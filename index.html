@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#8b5327">
+<title>Зимний сад 2: Урожай Вупсильды</title>
+<style>
+:root{
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --paper:rgba(255,238,198,.94);
+  --green:#7caf36;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+.app{
+  width:min(100vw,500px);
+  min-height:100vh;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+  padding:14px 12px calc(14px + var(--safe-bottom));
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  background:#8b5327 url("assets/background_main.png") center/cover no-repeat;
+  box-shadow:0 0 60px rgba(0,0,0,.25);
+}
+.app::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(80,42,14,.05),rgba(80,42,14,.10) 55%,rgba(80,42,14,.24));z-index:0;pointer-events:none}
+.top,.pantry,.controls{position:relative;z-index:1}
+.top{text-align:center}
+h1{margin:2px 0 0;font-family:Georgia,"Times New Roman",serif;color:#ffe8a6;font-weight:900;font-size:clamp(36px,10.5vw,56px);line-height:.9;letter-spacing:-.04em;text-shadow:0 3px 0 rgba(73,39,12,.65),0 0 13px rgba(255,213,96,.38)}
+.subtitle{display:inline-block;margin-top:4px;padding:6px 17px 7px;border-radius:16px;background:linear-gradient(180deg,#d89b4c,#a96727);color:#4b260f;font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,5.2vw,26px);font-weight:900;border:1px solid rgba(81,41,12,.28);box-shadow:0 7px 16px rgba(56,30,9,.22),inset 0 1px 0 rgba(255,232,164,.45)}
+.stage-chip{display:inline-block;margin-top:5px;padding:5px 12px 6px;border-radius:999px;background:rgba(255,240,200,.92);border:1px solid rgba(92,52,20,.22);color:#6d421f;font-weight:950;font-size:13px;box-shadow:0 6px 13px rgba(42,23,8,.14)}
+.stats{width:min(95%,390px);margin:7px auto 0;display:grid;grid-template-columns:1fr 1fr;background:var(--paper);border:1px solid rgba(92,52,20,.28);box-shadow:0 10px 22px rgba(47,25,7,.22);border-radius:23px;overflow:hidden}
+.stat{display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:center;padding:8px 10px;min-height:59px}
+.stat:first-child{border-right:1px dashed rgba(92,52,20,.24)}
+.stat .ico{font-size:26px}
+.stat strong{font-size:clamp(22px,6vw,30px);font-weight:950;line-height:1;color:#4a2c13}
+.stat span{display:block;font-size:12px;font-weight:850;color:#68411e}
+.switch-note{margin:6px auto 0;width:min(94%,390px);text-align:center;padding:8px 10px;border-radius:17px;background:rgba(255,240,200,.88);color:#68411e;font-size:13px;font-weight:850;border:1px solid rgba(92,52,20,.20)}
+.pantry{flex:1;display:grid;align-content:center;gap:12px;padding:4px 0 0;min-height:460px}
+.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:2.8%;align-items:end;padding:0 1px 15px;position:relative}
+.shelf::after{content:"";position:absolute;left:-6px;right:-6px;bottom:0;height:17px;border-radius:999px;background:linear-gradient(180deg,#ad6a2e,#663713);box-shadow:0 10px 20px rgba(40,20,7,.27),inset 0 2px 0 rgba(255,203,110,.22);z-index:0}
+.jar-card{position:relative;display:grid;justify-items:center;align-content:end;min-width:0;z-index:1}
+.jar-box{position:relative;width:100%;height:auto;aspect-ratio:260/430;max-width:104px}
+.jar-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;filter:drop-shadow(0 8px 12px rgba(76,42,13,.18))}
+.jar-lid{position:absolute;left:-10%;top:-14%;width:116%;height:auto;object-fit:contain;z-index:5;display:none;filter:drop-shadow(0 6px 8px rgba(76,42,13,.2))}
+.jar-card.full .jar-lid{display:block}
+.slots{position:absolute;left:16%;right:16%;top:18%;bottom:12%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);align-items:center;justify-items:center;gap:3px 6px;z-index:3}
+.slot{width:100%;height:100%;display:grid;place-items:center}
+.fruit-img{width:113%;height:113%;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(76,42,13,.22))}
+.empty{opacity:.20;filter:grayscale(.22) sepia(.15)}
+.label{position:relative;z-index:8;margin-top:-4px;padding:4px 7px 5px;border-radius:9px;background:linear-gradient(180deg,#e2aa5a,#b8732f);border:1px solid rgba(83,44,14,.35);color:#4a270e;font-family:Georgia,"Times New Roman",serif;font-size:clamp(10px,2.75vw,14px);font-weight:900;box-shadow:0 4px 8px rgba(45,24,8,.18),inset 0 1px 0 rgba(255,229,151,.35);max-width:100%;white-space:nowrap}
+
+/* Basket screen */
+.basket-wrap{position:relative;width:100%;min-height:455px;display:grid;place-items:center;padding:10px 0 6px}
+.basket-stage{position:relative;width:min(94%,430px);aspect-ratio:1/0.84;margin:0 auto}
+.basket-img{position:absolute;left:0;right:0;width:100%;height:auto;filter:drop-shadow(0 16px 20px rgba(50,25,7,.28))}
+.basket-img.back{bottom:-30px;z-index:2}
+.basket-img.front{bottom:-30px;z-index:6;clip-path:inset(63% 0 0 0)}
+.basket-fruits{position:absolute;left:13%;right:13%;top:34%;height:37%;z-index:5;pointer-events:none;overflow:visible;clip-path:ellipse(49% 52% at 50% 56%)}
+.basket-item{position:absolute;width:46px;height:46px;display:grid;place-items:center;transform-origin:center center}
+.basket-item img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(44,22,7,.25))}
+.basket-item.back{z-index:1}.basket-item.mid{z-index:3}.basket-item.front{z-index:5}
+.basket-shadow{position:absolute;left:10%;right:10%;bottom:-1%;height:36px;border-radius:50%;background:rgba(48,24,8,.22);filter:blur(10px);z-index:1}
+
+.controls{display:grid;gap:7px;margin-top:auto}
+button{appearance:none;border:0;width:100%;border-radius:22px;padding:13px 15px;min-height:55px;font-family:Georgia,"Times New Roman",serif;font-weight:900;font-size:clamp(22px,6vw,29px);cursor:pointer;touch-action:manipulation;color:#fff2c8;background:linear-gradient(180deg,#87ba39,#5a8b22);border:1px solid rgba(49,84,19,.5);box-shadow:0 9px 18px rgba(40,22,7,.25),inset 0 2px 0 rgba(255,255,255,.20);text-shadow:0 2px 0 rgba(49,84,19,.55)}
+button:active{transform:translateY(1px) scale(.996)}
+.button-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.secondary{background:linear-gradient(180deg,#fff0c8,#e4b76e);color:#5c3517;text-shadow:none;border-color:rgba(99,58,20,.28);font-size:clamp(16px,4vw,20px);min-height:45px}
+.manage{background:linear-gradient(180deg,#9c642d,#663915);color:#ffe8b3}
+.go-basket{background:linear-gradient(180deg,#8cb83e,#4f7d20)!important;color:#fff5d0!important}
+.worm-note{color:#fff0c8;text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,4.2vw,21px);font-weight:900;text-shadow:0 2px 2px rgba(42,23,8,.45);margin-top:1px}
+.worm-bar{position:relative;height:42px;margin:0 8px;border-radius:999px;background:linear-gradient(180deg,#fff0c8,#ddb66e);border:1px solid rgba(86,49,18,.35);box-shadow:inset 0 2px 5px rgba(83,48,18,.18),0 7px 14px rgba(42,23,8,.20);overflow:visible}
+.worm-fill{position:absolute;left:0;top:4px;height:34px;width:10%;min-width:42px;max-width:100%;display:flex;align-items:center;transition:width .25s ease}
+.worm-head{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#c3e65a,#75a62f 70%);border:1px solid rgba(58,93,22,.35);position:relative;box-shadow:0 4px 7px rgba(43,23,8,.22);flex:0 0 42px;z-index:2;display:grid;place-items:center;color:#305719;font-weight:900}
+.worm-body{height:28px;flex:1;min-width:0;border-radius:999px;background:repeating-linear-gradient(90deg,#9cc83d 0 16px,#79aa31 16px 32px);box-shadow:inset 0 2px 4px rgba(255,255,255,.25),inset 0 -4px 6px rgba(58,93,22,.25);margin-left:-7px}
+.leaf-end{position:absolute;right:-7px;top:4px;font-size:31px}
+.modal{position:fixed;inset:0;z-index:20;display:none;align-items:end;justify-content:center;padding:14px 14px calc(14px + var(--safe-bottom));background:rgba(45,24,8,.48)}
+.modal.open{display:flex}
+.sheet{width:min(100%,500px);border-radius:26px;background:#fff0c8;border:1px solid rgba(92,52,20,.28);padding:17px;box-shadow:0 20px 50px rgba(32,18,6,.36)}
+.sheet h2{margin:0 0 8px;font-family:Georgia,"Times New Roman",serif;color:#4d2f19;font-size:27px}
+.sheet p{margin:0 0 12px;color:#6a4424;line-height:1.35;font-weight:650}
+label{display:grid;gap:7px;font-weight:900;color:#4d2f19;margin:11px 0}
+input,textarea{width:100%;border-radius:17px;border:2px solid rgba(92,52,20,.18);background:#fff9ea;color:#4d2f19;outline:none;font-size:17px;padding:12px 13px}
+textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.sheet-actions{display:grid;gap:8px;margin-top:12px}
+.sheet-actions button{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;font-size:17px;min-height:48px}
+.ghost{background:transparent!important;color:#5c3517!important;border:1px solid rgba(92,52,20,.22)!important;text-shadow:none!important;box-shadow:none!important}
+.danger{background:linear-gradient(180deg,#c25732,#87371f)!important;color:#fff0d0!important}
+.result-list{display:grid;gap:6px;margin-top:10px}
+.result-item{border-radius:15px;background:rgba(255,255,255,.38);padding:9px 10px;font-weight:800;color:#5c3517}
+.toast{position:fixed;left:50%;bottom:calc(17px + var(--safe-bottom));transform:translateX(-50%) translateY(18px);max-width:calc(100% - 26px);background:rgba(255,240,200,.98);border:1px solid rgba(92,52,20,.24);box-shadow:0 12px 30px rgba(32,18,6,.3);color:#4e7d1e;font-weight:950;padding:12px 16px;border-radius:999px;opacity:0;transition:.25s ease;pointer-events:none;z-index:30;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:390px){
+  .app{padding-left:10px;padding-right:10px}
+  .pantry{min-height:438px;gap:10px}
+  .shelf{gap:2.3%}
+  .jar-box{max-width:92px}
+  .basket-wrap{min-height:430px}
+  .basket-stage{width:96%}
+  .label{font-size:10px;padding-left:5px;padding-right:5px}
+}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <section class="top">
+    <h1>Зимний сад 2</h1>
+    <div class="subtitle" id="subtitle">Урожай Вупсильды</div>
+    <div class="stage-chip" id="stageChip">Основной урожай</div>
+    <div class="stats">
+      <div class="stat"><div class="ico">✕</div><div><strong id="stitchesStat">0</strong><span>крестиков</span></div></div>
+      <div class="stat"><div class="ico" id="rightIcon">🫙</div><div><strong id="rightStat">0/8</strong><span id="rightLabel">банок</span></div></div>
+    </div>
+    <div class="switch-note" id="switchNote">После 8/8 откроется Лукошко Вупсильды.</div>
+  </section>
+  <section class="pantry" id="pantry"></section>
+  <section class="controls">
+    <button id="addBtn">Добавить крестики</button>
+    <button id="goBasketBtn" class="go-basket" style="display:none">Перейти к лукошку</button>
+    <div class="button-row">
+      <button class="secondary" id="downloadBtn">Скачать картинку</button>
+      <button class="secondary manage" id="manageBtn">Управление прогрессом</button>
+    </div>
+    <div class="worm-note" id="wormNote">До следующего плода: 500 крестиков</div>
+    <div class="worm-bar"><div class="worm-fill" id="wormFill"><div class="worm-head">•ᴗ•</div><div class="worm-body"></div></div><div class="leaf-end">🌿</div></div>
+  </section>
+</main>
+
+<div class="modal" id="addModal"><div class="sheet"><h2>Добавить крестики</h2><p id="addHelp">За каждые 500 крестиков Вупсильда выдаёт случайный плод. Иногда гусеницы могут утащить 100 крестиков.</p><label>Новые крестики<input id="addInput" inputmode="numeric" placeholder="например, 700"></label><div class="sheet-actions"><button id="confirmAdd">Добавить</button><button class="ghost" id="closeAdd">Отмена</button></div></div></div>
+<div class="modal" id="resultModal"><div class="sheet"><h2 id="resultTitle">Готово</h2><p id="resultText"></p><div class="result-list" id="resultList"></div><div class="sheet-actions"><button id="closeResult">Понятно</button></div></div></div>
+<div class="modal" id="manageModal"><div class="sheet"><h2>Управление прогрессом</h2><p>Прогресс хранится только в этом браузере. Код нужен, чтобы перенести или восстановить игру.</p><label>Код сохранения<textarea id="saveCode" readonly></textarea></label><div class="sheet-actions"><button id="copyCode">Скопировать код</button><button class="secondary" id="importCodeBtn">Восстановить из кода</button><button class="danger" id="resetBtn">Сбросить прогресс</button><button class="ghost" id="closeManage">Закрыть</button></div></div></div>
+<div class="toast" id="toast">Готово</div>
+
+<script>
+(function(){
+const STORAGE_KEY='winterGarden2BasketDraftV1', TARGET=6, STEP=500, MAIN_LIMIT=48, BASKET_LIMIT=100, STEAL_CHANCE=.05, STEAL=100;
+const MAIN=[
+ {key:'apple',name:'яблоко',img:'fruit_apple.png'},
+ {key:'strawberry',name:'клубника',img:'fruit_strawberry.png'},
+ {key:'cherry',name:'вишня',img:'fruit_cherry.png'},
+ {key:'raspberry',name:'малина',img:'fruit_raspberry.png'},
+ {key:'cucumber',name:'огурец',img:'fruit_cucumber.png'},
+ {key:'tomato',name:'помидор',img:'fruit_tomato.png'},
+ {key:'chili',name:'чили',img:'fruit_chili.png'},
+ {key:'garlic',name:'чеснок',img:'fruit_garlic.png'}
+];
+const BASKET=[
+ {key:'pear',name:'груша',img:'bonus_pear.png'},
+ {key:'blueberry',name:'черника',img:'bonus_blueberry.png'},
+ {key:'plum',name:'слива',img:'bonus_plum.png'},
+ {key:'apricot',name:'абрикос',img:'bonus_apricot.png'},
+ {key:'chanterelle',name:'лисичка',img:'bonus_chanterelle.png'},
+ {key:'mushroom',name:'гриб',img:'bonus_mushroom.png'}
+];
+function getBasketLayers(count) {
+  if (count <= 0) return [];
+
+  if (count <= 12) {
+    return [
+      { n: count, y: 84, spread: 70, size: 42 }
+    ];
+  }
+
+  if (count <= 24) {
+    const row1 = Math.min(14, Math.round(count * 0.58));
+    const row2 = count - row1;
+    return [
+      { n: row1, y: 84, spread: 72, size: 41 },
+      { n: row2, y: 68, spread: 58, size: 39 }
+    ];
+  }
+
+  if (count <= 40) {
+    const row1 = Math.round(count * 0.42);
+    const row2 = Math.round(count * 0.33);
+    const row3 = count - row1 - row2;
+    return [
+      { n: row1, y: 85, spread: 74, size: 40 },
+      { n: row2, y: 69, spread: 62, size: 38 },
+      { n: row3, y: 54, spread: 48, size: 36 }
+    ];
+  }
+
+  if (count <= 70) {
+    const row1 = Math.round(count * 0.34);
+    const row2 = Math.round(count * 0.27);
+    const row3 = Math.round(count * 0.22);
+    const row4 = count - row1 - row2 - row3;
+    return [
+      { n: row1, y: 86, spread: 74, size: 39 },
+      { n: row2, y: 72, spread: 64, size: 37 },
+      { n: row3, y: 58, spread: 54, size: 35 },
+      { n: row4, y: 45, spread: 42, size: 34 }
+    ];
+  }
+
+  const row1 = Math.round(count * 0.30);
+  const row2 = Math.round(count * 0.24);
+  const row3 = Math.round(count * 0.20);
+  const row4 = Math.round(count * 0.15);
+  const row5 = count - row1 - row2 - row3 - row4;
+
+  return [
+    { n: row1, y: 87, spread: 75, size: 38 },
+    { n: row2, y: 74, spread: 66, size: 36 },
+    { n: row3, y: 62, spread: 56, size: 35 },
+    { n: row4, y: 50, spread: 46, size: 34 },
+    { n: row5, y: 39, spread: 34, size: 33 }
+  ];
+}
+
+function seededOffset(index, salt, range) {
+  const raw = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;
+  return (raw - Math.floor(raw) - 0.5) * range * 2;
+}
+
+function basketPos(index, totalCount){
+  const layers = getBasketLayers(totalCount);
+  let passed = 0;
+
+  for (let rowIndex = 0; rowIndex < layers.length; rowIndex++) {
+    const layer = layers[rowIndex];
+
+    if (index < passed + layer.n) {
+      const local = index - passed;
+      const xBase = layer.n === 1
+        ? 50
+        : 50 - layer.spread / 2 + (layer.spread / (layer.n - 1)) * local;
+
+      const x = xBase + seededOffset(index, 1, 3);
+      const y = layer.y + seededOffset(index, 2, 2);
+      const scale = 1 + seededOffset(index, 3, 0.08);
+      const rot = seededOffset(index, 4, 18);
+      const layerName = rowIndex <= 1 ? 'front' : rowIndex <= 3 ? 'mid' : 'back';
+
+      return {
+        x,
+        y,
+        scale,
+        rot,
+        layer: layerName,
+        size: layer.size * scale
+      };
+    }
+
+    passed += layer.n;
+  }
+
+  return { x: 50, y: 50, scale: 1, rot: 0, layer: 'mid', size: 36 };
+}
+const e=id=>document.getElementById(id);
+const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),toast:e('toast'),addHelp:e('addHelp')};
+function def(){return {stitches:0,drops:0,basketOpened:false,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[]}}
+let state=load();
+function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();return {...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[]}}}catch{}return def()}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+function sumMain(){return Object.values(state.main).reduce((a,b)=>a+(b||0),0)}
+function fullMain(){return MAIN.filter(c=>(state.main[c.key]||0)>=TARGET).length}
+function mainDone(){return fullMain()===MAIN.length}
+function basketDone(){return state.basket.length>=BASKET_LIMIT}
+function view(){return state.basketOpened?'basket':'main'}
+function availableMain(){return MAIN.filter(c=>(state.main[c.key]||0)<TARGET)}
+function randomFrom(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function targetDrops(){return Math.floor(state.stitches/STEP)}
+function applyDrops(){
+  let results=[], closed=[], unlocked=false;
+  let neededMain=Math.min(targetDrops(),MAIN_LIMIT)-sumMain();
+  while(neededMain>0){
+    let pool=availableMain(); if(!pool.length)break;
+    let c=randomFrom(pool); state.main[c.key]++; results.push({type:'main',crop:c,count:state.main[c.key]});
+    if(state.main[c.key]===TARGET)closed.push(c);
+    neededMain--;
+    if(mainDone()) unlocked=true;
+  }
+  if(state.basketOpened){
+    let neededBasket=Math.min(Math.max(targetDrops()-MAIN_LIMIT,0),BASKET_LIMIT)-state.basket.length;
+    while(neededBasket>0){
+      let c=randomFrom(BASKET);
+      state.basket.push(c.key);
+      results.push({type:'basket',crop:c,count:state.basket.length});
+      neededBasket--;
+    }
+  }
+  return {results,closed,unlocked};
+}
+function render(){
+  els.pantry.innerHTML='';
+  els.stitches.textContent=state.stitches;
+  if(view()==='main'){
+    els.subtitle.textContent='Урожай Вупсильды';
+    els.stage.textContent=mainDone()?'Основной урожай собран':'Основной урожай';
+    els.rightIcon.textContent='🫙'; els.rightStat.textContent=`${fullMain()}/8`; els.rightLabel.textContent='банок';
+    if(mainDone()){
+      els.note.textContent='Все основные баночки закрыты! Скачайте картинку, а потом переходите к лукошку.';
+      els.addBtn.style.display='none'; els.goBasket.style.display='block';
+    }else{
+      els.note.textContent='После 8/8 откроется Лукошко Вупсильды.';
+      els.addBtn.style.display='block'; els.goBasket.style.display='none';
+    }
+    renderJars();
+  }else{
+    els.subtitle.textContent='Лукошко Вупсильды';
+    els.stage.textContent='Дополнительный урожай';
+    els.rightIcon.textContent='🍓'; els.rightStat.textContent=`${state.basket.length}/100`; els.rightLabel.textContent='плодов';
+    els.note.textContent=basketDone()?'Лукошко Вупсильды заполнено!':'Плоды складываются слоями внутри лукошка: от дна к полной корзине.';
+    els.addBtn.style.display=basketDone()?'none':'block'; els.goBasket.style.display='none';
+    renderBasket();
+  }
+  let rem=state.stitches%STEP, left=(rem===0&&state.drops>0)?0:STEP-rem;
+  if((view()==='main'&&mainDone()) || (view()==='basket'&&basketDone())){
+    els.worm.textContent=view()==='main'?'Основной урожай собран!':'Лукошко заполнено! ✨';
+    els.fill.style.width='100%';
+  }else{
+    els.worm.textContent=left===0?'Следующий плод уже готов!':`До следующего плода: ${left} крестиков`;
+    els.fill.style.width=Math.max(10,Math.round(rem/STEP*100))+'%';
+  }
+}
+function renderJars(){
+  let top=document.createElement('div'), bot=document.createElement('div'); top.className='shelf'; bot.className='shelf';
+  MAIN.forEach((c,i)=>(i<4?top:bot).appendChild(jarCard(c,state.main[c.key]||0)));
+  els.pantry.append(top,bot);
+}
+function jarCard(c,count){
+  count=Math.min(TARGET,count); let div=document.createElement('div'); div.className='jar-card'+(count>=TARGET?' full':'');
+  let box=document.createElement('div'); box.className='jar-box';
+  let jar=document.createElement('img'); jar.className='jar-img'; jar.src='assets/jar_open.png'; box.append(jar);
+  let slots=document.createElement('div'); slots.className='slots';
+  for(let i=0;i<TARGET;i++){let s=document.createElement('div');s.className='slot'+(i<count?'':' empty'); let img=document.createElement('img');img.className='fruit-img';img.src='assets/'+c.img;img.alt=c.name;s.append(img); slots.append(s)}
+  box.append(slots); let lid=document.createElement('img'); lid.className='jar-lid'; lid.src='assets/jar_lid_red.png'; box.append(lid);
+  let lab=document.createElement('div'); lab.className='label'; lab.textContent=c.name; div.append(box,lab); return div;
+}
+function renderBasket(){
+  let wrap=document.createElement('div'); wrap.className='basket-wrap';
+  let stage=document.createElement('div'); stage.className='basket-stage';
+  let shadow=document.createElement('div'); shadow.className='basket-shadow';
+
+  let basket=document.createElement('img');
+  basket.className='basket-img';
+  basket.src='assets/basket_main.png';
+
+  let fruits=document.createElement('div');
+  fruits.className='basket-fruits';
+
+  const basketItems = state.basket.slice(0,BASKET_LIMIT);
+  basketItems.forEach((key,i)=>{
+    const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i, basketItems.length);
+    let item=document.createElement('div'); item.className='basket-item '+p.layer;
+    item.style.left=p.x+'%'; item.style.top=p.y+'%';
+    item.style.width=p.size+'px'; item.style.height=p.size+'px';
+    item.style.transform=`translate(-50%,-50%) rotate(${p.rot}deg)`;
+    item.style.zIndex=String(100 + Math.round(p.y * 10) + i);
+    let img=document.createElement('img'); img.src='assets/'+crop.img; img.alt=crop.name;
+    item.append(img); fruits.append(item);
+  });
+
+  stage.append(shadow,basket,fruits);
+  wrap.append(stage);
+  els.pantry.append(wrap);
+}
+function openAdd(){els.addInput.value=''; els.addHelp.textContent=view()==='basket'?'За каждые 500 крестиков Вупсильда кладёт случайный плод в лукошко.':'За каждые 500 крестиков Вупсильда выдаёт случайный плод. Иногда гусеницы могут утащить 100 крестиков.'; els.addModal.classList.add('open');setTimeout(()=>els.addInput.focus(),80)}
+function closeAdd(){els.addModal.classList.remove('open')}
+function add(){
+  let typed=Math.max(0,parseInt(String(els.addInput.value).replace(/\D/g,''),10)||0); if(!typed){toast('Введи число крестиков');return}
+  let credited=typed, stolen=0;
+  if(typed>=STEAL&&!basketDone()&&Math.random()<STEAL_CHANCE){stolen=STEAL;credited=Math.max(0,typed-stolen)}
+  state.stitches+=credited;
+  let r=applyDrops(); save(); render(); closeAdd(); result({typed,credited,stolen,...r});
+}
+function result(o){
+  els.resultList.innerHTML=''; els.resultTitle.textContent=o.stolen?'🐛 Гусеницы устроили налёт!':'Крестики добавлены';
+  els.resultText.textContent=o.stolen?`Они утащили ${o.stolen} крестиков. Было добавлено ${o.typed}, в зачёт пошло ${o.credited}.`:`В зачёт пошло ${o.credited} крестиков.`;
+  if(o.results.length)o.results.forEach(r=>item(`${r.type==='basket'?'Лукошко':'Банки'}: ${r.crop.name} (${r.count}${r.type==='basket'?'/100':'/6'})`)); else item('До нового плода ещё не хватило крестиков.');
+  o.closed.forEach(c=>item(`Баночка закрыта: ${c.name} 🫙✨`));
+  if(o.unlocked)item('Все 8 баночек закрыты! Можно скачать картинку и перейти к лукошку.');
+  els.resultModal.classList.add('open');
+}
+function item(t){let d=document.createElement('div');d.className='result-item';d.textContent=t;els.resultList.append(d)}
+function toast(t){els.toast.textContent=t;els.toast.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>els.toast.classList.remove('show'),2200)}
+function code(){return 'WG2-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:2,state})))).replace(/=+$/,'')}
+function openManage(){els.saveCode.value=code();els.manageModal.classList.add('open')}
+function closeManage(){els.manageModal.classList.remove('open')}
+async function copy(){try{await navigator.clipboard.writeText(els.saveCode.value);toast('Код скопирован')}catch{els.saveCode.select();document.execCommand('copy');toast('Код скопирован')}}
+function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[]};save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
+function reset(){if(confirm('Сбросить весь прогресс на этом устройстве?')){state=def();save();render();closeManage();toast('Прогресс сброшен')}}
+function goBasket(){state.basketOpened=true; applyDrops(); save(); render(); toast('Лукошко открыто')}
+els.addBtn.onclick=openAdd; els.closeAdd.onclick=closeAdd; els.confirmAdd.onclick=add; els.addInput.onkeydown=e=>{if(e.key==='Enter')add()}; els.addModal.onclick=e=>{if(e.target===els.addModal)closeAdd()};
+els.closeResult.onclick=()=>els.resultModal.classList.remove('open'); els.resultModal.onclick=e=>{if(e.target===els.resultModal)els.resultModal.classList.remove('open')};
+els.manageBtn.onclick=openManage; els.closeManage.onclick=closeManage; els.manageModal.onclick=e=>{if(e.target===els.manageModal)closeManage()}; els.copyCode.onclick=copy; els.importCodeBtn.onclick=imp; els.resetBtn.onclick=reset;
+els.goBasket.onclick=goBasket;
+els.download.onclick=()=>toast('Скачивание картинки добавим после финального визуала');
+render();
+})();
+</script>
+</body>
+</html>
