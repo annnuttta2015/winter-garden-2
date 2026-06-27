@@ -14,7 +14,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
 .app{
-  width:min(100vw,500px);
+  width:min(100vw,520px);
   min-height:100vh;
   margin:0 auto;
   position:relative;
@@ -29,17 +29,32 @@ html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:
 .app::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(80,42,14,.05),rgba(80,42,14,.10) 55%,rgba(80,42,14,.24));z-index:0;pointer-events:none}
 .top,.pantry,.controls{position:relative;z-index:1}
 .top{text-align:center}
-h1{margin:2px 0 0;font-family:Georgia,"Times New Roman",serif;color:#ffe8a6;font-weight:900;font-size:clamp(36px,10.5vw,56px);line-height:.9;letter-spacing:-.04em;text-shadow:0 3px 0 rgba(73,39,12,.65),0 0 13px rgba(255,213,96,.38)}
-.subtitle{display:inline-block;margin-top:4px;padding:6px 17px 7px;border-radius:16px;background:linear-gradient(180deg,#d89b4c,#a96727);color:#4b260f;font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,5.2vw,26px);font-weight:900;border:1px solid rgba(81,41,12,.28);box-shadow:0 7px 16px rgba(56,30,9,.22),inset 0 1px 0 rgba(255,232,164,.45)}
+.title-image{display:block;width:min(98%,480px);height:auto;margin:0 auto -4px;filter:drop-shadow(0 4px 10px rgba(62,32,9,.25))}
+.subtitle-image{display:block;width:min(76%,350px);height:auto;margin:-4px auto 0;filter:drop-shadow(0 4px 9px rgba(62,32,9,.20))}
+.subtitle{display:inline-block;margin-top:0;padding:6px 20px 9px;border-radius:18px;background:linear-gradient(180deg,#dba65c,#a86527);color:#4b260f;font-family:Georgia,"Times New Roman",serif;font-size:clamp(21px,5.2vw,29px);font-weight:900;border:1px solid rgba(81,41,12,.28);box-shadow:0 7px 16px rgba(56,30,9,.22),inset 0 1px 0 rgba(255,232,164,.45)}
 .stage-chip{display:inline-block;margin-top:5px;padding:5px 12px 6px;border-radius:999px;background:rgba(255,240,200,.92);border:1px solid rgba(92,52,20,.22);color:#6d421f;font-weight:950;font-size:13px;box-shadow:0 6px 13px rgba(42,23,8,.14)}
-.stats{width:min(95%,390px);margin:7px auto 0;display:grid;grid-template-columns:1fr 1fr;background:var(--paper);border:1px solid rgba(92,52,20,.28);box-shadow:0 10px 22px rgba(47,25,7,.22);border-radius:23px;overflow:hidden}
-.stat{display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:center;padding:8px 10px;min-height:59px}
-.stat:first-child{border-right:1px dashed rgba(92,52,20,.24)}
-.stat .ico{font-size:26px}
-.stat strong{font-size:clamp(22px,6vw,30px);font-weight:950;line-height:1;color:#4a2c13}
-.stat span{display:block;font-size:12px;font-weight:850;color:#68411e}
-.switch-note{margin:6px auto 0;width:min(94%,390px);text-align:center;padding:8px 10px;border-radius:17px;background:rgba(255,240,200,.88);color:#68411e;font-size:13px;font-weight:850;border:1px solid rgba(92,52,20,.20)}
-.pantry{flex:1;display:grid;align-content:center;gap:12px;padding:4px 0 0;min-height:460px}
+.stats{width:min(95%,410px);height:72px;margin:6px auto 0;display:grid;grid-template-columns:1fr 1fr;background:transparent url('assets/panel_stats_main.png') center/100% 100% no-repeat;border:0;box-shadow:0 10px 22px rgba(47,25,7,.18);border-radius:23px;overflow:hidden}
+.stat{display:grid;place-items:center;padding:0;min-height:0}
+.stat:first-child{border-right:0}
+.stat .ico{display:none}
+.stat strong{
+  position:relative;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(32px,7.6vw,44px);
+  font-weight:900;
+  line-height:.92;
+  color:#4a250d;
+  letter-spacing:-1.3px;
+  text-shadow:
+    0 1px 0 #ffe9b5,
+    0 2px 0 rgba(123,67,22,.22),
+    0 4px 7px rgba(47,22,5,.22);
+}
+.stat:first-child strong{left:4px;top:-1px}
+.stat:last-child strong{left:12px;top:-1px}
+.stat span{display:none}
+.switch-note{margin:6px auto 0;width:min(94%,410px);height:50px;text-align:center;padding:0;border-radius:17px;background:transparent url('assets/panel_info_light.png') center/100% 100% no-repeat;border:0;font-size:0;color:transparent;overflow:hidden}
+.pantry{flex:1;display:grid;align-content:center;gap:10px;padding:3px 0 0;min-height:420px}
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:2.8%;align-items:end;padding:0 1px 15px;position:relative}
 .shelf::after{content:"";position:absolute;left:-6px;right:-6px;bottom:0;height:17px;border-radius:999px;background:linear-gradient(180deg,#ad6a2e,#663713);box-shadow:0 10px 20px rgba(40,20,7,.27),inset 0 2px 0 rgba(255,203,110,.22);z-index:0}
 .jar-card{position:relative;display:grid;justify-items:center;align-content:end;min-width:0;z-index:1}
@@ -51,7 +66,29 @@ h1{margin:2px 0 0;font-family:Georgia,"Times New Roman",serif;color:#ffe8a6;font
 .slot{width:100%;height:100%;display:grid;place-items:center}
 .fruit-img{width:113%;height:113%;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(76,42,13,.22))}
 .empty{opacity:.20;filter:grayscale(.22) sepia(.15)}
-.label{position:relative;z-index:8;margin-top:-4px;padding:4px 7px 5px;border-radius:9px;background:linear-gradient(180deg,#e2aa5a,#b8732f);border:1px solid rgba(83,44,14,.35);color:#4a270e;font-family:Georgia,"Times New Roman",serif;font-size:clamp(10px,2.75vw,14px);font-weight:900;box-shadow:0 4px 8px rgba(45,24,8,.18),inset 0 1px 0 rgba(255,229,151,.35);max-width:100%;white-space:nowrap}
+.label{
+  position:relative;
+  z-index:8;
+  width:105px;
+  height:37px;
+  margin-top:-6px;
+  padding:0 16px 3px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent url('assets/label_jar_name.png') center/100% 100% no-repeat;
+  color:#5a3316;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(10px,2.65vw,13px);
+  font-weight:900;
+  letter-spacing:.2px;
+  line-height:1;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-shadow:0 1px 0 rgba(255,236,178,.42);
+}
 
 /* Basket screen */
 .basket-wrap{position:relative;width:100%;min-height:455px;display:grid;place-items:center;padding:10px 0 6px}
@@ -66,18 +103,66 @@ h1{margin:2px 0 0;font-family:Georgia,"Times New Roman",serif;color:#ffe8a6;font
 .basket-shadow{position:absolute;left:10%;right:10%;bottom:-1%;height:36px;border-radius:50%;background:rgba(48,24,8,.22);filter:blur(10px);z-index:1}
 
 .controls{display:grid;gap:7px;margin-top:auto}
-button{appearance:none;border:0;width:100%;border-radius:22px;padding:13px 15px;min-height:55px;font-family:Georgia,"Times New Roman",serif;font-weight:900;font-size:clamp(22px,6vw,29px);cursor:pointer;touch-action:manipulation;color:#fff2c8;background:linear-gradient(180deg,#87ba39,#5a8b22);border:1px solid rgba(49,84,19,.5);box-shadow:0 9px 18px rgba(40,22,7,.25),inset 0 2px 0 rgba(255,255,255,.20);text-shadow:0 2px 0 rgba(49,84,19,.55)}
+button{appearance:none;border:0;width:100%;border-radius:22px;padding:13px 15px;min-height:55px;font-family:Georgia,"Times New Roman",serif;font-weight:900;font-size:clamp(22px,6vw,29px);cursor:pointer;touch-action:manipulation;color:#fff2c8;background:linear-gradient(180deg,#87ba39,#5a8b22);background-size:100% 100%;background-position:center;background-repeat:no-repeat;box-shadow:none;text-shadow:0 2px 0 rgba(49,84,19,.55)}
 button:active{transform:translateY(1px) scale(.996)}
-.button-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.secondary{background:linear-gradient(180deg,#fff0c8,#e4b76e);color:#5c3517;text-shadow:none;border-color:rgba(99,58,20,.28);font-size:clamp(16px,4vw,20px);min-height:45px}
-.manage{background:linear-gradient(180deg,#9c642d,#663915);color:#ffe8b3}
+.button-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.secondary{background:linear-gradient(180deg,#fff0c8,#e4b76e);color:#5c3517;text-shadow:none;font-size:clamp(16px,4vw,20px);min-height:45px;background-size:100% 100%;background-position:center;background-repeat:no-repeat}
+.compact{font-size:clamp(15px,3.9vw,20px);line-height:1.05;padding:10px 12px}
+.manage{background:linear-gradient(180deg,#9c642d,#663915);color:#ffe8b3;background-size:100% 100%;background-position:center;background-repeat:no-repeat}
 .go-basket{background:linear-gradient(180deg,#8cb83e,#4f7d20)!important;color:#fff5d0!important}
-.worm-note{color:#fff0c8;text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,4.2vw,21px);font-weight:900;text-shadow:0 2px 2px rgba(42,23,8,.45);margin-top:1px}
-.worm-bar{position:relative;height:42px;margin:0 8px;border-radius:999px;background:linear-gradient(180deg,#fff0c8,#ddb66e);border:1px solid rgba(86,49,18,.35);box-shadow:inset 0 2px 5px rgba(83,48,18,.18),0 7px 14px rgba(42,23,8,.20);overflow:visible}
-.worm-fill{position:absolute;left:0;top:4px;height:34px;width:10%;min-width:42px;max-width:100%;display:flex;align-items:center;transition:width .25s ease}
-.worm-head{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#c3e65a,#75a62f 70%);border:1px solid rgba(58,93,22,.35);position:relative;box-shadow:0 4px 7px rgba(43,23,8,.22);flex:0 0 42px;z-index:2;display:grid;place-items:center;color:#305719;font-weight:900}
-.worm-body{height:28px;flex:1;min-width:0;border-radius:999px;background:repeating-linear-gradient(90deg,#9cc83d 0 16px,#79aa31 16px 32px);box-shadow:inset 0 2px 4px rgba(255,255,255,.25),inset 0 -4px 6px rgba(58,93,22,.25);margin-left:-7px}
-.leaf-end{position:absolute;right:-7px;top:4px;font-size:31px}
+
+#addBtn,#goBasketBtn,#downloadBtn,#manageBtn,#hashtagBtn,#reportBtn{
+  color:transparent!important;
+  font-size:0!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+  border:0!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+}
+#addBtn,#goBasketBtn{background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px}
+#downloadBtn{background-image:url('assets/btn_download_light.png')!important;min-height:58px}
+#manageBtn{background-image:url('assets/btn_progress_brown.png')!important;min-height:58px}
+#hashtagBtn{background-image:url('assets/btn_hashtag_brown.png')!important;min-height:56px}
+#reportBtn{background-image:url('assets/btn_report_light.png')!important;min-height:56px}
+
+
+
+
+.worm-note{
+  color:#fff0c8;
+  text-align:center;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(16px,4.2vw,21px);
+  font-weight:900;
+  text-shadow:0 2px 2px rgba(42,23,8,.45);
+  margin-top:1px;
+}
+.worm-bar{
+  position:relative;
+  width:min(95%,465px);
+  height:45px;
+  margin:0 auto;
+  background:transparent url('assets/progress_bar_bg.png') center/100% 100% no-repeat;
+}
+.worm-inner{
+  position:absolute;
+  left:5.8%;
+  right:5.8%;
+  top:26.5%;
+  height:46.6%;
+  overflow:hidden;
+  border-radius:999px;
+}
+.worm-fill{
+  height:100%;
+  width:0%;
+  max-width:100%;
+  background:transparent url('assets/progress_bar_fill.png') left center/100% 100% no-repeat;
+  border-radius:999px;
+  transition:width .45s ease;
+}
 .modal{position:fixed;inset:0;z-index:20;display:none;align-items:end;justify-content:center;padding:14px 14px calc(14px + var(--safe-bottom));background:rgba(45,24,8,.48)}
 .modal.open{display:flex}
 .sheet{width:min(100%,500px);border-radius:26px;background:#fff0c8;border:1px solid rgba(92,52,20,.28);padding:17px;box-shadow:0 20px 50px rgba(32,18,6,.36)}
@@ -96,21 +181,81 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:390px){
   .app{padding-left:10px;padding-right:10px}
-  .pantry{min-height:438px;gap:10px}
+  .pantry{min-height:390px;gap:8px}
   .shelf{gap:2.3%}
   .jar-box{max-width:92px}
   .basket-wrap{min-height:430px}
   .basket-stage{width:96%}
-  .label{font-size:10px;padding-left:5px;padding-right:5px}
+  .label{width:96px;height:34px;font-size:10px;padding:0 12px 2px}
 }
+
+/* мягкие эффекты */
+.title-image{
+  animation:titleGlow 4.8s ease-in-out infinite;
+}
+@keyframes titleGlow{
+  0%,100%{filter:drop-shadow(0 4px 10px rgba(62,32,9,.25))}
+  50%{filter:drop-shadow(0 4px 18px rgba(255,210,90,.48))}
+}
+#addBtn{
+  animation:buttonBreath 2.9s ease-in-out infinite;
+}
+@keyframes buttonBreath{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.012)}
+}
+.fruit-img{
+  animation:fruitPop .34s ease-out both;
+}
+@keyframes fruitPop{
+  0%{transform:scale(.55);opacity:0}
+  70%{transform:scale(1.10);opacity:1}
+  100%{transform:scale(1);opacity:1}
+}
+.jar-card.full .jar-lid{
+  animation:lidDrop .45s ease-out both;
+}
+@keyframes lidDrop{
+  0%{transform:translateY(-24px) scale(1.08);opacity:0}
+  70%{transform:translateY(3px) scale(.98);opacity:1}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
+.basket-item img{
+  animation:basketFruitPop .42s ease-out both;
+}
+@keyframes basketFruitPop{
+  0%{transform:translateY(-18px) scale(.72);opacity:0}
+  75%{transform:translateY(2px) scale(1.08);opacity:1}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
+.app::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255,230,130,.15), transparent 25%),
+    radial-gradient(circle at 72% 34%, rgba(255,240,170,.10), transparent 30%);
+  pointer-events:none;
+  z-index:0;
+  animation:sunFloat 7s ease-in-out infinite;
+}
+@keyframes sunFloat{
+  0%,100%{opacity:.56;transform:translateY(0)}
+  50%{opacity:.86;transform:translateY(6px)}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
 </style>
 </head>
 <body>
 <main class="app" id="app">
   <section class="top">
-    <h1>Зимний сад 2</h1>
-    <div class="subtitle" id="subtitle">Урожай Вупсильды</div>
-    <div class="stage-chip" id="stageChip">Основной урожай</div>
+    <img class="title-image" src="assets/title_main.png" alt="Зимний сад 2">
+    <img class="subtitle-image" src="assets/title_sub.png" alt="Урожай Вупсильды">
+    <div class="subtitle" id="subtitle" style="display:none">Урожай Вупсильды</div>
+    <div class="stage-chip" id="stageChip" style="display:none">Основной урожай</div>
     <div class="stats">
       <div class="stat"><div class="ico">✕</div><div><strong id="stitchesStat">0</strong><span>крестиков</span></div></div>
       <div class="stat"><div class="ico" id="rightIcon">🫙</div><div><strong id="rightStat">0/8</strong><span id="rightLabel">банок</span></div></div>
@@ -122,17 +267,23 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
     <button id="addBtn">Добавить крестики</button>
     <button id="goBasketBtn" class="go-basket" style="display:none">Перейти к лукошку</button>
     <div class="button-row">
-      <button class="secondary" id="downloadBtn">Скачать картинку</button>
-      <button class="secondary manage" id="manageBtn">Управление прогрессом</button>
+      <button class="secondary compact" id="downloadBtn">Скачать картинку</button>
+      <button class="secondary manage compact" id="manageBtn">Управление прогрессом</button>
+    </div>
+    <div class="button-row">
+      <button class="secondary manage compact" id="hashtagBtn">Ввести хэштег</button>
+      <button class="secondary compact" id="reportBtn">Сформировать отчёт</button>
     </div>
     <div class="worm-note" id="wormNote">До следующего плода: 500 крестиков</div>
-    <div class="worm-bar"><div class="worm-fill" id="wormFill"><div class="worm-head">•ᴗ•</div><div class="worm-body"></div></div><div class="leaf-end">🌿</div></div>
+    <div class="worm-bar"><div class="worm-inner"><div class="worm-fill" id="wormFill"></div></div></div>
   </section>
 </main>
 
 <div class="modal" id="addModal"><div class="sheet"><h2>Добавить крестики</h2><p id="addHelp">За каждые 500 крестиков Вупсильда выдаёт случайный плод. Иногда гусеницы могут утащить 100 крестиков.</p><label>Новые крестики<input id="addInput" inputmode="numeric" placeholder="например, 700"></label><div class="sheet-actions"><button id="confirmAdd">Добавить</button><button class="ghost" id="closeAdd">Отмена</button></div></div></div>
 <div class="modal" id="resultModal"><div class="sheet"><h2 id="resultTitle">Готово</h2><p id="resultText"></p><div class="result-list" id="resultList"></div><div class="sheet-actions"><button id="closeResult">Понятно</button></div></div></div>
 <div class="modal" id="manageModal"><div class="sheet"><h2>Управление прогрессом</h2><p>Прогресс хранится только в этом браузере. Код нужен, чтобы перенести или восстановить игру.</p><label>Код сохранения<textarea id="saveCode" readonly></textarea></label><div class="sheet-actions"><button id="copyCode">Скопировать код</button><button class="secondary" id="importCodeBtn">Восстановить из кода</button><button class="danger" id="resetBtn">Сбросить прогресс</button><button class="ghost" id="closeManage">Закрыть</button></div></div></div>
+<div class="modal" id="hashtagModal"><div class="sheet"><h2>Хэштег для отчёта</h2><p>Этот хэштег будет автоматически подставляться в текст отчёта.</p><label>Хэштег<input id="hashtagInput" placeholder="#зимнийсад2"></label><div class="sheet-actions"><button id="saveHashtag">Сохранить</button><button class="ghost" id="closeHashtag">Отмена</button></div></div></div>
+<div class="modal" id="reportModal"><div class="sheet"><h2>Отчёт</h2><p>Скопируй текст отчёта и прикрепи фото вышивки в чат.</p><label>Текст отчёта<textarea id="reportOutput" readonly></textarea></label><div class="sheet-actions"><button id="copyReport">Скопировать отчёт</button><button class="ghost" id="closeReport">Закрыть</button></div></div></div>
 <div class="toast" id="toast">Готово</div>
 
 <script>
@@ -253,11 +404,16 @@ function basketPos(index, totalCount){
   return { x: 50, y: 50, scale: 1, rot: 0, layer: 'mid', size: 36 };
 }
 const e=id=>document.getElementById(id);
-const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),toast:e('toast'),addHelp:e('addHelp')};
-function def(){return {stitches:0,drops:0,basketOpened:false,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[]}}
+const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp')};
+function def(){return {stitches:0,drops:0,basketOpened:false,hashtag:'',main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[]}}
 let state=load();
 function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();return {...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[]}}}catch{}return def()}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+function normalizeHashtag(v){
+  let txt=String(v||"").trim();
+  if(!txt) return "";
+  return txt.startsWith("#") ? txt : "#"+txt.replace(/^#+/,"");
+}
 function sumMain(){return Object.values(state.main).reduce((a,b)=>a+(b||0),0)}
 function fullMain(){return MAIN.filter(c=>(state.main[c.key]||0)>=TARGET).length}
 function mainDone(){return fullMain()===MAIN.length}
@@ -316,7 +472,7 @@ function render(){
     els.fill.style.width='100%';
   }else{
     els.worm.textContent=left===0?'Следующий плод уже готов!':`До следующего плода: ${left} крестиков`;
-    els.fill.style.width=Math.max(10,Math.round(rem/STEP*100))+'%';
+    els.fill.style.width=(left===STEP?0:Math.max(4,Math.round(rem/STEP*100)))+'%';
   }
 }
 function renderJars(){
@@ -383,6 +539,31 @@ function toast(t){els.toast.textContent=t;els.toast.classList.add('show');clearT
 function code(){return 'WG2-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:2,state})))).replace(/=+$/,'')}
 function openManage(){els.saveCode.value=code();els.manageModal.classList.add('open')}
 function closeManage(){els.manageModal.classList.remove('open')}
+function openHashtag(){els.hashtagInput.value=state.hashtag||''; els.hashtagModal.classList.add('open'); setTimeout(()=>els.hashtagInput.focus(),80)}
+function closeHashtag(){els.hashtagModal.classList.remove('open')}
+function saveHashtagValue(){state.hashtag=normalizeHashtag(els.hashtagInput.value); save(); closeHashtag(); toast(state.hashtag?'Хэштег сохранён':'Хэштег очищен')}
+function basketSummary(){const counts={}; state.basket.forEach(k=>counts[k]=(counts[k]||0)+1); return BASKET.filter(c=>counts[c.key]).map(c=>`${c.name}: ${counts[c.key]}`)}
+function makeReport(){
+  const lines=[];
+  lines.push('Отчёт по игре «Зимний сад 2: Урожай Вупсильды»');
+  lines.push(`Крестиков всего: ${state.stitches}`);
+  lines.push(`Основной урожай: ${fullMain()}/8 банок`);
+  MAIN.forEach(c=>lines.push(`${c.name}: ${state.main[c.key]||0}/6`));
+  if(state.basketOpened || state.basket.length){
+    lines.push('');
+    lines.push(`Лукошко Вупсильды: ${state.basket.length}/100 плодов`);
+    const basketLines=basketSummary();
+    basketLines.forEach(line=>lines.push(line));
+  }
+  if(state.hashtag){
+    lines.push('');
+    lines.push(state.hashtag);
+  }
+  return lines.join('\n');
+}
+function openReport(){els.reportOutput.value=makeReport(); els.reportModal.classList.add('open')}
+function closeReport(){els.reportModal.classList.remove('open')}
+async function copyReportText(){els.reportOutput.value=makeReport(); try{await navigator.clipboard.writeText(els.reportOutput.value); toast('Отчёт скопирован')}catch{els.reportOutput.select(); document.execCommand('copy'); toast('Отчёт скопирован')}}
 async function copy(){try{await navigator.clipboard.writeText(els.saveCode.value);toast('Код скопирован')}catch{els.saveCode.select();document.execCommand('copy');toast('Код скопирован')}}
 function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[]};save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
 function reset(){if(confirm('Сбросить весь прогресс на этом устройстве?')){state=def();save();render();closeManage();toast('Прогресс сброшен')}}
@@ -392,6 +573,8 @@ els.closeResult.onclick=()=>els.resultModal.classList.remove('open'); els.result
 els.manageBtn.onclick=openManage; els.closeManage.onclick=closeManage; els.manageModal.onclick=e=>{if(e.target===els.manageModal)closeManage()}; els.copyCode.onclick=copy; els.importCodeBtn.onclick=imp; els.resetBtn.onclick=reset;
 els.goBasket.onclick=goBasket;
 els.download.onclick=()=>toast('Скачивание картинки добавим после финального визуала');
+els.hashtagBtn.onclick=openHashtag; els.closeHashtag.onclick=closeHashtag; els.saveHashtag.onclick=saveHashtagValue; els.hashtagInput.onkeydown=e=>{if(e.key==='Enter')saveHashtagValue()}; els.hashtagModal.onclick=e=>{if(e.target===els.hashtagModal)closeHashtag()};
+els.reportBtn.onclick=openReport; els.closeReport.onclick=closeReport; els.copyReport.onclick=copyReportText; els.reportModal.onclick=e=>{if(e.target===els.reportModal)closeReport()};
 render();
 })();
 </script>
