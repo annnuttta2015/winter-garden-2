@@ -1628,20 +1628,53 @@ function ensureHtml2Canvas(){
     document.head.appendChild(sc);
   });
 }
+function canvasToBlob(canvas){
+  return new Promise((resolve,reject)=>{
+    canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('canvas blob failed')),'image/png',1);
+  });
+}
+function openImageFallback(blob, canvas){
+  try{
+    const url=URL.createObjectURL(blob);
+    const win=window.open(url,'_blank');
+    if(win){
+      toast('Картинка открыта. Зажми её и выбери «Сохранить в Фото».');
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+      return;
+    }
+  }catch(e){}
+  const link=document.createElement('a');
+  link.download='zimniy-sad-2.png';
+  link.href=canvas.toDataURL('image/png');
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  toast('Картинка скачана. На iPhone ищи её в «Файлы → Загрузки».');
+}
 els.download.onclick=async()=>{
   const app=document.getElementById('app');
   try{
     toast('Готовлю картинку...');
     const h2c=await ensureHtml2Canvas();
     const canvas=await h2c(app,{backgroundColor:null,scale:Math.min(2,window.devicePixelRatio||2),useCORS:true,allowTaint:true,scrollX:0,scrollY:-window.scrollY});
-    const link=document.createElement('a');
-    link.download='zimniy-sad-2.png';
-    link.href=canvas.toDataURL('image/png');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    toast('Картинка сохранена');
-  }catch(e){toast('Не получилось сохранить картинку. На GitHub Pages кнопка работает стабильнее, чем при открытии файлом.')}
+    const blob=await canvasToBlob(canvas);
+    const file=new File([blob],'zimniy-sad-2.png',{type:'image/png'});
+
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      try{
+        await navigator.share({files:[file],title:'Зимний сад 2',text:'Мой прогресс в игре «Зимний сад 2»'});
+        toast('Выбери, куда сохранить или отправить картинку.');
+        return;
+      }catch(shareError){
+        if(shareError && shareError.name==='AbortError'){
+          toast('Сохранение отменено');
+          return;
+        }
+      }
+    }
+
+    openImageFallback(blob, canvas);
+  }catch(e){toast('Не получилось подготовить картинку. На GitHub Pages кнопка работает стабильнее, чем при открытии файлом.')}
 };
 els.hashtagBtn.onclick=openHashtag; els.closeHashtag.onclick=closeHashtag; els.saveHashtag.onclick=saveHashtagValue; els.hashtagInput.onkeydown=e=>{if(e.key==='Enter')saveHashtagValue()}; els.hashtagModal.onclick=e=>{if(e.target===els.hashtagModal)closeHashtag()};
 els.reportBtn.onclick=openReport; els.closeReport.onclick=closeReport; els.copyReport.onclick=copyReportText; els.reportModal.onclick=e=>{if(e.target===els.reportModal)closeReport()};
