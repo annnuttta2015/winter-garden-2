@@ -27,32 +27,114 @@ html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:
   box-shadow:0 0 60px rgba(0,0,0,.25);
 }
 .app::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(80,42,14,.05),rgba(80,42,14,.10) 55%,rgba(80,42,14,.24));z-index:0;pointer-events:none}
-.top,.pantry,.controls{position:relative;z-index:1}
+.top,.pantry,.controls{display:grid;gap:8px;margin-top:auto}
 .top{text-align:center}
 .title-image{display:block;width:min(98%,480px);height:auto;margin:0 auto -4px;filter:drop-shadow(0 4px 10px rgba(62,32,9,.25))}
 .subtitle-image{display:block;width:min(76%,350px);height:auto;margin:-4px auto 0;filter:drop-shadow(0 4px 9px rgba(62,32,9,.20))}
 .subtitle{display:inline-block;margin-top:0;padding:6px 20px 9px;border-radius:18px;background:linear-gradient(180deg,#dba65c,#a86527);color:#4b260f;font-family:Georgia,"Times New Roman",serif;font-size:clamp(21px,5.2vw,29px);font-weight:900;border:1px solid rgba(81,41,12,.28);box-shadow:0 7px 16px rgba(56,30,9,.22),inset 0 1px 0 rgba(255,232,164,.45)}
 .stage-chip{display:inline-block;margin-top:5px;padding:5px 12px 6px;border-radius:999px;background:rgba(255,240,200,.92);border:1px solid rgba(92,52,20,.22);color:#6d421f;font-weight:950;font-size:13px;box-shadow:0 6px 13px rgba(42,23,8,.14)}
-.stats{width:min(95%,410px);height:72px;margin:6px auto 0;display:grid;grid-template-columns:1fr 1fr;background:transparent url('assets/panel_stats_main.png') center/100% 100% no-repeat;border:0;box-shadow:0 10px 22px rgba(47,25,7,.18);border-radius:23px;overflow:hidden}
-.stat{display:grid;place-items:center;padding:0;min-height:0}
-.stat:first-child{border-right:0}
-.stat .ico{display:none}
-.stat strong{
+
+.stats{
+  width:min(95%,410px);
+  height:72px;
+  margin:6px auto 0;
   position:relative;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(32px,7.6vw,44px);
-  font-weight:900;
-  line-height:.92;
-  color:#4a250d;
-  letter-spacing:-1.3px;
-  text-shadow:
-    0 1px 0 #ffe9b5,
-    0 2px 0 rgba(123,67,22,.22),
-    0 4px 7px rgba(47,22,5,.22);
+  display:block;
+  background:transparent url('assets/panel_stats_main.png') center/100% 100% no-repeat;
+  border:0;
+  box-shadow:0 10px 22px rgba(47,25,7,.18);
+  border-radius:23px;
+  overflow:hidden;
 }
-.stat:first-child strong{left:4px;top:-1px}
-.stat:last-child strong{left:12px;top:-1px}
-.stat span{display:none}
+.stat{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:100%;
+  padding:0;
+}
+.stat:first-child{left:0}
+.stat:last-child{right:0}
+.stat .ico{display:none!important}
+.stat > div:last-child{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+.stat strong{
+  position:absolute;
+  top:23px;
+  width:74px;
+  text-align:center;
+  display:block;
+  font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:18px;
+  font-weight:700;
+  line-height:1;
+  color:#4a2b12;
+  text-shadow:0 1px 0 rgba(255,236,181,.75);
+  letter-spacing:-.02em;
+  white-space:nowrap;
+  z-index:5;
+}
+.stat:first-child strong{left:93px}
+.stat:last-child strong{left:86px}
+.stat span{display:none!important}
+
+/* На лукошке правая карточка полностью перекрывает нарисованную банку и подпись */
+.stats.basket-mode .stat:last-child::before{
+  content:"";
+  position:absolute;
+  left:28px;
+  top:9px;
+  width:160px;
+  height:54px;
+  background:rgba(255,235,192,.94);
+  border-radius:14px;
+  z-index:2;
+}
+.stats.basket-mode .stat:last-child::after{
+  content:"плодов";
+  position:absolute;
+  left:85px;
+  top:43px;
+  width:82px;
+  text-align:center;
+  font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:10px;
+  font-weight:700;
+  line-height:1;
+  color:#6c431f;
+  z-index:6;
+}
+.stats.basket-mode .stat:last-child .ico{
+  display:block!important;
+  position:absolute;
+  left:44px;
+  top:17px;
+  width:26px;
+  height:26px;
+  z-index:7;
+  font-size:0;
+  background:url('assets/fruit_strawberry.png') center/contain no-repeat;
+}
+.stats.basket-mode .stat:last-child strong{
+  left:83px;
+  top:22px;
+  width:86px;
+  font-size:16px;
+  z-index:7;
+}
+@media(max-width:430px){
+  .stat strong{font-size:16px;top:24px;width:68px}
+  .stat:first-child strong{left:84px}
+  .stat:last-child strong{left:78px}
+  .stats.basket-mode .stat:last-child::before{left:24px;width:150px}
+  .stats.basket-mode .stat:last-child .ico{left:38px;width:24px;height:24px}
+  .stats.basket-mode .stat:last-child strong{left:74px;font-size:15px;width:82px}
+  .stats.basket-mode .stat:last-child::after{left:74px;width:82px}
+}
+
 .switch-note{margin:6px auto 0;width:min(94%,410px);height:50px;text-align:center;padding:0;border-radius:17px;background:transparent url('assets/panel_info_light.png') center/100% 100% no-repeat;border:0;font-size:0;color:transparent;overflow:hidden}
 .pantry{flex:1;display:grid;align-content:center;gap:10px;padding:3px 0 0;min-height:420px}
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:2.8%;align-items:end;padding:0 1px 15px;position:relative}
@@ -96,9 +178,9 @@ html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:
 .basket-img{position:absolute;left:0;right:0;width:100%;height:auto;filter:drop-shadow(0 16px 20px rgba(50,25,7,.28))}
 .basket-img.back{bottom:-30px;z-index:2}
 .basket-img.front{bottom:-30px;z-index:6;clip-path:inset(63% 0 0 0)}
-.basket-fruits{position:absolute;left:13%;right:13%;top:34%;height:37%;z-index:5;pointer-events:none;overflow:visible;clip-path:ellipse(49% 52% at 50% 56%)}
-.basket-item{position:absolute;width:46px;height:46px;display:grid;place-items:center;transform-origin:center center}
-.basket-item img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(44,22,7,.25))}
+.basket-fruits{position:absolute;left:12%;right:12%;top:47%;height:22%;z-index:5;pointer-events:none;overflow:hidden;clip-path:ellipse(50% 52% at 50% 56%)}
+.basket-item{position:absolute;width:32px;height:32px;display:grid;place-items:center;transform-origin:center center}
+.basket-item img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 2px rgba(44,22,7,.24))}
 .basket-item.back{z-index:1}.basket-item.mid{z-index:3}.basket-item.front{z-index:5}
 .basket-shadow{position:absolute;left:10%;right:10%;bottom:-1%;height:36px;border-radius:50%;background:rgba(48,24,8,.22);filter:blur(10px);z-index:1}
 
@@ -126,6 +208,7 @@ button:active{transform:translateY(1px) scale(.996)}
 #manageBtn{background-image:url('assets/btn_progress_brown.png')!important;min-height:58px}
 #hashtagBtn{background-image:url('assets/btn_hashtag_brown.png')!important;min-height:56px}
 #reportBtn{background-image:url('assets/btn_report_light.png')!important;min-height:56px}
+
 
 
 
@@ -163,11 +246,14 @@ button:active{transform:translateY(1px) scale(.996)}
   border-radius:999px;
   transition:width .45s ease;
 }
+
 .modal{position:fixed;inset:0;z-index:20;display:none;align-items:end;justify-content:center;padding:14px 14px calc(14px + var(--safe-bottom));background:rgba(45,24,8,.48)}
 .modal.open{display:flex}
 .sheet{width:min(100%,500px);border-radius:26px;background:#fff0c8;border:1px solid rgba(92,52,20,.28);padding:17px;box-shadow:0 20px 50px rgba(32,18,6,.36)}
 .sheet h2{margin:0 0 8px;font-family:Georgia,"Times New Roman",serif;color:#4d2f19;font-size:27px}
 .sheet p{margin:0 0 12px;color:#6a4424;line-height:1.35;font-weight:650}
+.result-event-image{display:none;width:min(100%,260px);max-height:220px;object-fit:contain;margin:2px auto 10px;filter:drop-shadow(0 8px 16px rgba(65,38,15,.18))}
+.result-event-image.show{display:block}
 label{display:grid;gap:7px;font-weight:900;color:#4d2f19;margin:11px 0}
 input,textarea{width:100%;border-radius:17px;border:2px solid rgba(92,52,20,.18);background:#fff9ea;color:#4d2f19;outline:none;font-size:17px;padding:12px 13px}
 textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
@@ -188,64 +274,758 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   .basket-stage{width:96%}
   .label{width:96px;height:34px;font-size:10px;padding:0 12px 2px}
 }
-
-/* мягкие эффекты */
-.title-image{
-  animation:titleGlow 4.8s ease-in-out infinite;
+.stats{
+  width:min(95%,410px);
+  height:72px;
+  margin:6px auto 0;
+  position:relative;
+  display:block;
+  background:transparent url('assets/panel_stats_main.png') center/100% 100% no-repeat;
+  border:0;
+  box-shadow:0 10px 22px rgba(47,25,7,.18);
+  border-radius:23px;
+  overflow:hidden;
 }
-@keyframes titleGlow{
-  0%,100%{filter:drop-shadow(0 4px 10px rgba(62,32,9,.25))}
-  50%{filter:drop-shadow(0 4px 18px rgba(255,210,90,.48))}
+.stat{position:absolute;top:0;width:50%;height:100%;padding:0}
+.stat:first-child{left:0}
+.stat:last-child{right:0}
+.stat .ico{display:none}
+.stat > div:last-child{position:relative;width:100%;height:100%}
+.stat strong{
+  position:absolute;
+  top:23px;
+  width:82px;
+  text-align:center;
+  display:block;
+  font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:20px;
+  font-weight:700;
+  line-height:1;
+  color:#4a2b12;
+  text-shadow:0 1px 0 rgba(255,236,181,.75);
+  letter-spacing:-.02em;
+  white-space:nowrap;
 }
-#addBtn{
-  animation:buttonBreath 2.9s ease-in-out infinite;
-}
-@keyframes buttonBreath{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.012)}
-}
-.fruit-img{
-  animation:fruitPop .34s ease-out both;
-}
-@keyframes fruitPop{
-  0%{transform:scale(.55);opacity:0}
-  70%{transform:scale(1.10);opacity:1}
-  100%{transform:scale(1);opacity:1}
-}
-.jar-card.full .jar-lid{
-  animation:lidDrop .45s ease-out both;
-}
-@keyframes lidDrop{
-  0%{transform:translateY(-24px) scale(1.08);opacity:0}
-  70%{transform:translateY(3px) scale(.98);opacity:1}
-  100%{transform:translateY(0) scale(1);opacity:1}
-}
-.basket-item img{
-  animation:basketFruitPop .42s ease-out both;
-}
-@keyframes basketFruitPop{
-  0%{transform:translateY(-18px) scale(.72);opacity:0}
-  75%{transform:translateY(2px) scale(1.08);opacity:1}
-  100%{transform:translateY(0) scale(1);opacity:1}
-}
-.app::after{
+.stat:first-child strong{left:91px}
+.stat:last-child strong{left:86px}
+.stat span{display:none}
+.stats.basket-mode::after{
   content:"";
   position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 24% 18%, rgba(255,230,130,.15), transparent 25%),
-    radial-gradient(circle at 72% 34%, rgba(255,240,170,.10), transparent 30%);
+  right:18px;
+  top:11px;
+  width:155px;
+  height:50px;
+  border-radius:14px;
+  background:rgba(255,231,181,.92);
+  z-index:1;
+}
+.stats.basket-mode .stat:last-child::before{
+  content:"";
+  position:absolute;
+  left:41px;
+  top:15px;
+  width:31px;
+  height:31px;
+  background:url('assets/fruit_strawberry.png') center/contain no-repeat;
+  z-index:3;
+}
+.stats.basket-mode .stat:last-child::after{
+  content:"плодов";
+  position:absolute;
+  left:86px;
+  top:43px;
+  width:82px;
+  text-align:center;
+  font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-size:10px;
+  font-weight:700;
+  color:#6c431f;
+  z-index:3;
+}
+.stats.basket-mode .stat:last-child strong{z-index:4;font-size:18px;top:22px;left:86px}
+.stats.basket-mode .stat:first-child strong{z-index:4}
+@media(max-width:430px){
+  .stat strong{font-size:18px;top:24px;width:76px}
+  .stat:first-child strong{left:82px}
+  .stat:last-child strong{left:78px}
+  .stats.basket-mode::after{right:16px;width:145px}
+  .stats.basket-mode .stat:last-child::before{left:35px;width:29px;height:29px}
+  .stats.basket-mode .stat:last-child strong{left:78px;font-size:16px}
+  .stats.basket-mode .stat:last-child::after{left:78px;width:76px}
+}
+
+/* мягкие эффекты */
+.title-image{animation:titleGlow 4.8s ease-in-out infinite}
+@keyframes titleGlow{0%,100%{filter:drop-shadow(0 4px 10px rgba(62,32,9,.25))}50%{filter:drop-shadow(0 4px 18px rgba(255,210,90,.48))}}
+#addBtn{animation:buttonBreath 2.9s ease-in-out infinite}
+@keyframes buttonBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
+.fruit-img{animation:fruitPop .34s ease-out both}
+@keyframes fruitPop{0%{transform:scale(.55);opacity:0}70%{transform:scale(1.10);opacity:1}100%{transform:scale(1);opacity:1}}
+.jar-card.full .jar-lid{animation:lidDrop .45s ease-out both}
+@keyframes lidDrop{0%{transform:translateY(-24px) scale(1.08);opacity:0}70%{transform:translateY(3px) scale(.98);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+.basket-item img{animation:basketFruitPop .42s ease-out both}
+@keyframes basketFruitPop{0%{transform:translateY(-18px) scale(.72);opacity:0}75%{transform:translateY(2px) scale(1.08);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+.app::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 24% 18%, rgba(255,230,130,.15), transparent 25%),radial-gradient(circle at 72% 34%, rgba(255,240,170,.10), transparent 30%);pointer-events:none;z-index:0;animation:sunFloat 7s ease-in-out infinite}
+.top,.pantry,.controls{position:relative;z-index:1}
+@keyframes sunFloat{0%,100%{opacity:.56;transform:translateY(0)}50%{opacity:.86;transform:translateY(6px)}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+
+/* === Финальная правка: статистика переписана CSS-карточками, без встроенных подписей panel_stats_main === */
+.stats{
+  width:min(95%,430px)!important;
+  height:auto!important;
+  min-height:66px!important;
+  margin:6px auto 0!important;
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  overflow:visible!important;
+}
+.stats::before,.stats::after,.stats.basket-mode::before,.stats.basket-mode::after{content:none!important;display:none!important}
+.stat,
+.stat:first-child,
+.stat:last-child{
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  width:auto!important;
+  height:66px!important;
+  padding:8px 10px!important;
+  display:grid!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:8px!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,rgba(255,242,206,.96),rgba(232,188,111,.94))!important;
+  border:1px solid rgba(90,48,18,.26)!important;
+  box-shadow:0 10px 20px rgba(47,25,7,.16), inset 0 1px 0 rgba(255,255,255,.42)!important;
+  overflow:hidden!important;
+}
+.stat .ico,
+.stats.basket-mode .stat:last-child .ico{
+  display:grid!important;
+  place-items:center!important;
+  position:relative!important;
+  left:auto!important;
+  top:auto!important;
+  width:42px!important;
+  height:42px!important;
+  z-index:2!important;
+  border-radius:15px!important;
+  background:rgba(255,248,229,.55)!important;
+  color:#5b3518!important;
+  font-size:23px!important;
+  line-height:1!important;
+  filter:drop-shadow(0 2px 2px rgba(83,43,12,.16))!important;
+}
+.stats.basket-mode .stat:last-child .ico{background:rgba(255,248,229,.55)!important}
+.stat > div:last-child{
+  position:relative!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  display:grid!important;
+  align-content:center!important;
+  justify-items:start!important;
+  gap:2px!important;
+}
+.stat strong,
+.stat:first-child strong,
+.stat:last-child strong,
+.stats.basket-mode .stat:last-child strong,
+.stats.basket-mode .stat:first-child strong{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  width:100%!important;
+  display:block!important;
+  text-align:left!important;
+  font-family:"Palatino Linotype","Book Antiqua",Georgia,serif!important;
+  font-size:clamp(18px,4.8vw,23px)!important;
+  font-weight:900!important;
+  line-height:1!important;
+  color:#4a2b12!important;
+  letter-spacing:-.03em!important;
+  white-space:nowrap!important;
+  text-shadow:0 1px 0 rgba(255,242,200,.75)!important;
+  z-index:2!important;
+}
+.stat span,
+.stat:first-child span,
+.stat:last-child span{
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  text-align:left!important;
+  color:#6c431f!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.05!important;
+  text-transform:lowercase!important;
+  z-index:2!important;
+}
+.stats.basket-mode .stat:last-child::before,
+.stats.basket-mode .stat:last-child::after{content:none!important;display:none!important}
+@media(max-width:390px){
+  .stats{gap:7px!important;width:100%!important}
+  .stat,.stat:first-child,.stat:last-child{height:62px!important;grid-template-columns:36px minmax(0,1fr)!important;gap:6px!important;padding:8px!important;border-radius:19px!important}
+  .stat .ico,.stats.basket-mode .stat:last-child .ico{width:36px!important;height:36px!important;font-size:20px!important;border-radius:13px!important}
+  .stat strong,.stat:first-child strong,.stat:last-child strong,.stats.basket-mode .stat:last-child strong{font-size:clamp(16px,4.5vw,20px)!important}
+  .stat span{font-size:10px!important}
+}
+
+/* === Финальная правка: лукошко собрано слоями — задняя корзина, фрукты, передний край === */
+.basket-wrap{min-height:455px!important;padding:4px 0 2px!important;align-items:center!important}
+.basket-stage{position:relative!important;width:min(96%,430px)!important;aspect-ratio:1/1!important;margin:0 auto!important;overflow:visible!important}
+.basket-shadow{position:absolute!important;left:12%!important;right:12%!important;bottom:8%!important;height:34px!important;border-radius:50%!important;background:rgba(48,24,8,.22)!important;filter:blur(10px)!important;z-index:1!important}
+.basket-img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;filter:drop-shadow(0 16px 20px rgba(50,25,7,.28))!important;pointer-events:none!important}
+.basket-img.back{z-index:2!important;clip-path:none!important}
+.basket-img.front{z-index:7!important;clip-path:inset(58% 0 0 0)!important}
+.basket-fruits{position:absolute!important;left:14%!important;right:14%!important;top:30%!important;height:31%!important;z-index:5!important;pointer-events:none!important;overflow:hidden!important;clip-path:ellipse(50% 58% at 50% 62%)!important}
+.basket-item{position:absolute!important;display:grid!important;place-items:center!important;transform-origin:center center!important}
+.basket-item img{width:100%!important;height:100%!important;object-fit:contain!important;filter:drop-shadow(0 2px 2px rgba(44,22,7,.24))!important}
+@media(max-width:390px){
+  .basket-wrap{min-height:405px!important}
+  .basket-stage{width:100%!important}
+  .basket-fruits{left:13%!important;right:13%!important;top:31%!important;height:30%!important}
+}
+
+
+/* === Правка 2: финальные визуальные исправления по замечаниям === */
+.switch-note{display:block!important}
+.stats .stat.stitches .ico,
+.stats .stat.right .ico{background:rgba(255,248,229,.72)!important}
+.stats .stat.stitches .ico::before,
+.stats .stat.stitches .ico::after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  width:24px; height:3px;
+  border-radius:999px;
+  background:#734420;
+  transform-origin:center center;
+}
+.stats .stat.stitches .ico::before{transform:translate(-50%,-50%) rotate(45deg)}
+.stats .stat.stitches .ico::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.stats .stat.right.jar .ico::before{
+  content:"";
+  position:absolute; left:50%; top:52%;
+  width:18px; height:20px;
+  transform:translate(-50%,-50%);
+  border:3px solid #734420;
+  border-top-width:4px;
+  border-radius:3px 3px 6px 6px;
+  box-sizing:border-box;
+}
+.stats .stat.right.jar .ico::after{
+  content:"";
+  position:absolute; left:50%; top:15px;
+  width:14px; height:4px;
+  transform:translateX(-50%);
+  background:#734420; border-radius:999px;
+}
+.stats .stat.right.fruit .ico{background:rgba(255,248,229,.72) url('assets/fruit_strawberry.png') center/24px 24px no-repeat!important}
+.stats .stat.right.fruit .ico::before,
+.stats .stat.right.fruit .ico::after{display:none!important}
+.worm-bar{height:42px!important}
+.worm-inner{left:9.2%!important; right:10.4%!important; top:24.5%!important; height:62%!important; border-radius:999px!important}
+.worm-fill{background-size:cover!important; background-repeat:no-repeat!important; background-position:left center!important}
+.basket-fruits{left:7%!important; right:7%!important; top:38%!important; height:28%!important; clip-path:ellipse(50% 54% at 50% 58%)!important}
+.result-item{font-size:14px!important; line-height:1.25!important}
+.sheet-actions button{
+  min-height:52px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(110,65,22,.22)!important;
+  box-shadow:0 8px 16px rgba(58,31,10,.14), inset 0 1px 0 rgba(255,255,255,.35)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:900!important;
+}
+.sheet-actions button:not(.ghost):not(.danger):not(.secondary){
+  background:linear-gradient(180deg,#89ba3b,#5e8f25)!important;
+  color:#fff4d1!important;
+  text-shadow:0 2px 0 rgba(54,87,19,.45)!important;
+}
+.sheet-actions .ghost{
+  background:linear-gradient(180deg,#fff0c8,#efd8a2)!important;
+  color:#5a3316!important;
+  text-shadow:none!important;
+}
+#addHelp{display:block!important}
+@media(max-width:390px){
+  .basket-fruits{left:6%!important; right:6%!important; top:39%!important; height:28%!important}
+}
+
+
+/* === Правка 3: лукошко заполняется выше и шире === */
+.basket-wrap{min-height:470px!important}
+.basket-stage{width:min(97%,440px)!important}
+.basket-img.front{clip-path:inset(53% 0 0 0)!important}
+.basket-fruits{
+  left:8%!important;
+  right:8%!important;
+  top:27%!important;
+  height:40%!important;
+  clip-path:ellipse(50% 60% at 50% 61%)!important;
+}
+@media(max-width:390px){
+  .basket-fruits{left:7%!important; right:7%!important; top:28%!important; height:39%!important}
+}
+
+
+/* === Правка 4: плоды укладываются в овальную чашу лукошка === */
+.basket-wrap{min-height:468px!important}
+.basket-stage{width:min(97%,438px)!important}
+.basket-img.front{clip-path:inset(55.5% 0 0 0)!important}
+.basket-fruits{
+  left:10.5%!important;
+  right:10.5%!important;
+  top:31%!important;
+  height:34.5%!important;
+  clip-path:ellipse(50% 63% at 50% 67%)!important;
+}
+@media(max-width:390px){
+  .basket-fruits{left:10%!important; right:10%!important; top:31.5%!important; height:34%!important}
+}
+
+
+/* === Правка 5: лукошко не полоской, а овальной горкой === */
+.basket-wrap{min-height:468px!important}
+.basket-stage{width:min(97%,438px)!important}
+.basket-img.front{clip-path:inset(65% 0 0 0)!important}
+.basket-fruits{
+  left:10.5%!important;
+  right:10.5%!important;
+  top:33%!important;
+  height:37%!important;
+  clip-path:ellipse(50% 61% at 50% 66%)!important;
+}
+@media(max-width:390px){
+  .basket-fruits{left:10%!important; right:10%!important; top:33.5%!important; height:36.5%!important}
+}
+
+
+/* === Правка 6: возвращаем удачный полукруг и опускаем его внутрь лукошка === */
+.basket-wrap{min-height:462px!important}
+.basket-stage{width:min(96%,430px)!important;aspect-ratio:1/0.84!important}
+.basket-img.back{z-index:2!important;clip-path:none!important}
+.basket-img.front{display:none!important}
+.basket-fruits{
+  left:13%!important;
+  right:13%!important;
+  top:39%!important;
+  height:35.5%!important;
+  z-index:6!important;
+  overflow:visible!important;
+  clip-path:ellipse(49% 52% at 50% 56%)!important;
+}
+@media(max-width:390px){
+  .basket-wrap{min-height:430px!important}
+  .basket-stage{width:96%!important}
+  .basket-fruits{left:13%!important;right:13%!important;top:39.5%!important;height:35%!important}
+}
+
+
+/* === Правка 7: убрана табличка на лукошке, фрукты возвращены в чашу === */
+.stats.basket-mode + .switch-note{display:none!important}
+.basket-stage{width:min(96%,430px)!important;aspect-ratio:1/0.84!important}
+.basket-img.front{display:block!important;z-index:7!important;clip-path:inset(68% 0 0 0)!important}
+.basket-fruits{
+  left:13%!important;
+  right:13%!important;
+  top:35.8%!important;
+  height:36%!important;
+  z-index:6!important;
+  overflow:visible!important;
+  clip-path:ellipse(49% 54% at 50% 58%)!important;
+}
+@media(max-width:390px){
+  .basket-fruits{left:13%!important;right:13%!important;top:36.2%!important;height:35.5%!important}
+}
+
+
+/* === Rev8: другой вариант лукошка — декоративная кучка урожая вместо 100 отдельных плодов === */
+.basket-stage{width:min(96%,430px)!important;aspect-ratio:1/1!important;margin:0 auto!important}
+.basket-img{inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important}
+.basket-img.front{display:block!important;z-index:7!important;clip-path:inset(57.5% 0 0 0)!important}
+.basket-fruits{display:none!important}
+.basket-pile{
+  position:absolute;
+  left:13.5%;
+  top:52.5%;
+  width:73%;
+  height:auto;
+  z-index:6;
+  transform:translateY(-50%);
+  filter:drop-shadow(0 4px 4px rgba(45,22,7,.28));
   pointer-events:none;
-  z-index:0;
-  animation:sunFloat 7s ease-in-out infinite;
 }
-@keyframes sunFloat{
-  0%,100%{opacity:.56;transform:translateY(0)}
-  50%{opacity:.86;transform:translateY(6px)}
+@media(max-width:390px){
+  .basket-pile{left:13%;top:53%;width:74%}
 }
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
+
+
+/* === Rev9: значения из калибратора лукошка === */
+.app{width:min(100vw,484px)!important;}
+.stats.basket-mode + .switch-note{display:none!important;}
+.basket-wrap{min-height:455px!important;padding:4px 0 2px!important;}
+.basket-stage{
+  width:97%!important;
+  aspect-ratio:1/1!important;
+  margin:0 auto!important;
+  overflow:visible!important;
+  transform:translateY(82px) scale(1.03)!important;
+  transform-origin:center center!important;
 }
+.basket-img{inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;pointer-events:none!important;}
+.basket-img.back{display:block!important;z-index:2!important;clip-path:none!important;}
+.basket-img.front{display:block!important;z-index:7!important;clip-path:inset(75% 0 0 0)!important;}
+.basket-fruits{
+  display:block!important;
+  position:absolute!important;
+  left:1%!important;
+  top:18.5%!important;
+  width:98%!important;
+  height:47.5%!important;
+  right:auto!important;
+  z-index:5!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  clip-path:ellipse(41.5% 44.5% at 50.5% 56%)!important;
+}
+.basket-pile{display:none!important;}
+@media(max-width:390px){
+  .app{width:min(100vw,484px)!important;}
+  .basket-stage{width:97%!important;transform:translateY(82px) scale(1.03)!important;}
+  .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(41.5% 44.5% at 50.5% 56%)!important;}
+}
+
+
+/* === Стартовый экран === */
+.intro-modal{align-items:center!important;padding:16px!important;background:rgba(48,25,7,.58)!important;backdrop-filter:blur(2px)}
+.intro-card{
+  width:min(100%,500px);
+  border-radius:30px;
+  padding:20px 18px 18px;
+  background:linear-gradient(180deg,#fff1ca,#f4d28c 68%,#e6b66c);
+  border:2px solid rgba(114,63,20,.34);
+  box-shadow:0 22px 55px rgba(32,18,6,.42), inset 0 1px 0 rgba(255,255,255,.5);
+  color:#563114;
+}
+.intro-card h1{
+  margin:0 0 8px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(27px,7vw,36px);
+  line-height:1.05;
+  color:#4d2a0f;
+  text-shadow:0 1px 0 rgba(255,241,196,.85);
+}
+.intro-card .intro-lead{
+  margin:0 0 12px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(17px,4.5vw,21px);
+  line-height:1.25;
+  font-weight:900;
+  color:#6a3d18;
+}
+.intro-list{display:grid;gap:8px;margin:14px 0}
+.intro-item{
+  display:grid;
+  grid-template-columns:34px 1fr;
+  gap:9px;
+  align-items:start;
+  padding:10px 11px;
+  border-radius:18px;
+  background:rgba(255,250,232,.55);
+  border:1px solid rgba(109,63,22,.15);
+  font-weight:800;
+  line-height:1.28;
+}
+.intro-item b{color:#4e2b11}
+.intro-ico{font-size:24px;line-height:1;text-align:center;filter:drop-shadow(0 2px 2px rgba(80,42,12,.14))}
+.intro-save{
+  margin:10px 0 14px;
+  padding:11px 12px;
+  border-radius:18px;
+  background:rgba(126,77,25,.12);
+  border:1px solid rgba(102,58,20,.18);
+  font-size:14px;
+  line-height:1.35;
+  font-weight:850;
+  color:#5b371b;
+}
+.intro-video-note{margin-top:9px;padding:10px 12px;border-radius:15px;background:rgba(255,247,221,.58);border:1px dashed rgba(111,69,27,.34);color:#6a4424;font-size:13px;font-weight:850;line-height:1.28}.intro-video-link{display:none!important}.intro-video-link.show{display:block!important}
+.intro-actions{display:grid;gap:9px;margin-top:12px}
+.intro-actions button{font-size:20px!important;min-height:54px!important;font-family:Georgia,"Times New Roman",serif!important}
+.intro-actions .ghost{background:rgba(255,247,221,.55)!important}
+
+
+/* === rev12: отчёт от 500 до 1000 крестиков, шкала убрана === */
+.worm-note,.worm-bar{display:none!important}
+#addHelp{
+  display:block!important;
+  margin:0 0 12px!important;
+  padding:10px 12px!important;
+  border-radius:15px!important;
+  background:rgba(255,255,255,.34)!important;
+  color:#6a4424!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  line-height:1.28!important;
+}
+
+
+/* === rev16: компактные правила и чистый отчёт === */
+.intro-modal{align-items:center!important;padding:10px!important;overflow:auto!important}
+.intro-card{padding:14px 14px 13px!important;border-radius:24px!important;max-height:96vh!important;overflow:auto!important;width:min(100%,484px)!important}
+.intro-card h1{font-size:clamp(24px,6.4vw,32px)!important;margin-bottom:6px!important}
+.intro-card .intro-lead{font-size:clamp(15px,4vw,18px)!important;line-height:1.18!important;margin-bottom:8px!important}
+.intro-list{gap:6px!important;margin:8px 0!important}
+.intro-item{grid-template-columns:28px 1fr!important;gap:8px!important;padding:7px 9px!important;border-radius:14px!important;font-size:13px!important;line-height:1.18!important}
+.intro-ico{font-size:21px!important}
+.intro-save{margin:8px 0 9px!important;padding:8px 10px!important;border-radius:14px!important;font-size:12px!important;line-height:1.22!important}
+.intro-video-note{display:none!important}
+.intro-actions{gap:7px!important;margin-top:8px!important}
+.intro-actions button{min-height:47px!important;font-size:18px!important}
+@media(max-width:390px){.intro-item{font-size:12.4px!important}.intro-card{padding:12px!important}}
+
+
+/* === Правка 17: иконка банки и понятные результаты добавления === */
+.stats .stat.right.jar .ico{
+  background:rgba(255,248,229,.72) url('assets/jar_open_clean.png') center/24px 34px no-repeat!important;
+}
+.stats .stat.right.jar .ico::before,
+.stats .stat.right.jar .ico::after{content:none!important;display:none!important}
+.result-item{font-size:15px!important}
+
+
+
+/* === Правка 18: красивый результат без технических строк === */
+.result-list{gap:8px!important}
+.result-item{font-size:15px!important;line-height:1.25!important}
+.result-fruit-row{
+  border-radius:16px;
+  background:rgba(255,255,255,.42);
+  padding:10px 10px;
+  display:grid;
+  gap:8px;
+  color:#5c3517;
+  font-weight:900;
+}
+.result-fruit-title{font-size:15px}
+.result-fruit-chips{display:flex;flex-wrap:wrap;gap:7px}
+.result-fruit-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:34px;
+  padding:5px 9px 5px 6px;
+  border-radius:999px;
+  background:rgba(255,247,220,.78);
+  border:1px solid rgba(111,65,23,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45);
+  white-space:nowrap;
+}
+.result-fruit-chip img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 2px rgba(75,39,12,.2));
+}
+.result-jar-chip img{width:22px;height:30px}
+
+
+
+/* === Правка 19: объемные кнопки в модальных окнах без картинок === */
+.sheet-actions button,
+.intro-actions button{
+  position:relative!important;
+  overflow:hidden!important;
+  min-height:54px!important;
+  border-radius:18px!important;
+  border:2px solid rgba(93,45,10,.45)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  letter-spacing:.1px!important;
+  box-shadow:
+    0 9px 0 rgba(78,39,10,.30),
+    0 13px 22px rgba(45,22,6,.22),
+    inset 0 2px 0 rgba(255,244,188,.55),
+    inset 0 -4px 0 rgba(65,31,7,.22)!important;
+  text-shadow:0 2px 0 rgba(63,34,10,.35)!important;
+}
+.sheet-actions button::before,
+.intro-actions button::before{
+  content:"";
+  position:absolute;
+  left:8px; right:8px; top:5px;
+  height:42%;
+  border-radius:16px 16px 10px 10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.06));
+  pointer-events:none;
+}
+.sheet-actions button:active,
+.intro-actions button:active{
+  transform:translateY(3px) scale(.995)!important;
+  box-shadow:
+    0 4px 0 rgba(78,39,10,.28),
+    0 8px 14px rgba(45,22,6,.18),
+    inset 0 2px 0 rgba(255,244,188,.45),
+    inset 0 -3px 0 rgba(65,31,7,.20)!important;
+}
+.sheet-actions button:not(.ghost):not(.danger):not(.secondary),
+.intro-actions button:not(.ghost):not(.danger):not(.secondary){
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,245,155,.35),transparent 30%),
+    linear-gradient(180deg,#93c84a 0%,#73ad2e 47%,#4f8420 100%)!important;
+  color:#fff4c9!important;
+  border-color:#6c8c21!important;
+}
+.sheet-actions .secondary,
+.intro-actions .secondary{
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,236,151,.32),transparent 32%),
+    linear-gradient(180deg,#b97835 0%,#95541e 48%,#673512 100%)!important;
+  color:#ffedbd!important;
+  border-color:#8a4b18!important;
+  text-shadow:0 2px 0 rgba(54,28,8,.55)!important;
+}
+.sheet-actions .ghost,
+.intro-actions .ghost{
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,255,255,.45),transparent 30%),
+    linear-gradient(180deg,#fff1c8 0%,#edd094 52%,#d8aa5e 100%)!important;
+  color:#5d3517!important;
+  border-color:#bd8241!important;
+  text-shadow:0 1px 0 rgba(255,242,198,.65)!important;
+}
+.sheet-actions .danger,
+.intro-actions .danger{
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,210,155,.30),transparent 32%),
+    linear-gradient(180deg,#c65f36 0%,#9b3f22 50%,#6d2415 100%)!important;
+  color:#fff0cf!important;
+  border-color:#8f341c!important;
+}
+
+
+
+/* === Правка 20: модальные кнопки ближе к кнопкам главного экрана === */
+.sheet-actions button,
+.intro-actions button{
+  min-height:50px!important;
+  border-radius:15px!important;
+  padding:10px 14px 12px!important;
+  border:2px solid #d49a43!important;
+  outline:1px solid rgba(79,38,9,.34)!important;
+  outline-offset:-5px!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:17px!important;
+  font-weight:900!important;
+  letter-spacing:.05px!important;
+  box-shadow:
+    0 4px 0 rgba(81,40,9,.42),
+    0 9px 14px rgba(48,24,6,.18),
+    inset 0 1px 0 rgba(255,231,142,.48),
+    inset 0 -3px 0 rgba(57,25,6,.28)!important;
+  text-shadow:0 2px 0 rgba(54,27,8,.55)!important;
+}
+.sheet-actions button::before,
+.intro-actions button::before{
+  left:10px!important;
+  right:10px!important;
+  top:5px!important;
+  height:28%!important;
+  border-radius:12px 12px 7px 7px!important;
+  background:linear-gradient(180deg,rgba(255,239,156,.42),rgba(255,255,255,.08))!important;
+}
+.sheet-actions button::after,
+.intro-actions button::after{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:11px;
+  border:1px solid rgba(255,224,126,.28);
+  box-shadow:inset 0 0 0 1px rgba(74,33,8,.16);
+  pointer-events:none;
+}
+.sheet-actions button:not(.ghost):not(.danger):not(.secondary),
+.intro-actions button:not(.ghost):not(.danger):not(.secondary){
+  background:
+    linear-gradient(180deg,rgba(255,236,129,.18) 0%,rgba(255,236,129,0) 38%),
+    linear-gradient(180deg,#7fb238 0%,#5d9827 48%,#3f7418 100%)!important;
+  color:#fff1bc!important;
+  border-color:#cfa247!important;
+}
+.sheet-actions .secondary,
+.intro-actions .secondary{
+  background:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  color:#ffe6ad!important;
+  border-color:#d69a42!important;
+}
+.sheet-actions .ghost,
+.intro-actions .ghost{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,0) 42%),
+    linear-gradient(180deg,#fff0c1 0%,#edcf89 54%,#c88e44 100%)!important;
+  color:#613411!important;
+  border-color:#d6a24d!important;
+  text-shadow:0 1px 0 rgba(255,243,202,.8)!important;
+}
+.sheet-actions .danger,
+.intro-actions .danger{
+  background:
+    linear-gradient(180deg,rgba(255,207,129,.14) 0%,rgba(255,207,129,0) 40%),
+    linear-gradient(180deg,#ad5130 0%,#873119 51%,#5f1e10 100%)!important;
+  color:#ffe7bd!important;
+  border-color:#d18a3b!important;
+}
+.sheet-actions button:active,
+.intro-actions button:active{
+  transform:translateY(2px) scale(.997)!important;
+  box-shadow:
+    0 2px 0 rgba(81,40,9,.38),
+    0 5px 10px rgba(48,24,6,.16),
+    inset 0 1px 0 rgba(255,231,142,.38),
+    inset 0 -2px 0 rgba(57,25,6,.25)!important;
+}
+
+
+/* === rev23: правила без эмодзи-иконок === */
+.intro-card h1{padding-left:0!important}
+.intro-ico{
+  width:25px!important;
+  height:25px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(circle at 34% 25%, rgba(255,242,177,.9), rgba(214,151,54,.72) 42%, rgba(107,66,20,.96) 100%)!important;
+  border:1px solid rgba(80,42,11,.52)!important;
+  color:#fff4c4!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  text-shadow:0 1px 1px rgba(54,28,8,.65)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 0 2px 4px rgba(65,35,12,.16)!important;
+  filter:none!important;
+}
+.intro-item{grid-template-columns:30px 1fr!important}
+@media(max-width:390px){.intro-ico{width:23px!important;height:23px!important;font-size:14px!important}.intro-item{grid-template-columns:28px 1fr!important}}
 
 </style>
 </head>
@@ -257,8 +1037,8 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
     <div class="subtitle" id="subtitle" style="display:none">Урожай Вупсильды</div>
     <div class="stage-chip" id="stageChip" style="display:none">Основной урожай</div>
     <div class="stats">
-      <div class="stat"><div class="ico">✕</div><div><strong id="stitchesStat">0</strong><span>крестиков</span></div></div>
-      <div class="stat"><div class="ico" id="rightIcon">🫙</div><div><strong id="rightStat">0/8</strong><span id="rightLabel">банок</span></div></div>
+      <div class="stat stitches"><div class="ico" aria-hidden="true"></div><div><strong id="stitchesStat">0</strong><span>крестиков</span></div></div>
+      <div class="stat right jar"><div class="ico" id="rightIcon" aria-hidden="true"></div><div><strong id="rightStat">0/8</strong><span id="rightLabel">банок</span></div></div>
     </div>
     <div class="switch-note" id="switchNote">После 8/8 откроется Лукошко Вупсильды.</div>
   </section>
@@ -279,16 +1059,39 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   </section>
 </main>
 
-<div class="modal" id="addModal"><div class="sheet"><h2>Добавить крестики</h2><p id="addHelp">За каждые 500 крестиков Вупсильда выдаёт случайный плод. Иногда гусеницы могут утащить 100 крестиков.</p><label>Новые крестики<input id="addInput" inputmode="numeric" placeholder="например, 700"></label><div class="sheet-actions"><button id="confirmAdd">Добавить</button><button class="ghost" id="closeAdd">Отмена</button></div></div></div>
-<div class="modal" id="resultModal"><div class="sheet"><h2 id="resultTitle">Готово</h2><p id="resultText"></p><div class="result-list" id="resultList"></div><div class="sheet-actions"><button id="closeResult">Понятно</button></div></div></div>
-<div class="modal" id="manageModal"><div class="sheet"><h2>Управление прогрессом</h2><p>Прогресс хранится только в этом браузере. Код нужен, чтобы перенести или восстановить игру.</p><label>Код сохранения<textarea id="saveCode" readonly></textarea></label><div class="sheet-actions"><button id="copyCode">Скопировать код</button><button class="secondary" id="importCodeBtn">Восстановить из кода</button><button class="danger" id="resetBtn">Сбросить прогресс</button><button class="ghost" id="closeManage">Закрыть</button></div></div></div>
+<div class="modal intro-modal" id="introModal" aria-modal="true" role="dialog">
+  <div class="intro-card">
+    <h1>Зимний сад 2</h1>
+    <p class="intro-lead">В зимнем саду начинается сезон заготовок: вышивай крестики, собирай плоды и закрывай волшебные баночки.</p>
+    <div class="intro-list">
+      <div class="intro-item"><div class="intro-ico">1</div><div><b>Цель — заполнить 8 банок.</b><br>В каждой банке нужно собрать 6 плодов.</div></div>
+      <div class="intro-item"><div class="intro-ico">2</div><div><b>1 плод = 500 крестиков.</b><br>За один отчёт принимается от 500 до 1000 крестиков. Всё свыше 1000 сгорает.</div></div>
+      <div class="intro-item"><div class="intro-ico">3</div><div><b>Вупсильда может съесть 100 крестиков.</b><br>Плод считается уже после её шалости.</div></div>
+      <div class="intro-item"><div class="intro-ico">4</div><div><b>Вупсент может пробраться к полочкам.</b><br>Он может разбить банку с небольшим запасом, и её придётся собирать заново.</div></div>
+      <div class="intro-item"><div class="intro-ico">5</div><div><b>После 8/8 откроется Лукошко Вупсильды.</b><br>Повышенный уровень сложности для самых быстрых вышивальщиц.</div></div>
+      <div class="intro-item"><div class="intro-ico">6</div><div><b>Отчёты отправляем в чат.</b><br>Позже здесь можно будет открыть видеоинструкцию.</div></div>
+    </div>
+    <div class="intro-save">Прогресс сохраняется в этом браузере автоматически. Для переноса на другое устройство сохрани код в «Управление прогрессом».</div>
+    <div class="intro-actions">
+      <button id="introStartBtn">Начать игру</button>
+      <button class="secondary intro-video-link" id="introVideoBtn">Видеоинструкция</button>
+      <button class="ghost" id="introProgressBtn">У меня уже есть код</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="addModal"><div class="sheet"><h2>Добавить крестики</h2><p id="addHelp">Введите от 500 до 1000 крестиков за отчёт. Если указать больше 1000, излишек не переносится.</p><label>Новые крестики<input id="addInput" inputmode="numeric" placeholder="например, 700"></label><div class="sheet-actions"><button id="confirmAdd">Добавить</button><button class="ghost" id="closeAdd">Отмена</button></div></div></div>
+<div class="modal" id="resultModal"><div class="sheet"><img id="resultEventImage" class="result-event-image" src="" alt=""><h2 id="resultTitle">Готово</h2><p id="resultText"></p><div class="result-list" id="resultList"></div><div class="sheet-actions"><button id="closeResult">Понятно</button></div></div></div>
+<div class="modal" id="manageModal"><div class="sheet"><h2>Управление прогрессом</h2><p>Прогресс хранится только в этом браузере. Код нужен, чтобы перенести или восстановить игру.</p><label>Код сохранения<textarea id="saveCode" readonly></textarea></label><div class="sheet-actions"><button id="copyCode">Скопировать код</button><button class="secondary" id="importCodeBtn">Восстановить из кода</button><button class="secondary" id="rulesBtn">Правила игры</button><button class="danger" id="resetBtn">Сбросить прогресс</button><button class="ghost" id="closeManage">Закрыть</button></div></div></div>
 <div class="modal" id="hashtagModal"><div class="sheet"><h2>Хэштег для отчёта</h2><p>Этот хэштег будет автоматически подставляться в текст отчёта.</p><label>Хэштег<input id="hashtagInput" placeholder="#зимнийсад2"></label><div class="sheet-actions"><button id="saveHashtag">Сохранить</button><button class="ghost" id="closeHashtag">Отмена</button></div></div></div>
 <div class="modal" id="reportModal"><div class="sheet"><h2>Отчёт</h2><p>Скопируй текст отчёта и прикрепи фото вышивки в чат.</p><label>Текст отчёта<textarea id="reportOutput" readonly></textarea></label><div class="sheet-actions"><button id="copyReport">Скопировать отчёт</button><button class="ghost" id="closeReport">Закрыть</button></div></div></div>
 <div class="toast" id="toast">Готово</div>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 (function(){
-const STORAGE_KEY='winterGarden2BasketDraftV1', TARGET=6, STEP=500, MAIN_LIMIT=48, BASKET_LIMIT=100, STEAL_CHANCE=.05, STEAL=100;
+const STORAGE_KEY='winterGarden2BasketDraftV1', INTRO_KEY='winterGarden2IntroSeenV1', TARGET=6, STEP=500, MAIN_LIMIT=48, BASKET_LIMIT=100, STEAL_CHANCE=.20, STEAL=100, STEAL_PROTECTED_ADDS=2, VUPSENT_BREAK_LIMIT=2, VUPSENT_MAX_FRUITS=4, VUPSENT_BREAK_MILESTONES=[8,24];
+const VIDEO_GUIDE_URL=''; // сюда потом можно вставить ссылку на видеоинструкцию в облаке
 const MAIN=[
  {key:'apple',name:'яблоко',img:'fruit_apple.png'},
  {key:'strawberry',name:'клубника',img:'fruit_strawberry.png'},
@@ -307,6 +1110,81 @@ const BASKET=[
  {key:'chanterelle',name:'лисичка',img:'bonus_chanterelle.png'},
  {key:'mushroom',name:'гриб',img:'bonus_mushroom.png'}
 ];
+const BASKET_TUNE={gameW:484,stageWidth:97,basketY:82,basketScale:1.03,fruitLeft:1,fruitTop:18.5,fruitWidth:98,fruitHeight:47.5,ovalW:41.5,ovalH:44.5,ovalX:50.5,ovalY:56,frontClip:75,count:100,visibleMax:100,yShift:0,xShift:0,spreadScale:1.07,rowGapScale:1.18,sizeScale:1.24,rotation:35,jitterX:5.8,jitterY:4.5};
+const CROP_EMOJI={apple:'🍎',strawberry:'🍓',cherry:'🍒',raspberry:'🍇',cucumber:'🥒',tomato:'🍅',chili:'🌶️',garlic:'🧄',pear:'🍐',blueberry:'🫐',plum:'🟣',apricot:'🍑',chanterelle:'🍄',mushroom:'🍄'};
+function cropEmojiByName(name){
+  const all=[...MAIN,...BASKET];
+  const found=all.find(c=>c.name===name);
+  return found ? (CROP_EMOJI[found.key]||'🍓') : '🍓';
+}
+
+function resultCrop(r){
+  if(r&&r.crop) return r.crop;
+  if(r&&r.name){
+    return [...MAIN,...BASKET].find(c=>c.name===r.name) || {name:r.name,img:''};
+  }
+  return {name:'плод',img:''};
+}
+function summarizeResultFruits(results, type){
+  const counts={};
+  (results||[]).filter(r=>r.type===type).forEach(r=>{
+    const crop=resultCrop(r);
+    const key=crop.name;
+    if(!counts[key])counts[key]={name:crop.name,img:crop.img,emoji:cropEmojiByName(crop.name),count:0};
+    counts[key].count++;
+  });
+  return Object.values(counts);
+}
+function fruitRow(title, fruits){
+  if(!fruits||!fruits.length)return;
+  const row=document.createElement('div');
+  row.className='result-fruit-row';
+  const t=document.createElement('div');
+  t.className='result-fruit-title';
+  t.textContent=title;
+  const chips=document.createElement('div');
+  chips.className='result-fruit-chips';
+  fruits.forEach(f=>{
+    const chip=document.createElement('span');
+    chip.className='result-fruit-chip';
+    if(f.img){
+      const img=document.createElement('img');
+      img.src='assets/'+f.img;
+      img.alt=f.name;
+      chip.append(img);
+    }
+    const label=document.createElement('span');
+    label.textContent=`${f.name} ×${f.count}`;
+    chip.append(label);
+    chips.append(chip);
+  });
+  row.append(t,chips);
+  els.resultList.append(row);
+}
+function jarRow(title, names){
+  if(!names||!names.length)return;
+  const row=document.createElement('div');
+  row.className='result-fruit-row';
+  const t=document.createElement('div');
+  t.className='result-fruit-title';
+  t.textContent=title;
+  const chips=document.createElement('div');
+  chips.className='result-fruit-chips';
+  names.forEach(name=>{
+    const chip=document.createElement('span');
+    chip.className='result-fruit-chip result-jar-chip';
+    const img=document.createElement('img');
+    img.src='assets/jar_open_clean.png';
+    img.alt='банка';
+    const label=document.createElement('span');
+    label.textContent=name;
+    chip.append(img,label);
+    chips.append(chip);
+  });
+  row.append(t,chips);
+  els.resultList.append(row);
+}
+
 function getBasketLayers(count) {
   if (count <= 0) return [];
 
@@ -370,22 +1248,26 @@ function seededOffset(index, salt, range) {
 }
 
 function basketPos(index, totalCount){
+  const tune=BASKET_TUNE;
   const layers = getBasketLayers(totalCount);
   let passed = 0;
+  const centerY=86;
 
   for (let rowIndex = 0; rowIndex < layers.length; rowIndex++) {
     const layer = layers[rowIndex];
 
     if (index < passed + layer.n) {
       const local = index - passed;
+      const spread = layer.spread * tune.spreadScale;
       const xBase = layer.n === 1
         ? 50
-        : 50 - layer.spread / 2 + (layer.spread / (layer.n - 1)) * local;
+        : 50 - spread / 2 + (spread / (layer.n - 1)) * local;
+      const yBase = centerY + (layer.y - centerY) * tune.rowGapScale;
 
-      const x = xBase + seededOffset(index, 1, 3);
-      const y = layer.y + seededOffset(index, 2, 2);
+      const x = xBase + tune.xShift + seededOffset(index, 1, tune.jitterX);
+      const y = yBase + tune.yShift + seededOffset(index, 2, tune.jitterY);
       const scale = 1 + seededOffset(index, 3, 0.08);
-      const rot = seededOffset(index, 4, 18);
+      const rot = seededOffset(index, 4, tune.rotation);
       const layerName = rowIndex <= 1 ? 'front' : rowIndex <= 3 ? 'mid' : 'back';
 
       return {
@@ -394,20 +1276,21 @@ function basketPos(index, totalCount){
         scale,
         rot,
         layer: layerName,
-        size: layer.size * scale
+        size: layer.size * scale * tune.sizeScale
       };
     }
 
     passed += layer.n;
   }
 
-  return { x: 50, y: 50, scale: 1, rot: 0, layer: 'mid', size: 36 };
+  return { x: 50, y: 50, scale: 1, rot: 0, layer: 'mid', size: 36 * BASKET_TUNE.sizeScale };
 }
+
 const e=id=>document.getElementById(id);
-const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp')};
-function def(){return {stitches:0,drops:0,basketOpened:false,hashtag:'',main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[]}}
+const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultEventImage:e('resultEventImage'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp'),introModal:e('introModal'),introStart:e('introStartBtn'),introProgress:e('introProgressBtn'),introVideo:e('introVideoBtn'),rulesBtn:e('rulesBtn')};
+function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[]}}
 let state=load();
-function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();return {...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[]}}}catch{}return def()}
+function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[]};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function normalizeHashtag(v){
   let txt=String(v||"").trim();
@@ -421,60 +1304,102 @@ function basketDone(){return state.basket.length>=BASKET_LIMIT}
 function view(){return state.basketOpened?'basket':'main'}
 function availableMain(){return MAIN.filter(c=>(state.main[c.key]||0)<TARGET)}
 function randomFrom(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function fruitWord(n){n=Math.abs(Number(n)||0);const last=n%10,last2=n%100;if(last===1&&last2!==11)return 'плод';if(last>=2&&last<=4&&(last2<12||last2>14))return 'плода';return 'плодов'}
 function targetDrops(){return Math.floor(state.stitches/STEP)}
-function applyDrops(){
+function eligibleBreakJars(){return MAIN.filter(c=>{const n=state.main[c.key]||0; return n>0 && n<=VUPSENT_MAX_FRUITS;})}
+function maybeVupsentBreak(projectedDrops=Number(state.drops)||0){
+  if(state.basketOpened || mainDone() || state.brokenByVupsent>=VUPSENT_BREAK_LIMIT) return null;
+  const brokenCount=Number(state.brokenByVupsent)||0;
+  const milestone=VUPSENT_BREAK_MILESTONES[brokenCount]||9999;
+  if(projectedDrops<milestone) return null;
+  const pool=eligibleBreakJars();
+  if(!pool.length) return null;
+  const victim=randomFrom(pool);
+  const lost=state.main[victim.key]||0;
+  if(!lost) return null;
+  state.main[victim.key]=0;
+  state.brokenByVupsent=brokenCount+1;
+  return {crop:victim,lost};
+}
+
+function applyDrops(extraDrops=0, blockedMainKey=null){
   let results=[], closed=[], unlocked=false;
-  let neededMain=Math.min(targetDrops(),MAIN_LIMIT)-sumMain();
-  while(neededMain>0){
-    let pool=availableMain(); if(!pool.length)break;
-    let c=randomFrom(pool); state.main[c.key]++; results.push({type:'main',crop:c,count:state.main[c.key]});
-    if(state.main[c.key]===TARGET)closed.push(c);
-    neededMain--;
-    if(mainDone()) unlocked=true;
-  }
-  if(state.basketOpened){
-    let neededBasket=Math.min(Math.max(targetDrops()-MAIN_LIMIT,0),BASKET_LIMIT)-state.basket.length;
-    while(neededBasket>0){
+  let toAdd=Math.max(0, Math.floor(Number(extraDrops)||0));
+
+  while(toAdd>0){
+    if(!mainDone()){
+      let pool=availableMain().filter(c=>c.key!==blockedMainKey);
+      if(!pool.length) pool=availableMain();
+      if(!pool.length)break;
+      let c=randomFrom(pool);
+      state.main[c.key]++;
+      state.drops=(Number(state.drops)||0)+1;
+      results.push({type:'main',crop:c,count:state.main[c.key]});
+      if(state.main[c.key]===TARGET)closed.push(c);
+      if(mainDone())unlocked=true;
+      toAdd--;
+      continue;
+    }
+
+    if(state.basketOpened && !basketDone()){
       let c=randomFrom(BASKET);
       state.basket.push(c.key);
+      state.drops=(Number(state.drops)||0)+1;
       results.push({type:'basket',crop:c,count:state.basket.length});
-      neededBasket--;
+      toAdd--;
+      continue;
     }
+
+    break;
   }
   return {results,closed,unlocked};
 }
+
 function render(){
   els.pantry.innerHTML='';
   els.stitches.textContent=state.stitches;
+  const statsBox=document.querySelector('.stats');
+  const rightStatBox=statsBox.querySelector('.stat.right');
+  statsBox.classList.toggle('basket-mode', view()==='basket');
+  rightStatBox.classList.remove('jar','fruit');
+
   if(view()==='main'){
     els.subtitle.textContent='Урожай Вупсильды';
     els.stage.textContent=mainDone()?'Основной урожай собран':'Основной урожай';
-    els.rightIcon.textContent='🫙'; els.rightStat.textContent=`${fullMain()}/8`; els.rightLabel.textContent='банок';
-    if(mainDone()){
-      els.note.textContent='Все основные баночки закрыты! Скачайте картинку, а потом переходите к лукошку.';
-      els.addBtn.style.display='none'; els.goBasket.style.display='block';
-    }else{
-      els.note.textContent='После 8/8 откроется Лукошко Вупсильды.';
-      els.addBtn.style.display='block'; els.goBasket.style.display='none';
-    }
+    rightStatBox.classList.add('jar');
+    els.rightStat.textContent=`${fullMain()}/8`;
+    els.rightLabel.textContent='банок';
+    els.note.style.setProperty('display','block','important');
+    els.note.textContent=mainDone()
+      ? 'Основной урожай собран! Нажми «Добавить крестики», чтобы открыть Лукошко Вупсильды.'
+      : 'После 8/8 откроется Лукошко Вупсильды.';
+    els.addBtn.style.display='block';
+    els.goBasket.style.display='none';
     renderJars();
   }else{
     els.subtitle.textContent='Лукошко Вупсильды';
     els.stage.textContent='Дополнительный урожай';
-    els.rightIcon.textContent='🍓'; els.rightStat.textContent=`${state.basket.length}/100`; els.rightLabel.textContent='плодов';
-    els.note.textContent=basketDone()?'Лукошко Вупсильды заполнено!':'Плоды складываются слоями внутри лукошка: от дна к полной корзине.';
-    els.addBtn.style.display=basketDone()?'none':'block'; els.goBasket.style.display='none';
+    rightStatBox.classList.add('fruit');
+    els.rightStat.textContent=`${state.basket.length}/100`;
+    els.rightLabel.textContent='плодов';
+    els.note.style.setProperty('display','none','important');
+    els.addBtn.style.display=basketDone()?'none':'block';
+    els.goBasket.style.display='none';
     renderBasket();
   }
-  let rem=state.stitches%STEP, left=(rem===0&&state.drops>0)?0:STEP-rem;
-  if((view()==='main'&&mainDone()) || (view()==='basket'&&basketDone())){
-    els.worm.textContent=view()==='main'?'Основной урожай собран!':'Лукошко заполнено! ✨';
+
+  if(view()==='main'&&mainDone()&&!state.basketOpened){
+    els.worm.textContent='Основной урожай собран!';
+    els.fill.style.width='100%';
+  }else if(view()==='basket'&&basketDone()){
+    els.worm.textContent='Лукошко заполнено! ✨';
     els.fill.style.width='100%';
   }else{
-    els.worm.textContent=left===0?'Следующий плод уже готов!':`До следующего плода: ${left} крестиков`;
-    els.fill.style.width=(left===STEP?0:Math.max(4,Math.round(rem/STEP*100)))+'%';
+    els.worm.textContent='500 крестиков = 1 плод · за раз принимается до 1000';
+    els.fill.style.width='0%';
   }
 }
+
 function renderJars(){
   let top=document.createElement('div'), bot=document.createElement('div'); top.className='shelf'; bot.className='shelf';
   MAIN.forEach((c,i)=>(i<4?top:bot).appendChild(jarCard(c,state.main[c.key]||0)));
@@ -494,14 +1419,18 @@ function renderBasket(){
   let stage=document.createElement('div'); stage.className='basket-stage';
   let shadow=document.createElement('div'); shadow.className='basket-shadow';
 
-  let basket=document.createElement('img');
-  basket.className='basket-img';
-  basket.src='assets/basket_main.png';
+  let basketBack=document.createElement('img');
+  basketBack.className='basket-img back';
+  basketBack.src='assets/basket_main.png';
+  basketBack.alt='Лукошко Вупсильды';
 
   let fruits=document.createElement('div');
   fruits.className='basket-fruits';
 
-  const basketItems = state.basket.slice(0,BASKET_LIMIT);
+  const total=Math.min(state.basket.length,BASKET_LIMIT);
+  const visible=Math.min(total,BASKET_TUNE.visibleMax);
+  const basketItems = state.basket.slice(0,visible);
+
   basketItems.forEach((key,i)=>{
     const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i, basketItems.length);
     let item=document.createElement('div'); item.className='basket-item '+p.layer;
@@ -513,27 +1442,112 @@ function renderBasket(){
     item.append(img); fruits.append(item);
   });
 
-  stage.append(shadow,basket,fruits);
+  let basketFront=document.createElement('img');
+  basketFront.className='basket-img front';
+  basketFront.src='assets/basket_main.png';
+  basketFront.alt='';
+  basketFront.setAttribute('aria-hidden','true');
+
+  stage.append(shadow,basketBack,fruits,basketFront);
   wrap.append(stage);
   els.pantry.append(wrap);
 }
-function openAdd(){els.addInput.value=''; els.addHelp.textContent=view()==='basket'?'За каждые 500 крестиков Вупсильда кладёт случайный плод в лукошко.':'За каждые 500 крестиков Вупсильда выдаёт случайный плод. Иногда гусеницы могут утащить 100 крестиков.'; els.addModal.classList.add('open');setTimeout(()=>els.addInput.focus(),80)}
+
+function introSeen(){try{return localStorage.getItem(INTRO_KEY)==='1'}catch{return false}}
+function showIntro(force=false){if(force||!introSeen())els.introModal.classList.add('open')}
+function closeIntro(){try{localStorage.setItem(INTRO_KEY,'1')}catch{} els.introModal.classList.remove('open')}
+function closeIntroAndOpenProgress(){closeIntro(); openManage()}
+function openRules(){closeManage(); showIntro(true)}
+function setupVideoGuide(){if(els.introVideo && VIDEO_GUIDE_URL){els.introVideo.classList.add('show'); els.introVideo.onclick=()=>window.open(VIDEO_GUIDE_URL,'_blank')}}
+function openAdd(){
+  if(mainDone() && !state.basketOpened){
+    goBasket();
+    return;
+  }
+  els.addInput.value='';
+  els.addHelp.textContent='Введите от 500 до 1000 крестиков за отчёт. Если указать больше 1000, излишек не переносится.';
+  els.addModal.classList.add('open');
+  setTimeout(()=>els.addInput.focus(),80)
+}
+
 function closeAdd(){els.addModal.classList.remove('open')}
 function add(){
-  let typed=Math.max(0,parseInt(String(els.addInput.value).replace(/\D/g,''),10)||0); if(!typed){toast('Введи число крестиков');return}
-  let credited=typed, stolen=0;
-  if(typed>=STEAL&&!basketDone()&&Math.random()<STEAL_CHANCE){stolen=STEAL;credited=Math.max(0,typed-stolen)}
-  state.stitches+=credited;
-  let r=applyDrops(); save(); render(); closeAdd(); result({typed,credited,stolen,...r});
+  let typed=Math.max(0,parseInt(String(els.addInput.value).replace(/\D/g,''),10)||0);
+  if(typed<STEP){toast('Минимум 500 крестиков за раз');return}
+
+  state.addCount=(state.addCount||0)+1;
+  const accepted=Math.min(typed,1000);
+  let credited=accepted, stolen=0;
+  const stealAllowed=state.addCount>STEAL_PROTECTED_ADDS;
+
+  if(accepted>=STEAL && stealAllowed && !basketDone() && Math.random()<STEAL_CHANCE){
+    stolen=STEAL;
+    credited=Math.max(0,accepted-stolen);
+  }
+
+  const beforeDrops=Math.floor((Number(state.stitches)||0)/STEP);
+  state.stitches=(Number(state.stitches)||0)+credited;
+  const afterDrops=Math.floor(state.stitches/STEP);
+  const alreadyDropped=Number(state.drops)||0;
+  const dropsToAdd=Math.max(0, afterDrops-alreadyDropped);
+
+  // Сначала проверяем Вупсента, потом раскладываем новые плоды.
+  // Так он не может разбить тот же плод, который только что выпал в этом добавлении.
+  const broken=maybeVupsentBreak(alreadyDropped+dropsToAdd);
+  let r=applyDrops(dropsToAdd, broken?.crop?.key || null);
+  state.reportNo=(state.reportNo||0)+1;
+  state.lastAdd={
+    reportNo:state.reportNo,
+    typed,
+    credited,
+    stolen,
+    results:r.results.map(x=>({type:x.type,name:x.crop.name,count:x.count})),
+    closed:r.closed.map(x=>x.name),
+    broken:broken?{name:broken.crop.name,lost:broken.lost}:null,
+    unlocked:!!r.unlocked
+  };
+  save(); render(); closeAdd(); result({typed,credited,stolen,broken,...r});
 }
+
 function result(o){
-  els.resultList.innerHTML=''; els.resultTitle.textContent=o.stolen?'🐛 Гусеницы устроили налёт!':'Крестики добавлены';
-  els.resultText.textContent=o.stolen?`Они утащили ${o.stolen} крестиков. Было добавлено ${o.typed}, в зачёт пошло ${o.credited}.`:`В зачёт пошло ${o.credited} крестиков.`;
-  if(o.results.length)o.results.forEach(r=>item(`${r.type==='basket'?'Лукошко':'Банки'}: ${r.crop.name} (${r.count}${r.type==='basket'?'/100':'/6'})`)); else item('До нового плода ещё не хватило крестиков.');
-  o.closed.forEach(c=>item(`Баночка закрыта: ${c.name} 🫙✨`));
-  if(o.unlocked)item('Все 8 баночек закрыты! Можно скачать картинку и перейти к лукошку.');
+  els.resultList.innerHTML='';
+  els.resultEventImage.classList.remove('show');
+  els.resultEventImage.removeAttribute('src');
+  els.resultEventImage.alt='';
+  if(o.stolen){
+    els.resultEventImage.src='assets/event_vupsilda_eat.png';
+    els.resultEventImage.alt='Вупсильда полакомилась крестиками';
+    els.resultEventImage.classList.add('show');
+    els.resultTitle.textContent='Вупсильда пошалила!';
+    els.resultText.textContent=`Вупсильда съела ${o.stolen} крестиков. В зачёт пошло ${o.credited}.`;
+  }else if(o.broken){
+    els.resultEventImage.src='assets/event_vupsent_break.png';
+    els.resultEventImage.alt='Вупсент разбил банку';
+    els.resultEventImage.classList.add('show');
+    els.resultTitle.textContent='Вупсент разбил банку!';
+    els.resultText.textContent=`Неловкий жених Вупсент разбил банку «${o.broken.crop.name}». Из неё пропало ${o.broken.lost} ${fruitWord(o.broken.lost)}.`;
+  }else{
+    els.resultTitle.textContent='Крестики добавлены';
+    els.resultText.textContent=`В зачёт пошло ${o.credited} крестиков.`;
+  }
+
+  const mainFruits=summarizeResultFruits(o.results,'main');
+  const basketFruits=summarizeResultFruits(o.results,'basket');
+  if(mainFruits.length){
+    fruitRow('Собрано плодов:', mainFruits);
+  }else if(basketFruits.length){
+    fruitRow('Добавлено в лукошко:', basketFruits);
+  }else{
+    item('Плод пока не выпал: крестики остались в зачёте и могут добраться следующим добавлением.');
+  }
+
+  if(o.closed.length){
+    jarRow(o.closed.length===1?'Закрыта банка:':'Закрыты банки:', o.closed.map(c=>c.name));
+  }
+  if(o.unlocked)item('Все 8 баночек закрыты! Теперь нажми «Добавить крестики», чтобы открыть лукошко.');
   els.resultModal.classList.add('open');
 }
+
 function item(t){let d=document.createElement('div');d.className='result-item';d.textContent=t;els.resultList.append(d)}
 function toast(t){els.toast.textContent=t;els.toast.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>els.toast.classList.remove('show'),2200)}
 function code(){return 'WG2-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:2,state})))).replace(/=+$/,'')}
@@ -544,38 +1558,99 @@ function closeHashtag(){els.hashtagModal.classList.remove('open')}
 function saveHashtagValue(){state.hashtag=normalizeHashtag(els.hashtagInput.value); save(); closeHashtag(); toast(state.hashtag?'Хэштег сохранён':'Хэштег очищен')}
 function basketSummary(){const counts={}; state.basket.forEach(k=>counts[k]=(counts[k]||0)+1); return BASKET.filter(c=>counts[c.key]).map(c=>`${c.name}: ${counts[c.key]}`)}
 function makeReport(){
+  const last=state.lastAdd||{reportNo:state.reportNo||0,credited:0,results:[],closed:[],broken:null};
   const lines=[];
-  lines.push('Отчёт по игре «Зимний сад 2: Урожай Вупсильды»');
-  lines.push(`Крестиков всего: ${state.stitches}`);
-  lines.push(`Основной урожай: ${fullMain()}/8 банок`);
-  MAIN.forEach(c=>lines.push(`${c.name}: ${state.main[c.key]||0}/6`));
-  if(state.basketOpened || state.basket.length){
-    lines.push('');
-    lines.push(`Лукошко Вупсильды: ${state.basket.length}/100 плодов`);
-    const basketLines=basketSummary();
-    basketLines.forEach(line=>lines.push(line));
+  lines.push(`Отчёт № ${last.reportNo||0}`);
+  lines.push(`Добавлено крестиков: ${last.credited||0}`);
+
+  const fruitCounts={};
+  (last.results||[]).filter(r=>r.type==='main').forEach(r=>{
+    const emoji=cropEmojiByName(r.name);
+    fruitCounts[emoji]=(fruitCounts[emoji]||0)+1;
+  });
+  const fruitParts=Object.entries(fruitCounts).map(([emoji,count])=>`${emoji} ×${count}`);
+  const basketAdded=(last.results||[]).filter(r=>r.type==='basket').length;
+
+  if(fruitParts.length){
+    lines.push(`Собрано плодов: ${fruitParts.join(' ')}`);
+  }else if(basketAdded){
+    lines.push(`Собрано плодов в лукошко: ${basketAdded}`);
+  }else{
+    lines.push('Собрано плодов: пока без новых плодов');
   }
+
+  const closed=(last.closed||[]);
+  if(closed.length){
+    lines.push(`Закатано банок: ${closed.join(', ')}`);
+  }
+
+  if(last.broken){
+    lines.push(`Вупсент разбил банку: ${last.broken.name} (-${last.broken.lost})`);
+  }
+
+  lines.push(`Всего за игру вышито крестиков: ${state.stitches}`);
+
+  if(fullMain()>0){
+    lines.push(`Банок закрыто: ${fullMain()}/8`);
+  }
+  if(state.basketOpened || state.basket.length>0){
+    lines.push(`Открыто плодов в лукошке: ${state.basket.length}/100`);
+  }
+
   if(state.hashtag){
-    lines.push('');
     lines.push(state.hashtag);
   }
   return lines.join('\n');
 }
+
 function openReport(){els.reportOutput.value=makeReport(); els.reportModal.classList.add('open')}
 function closeReport(){els.reportModal.classList.remove('open')}
 async function copyReportText(){els.reportOutput.value=makeReport(); try{await navigator.clipboard.writeText(els.reportOutput.value); toast('Отчёт скопирован')}catch{els.reportOutput.select(); document.execCommand('copy'); toast('Отчёт скопирован')}}
 async function copy(){try{await navigator.clipboard.writeText(els.saveCode.value);toast('Код скопирован')}catch{els.saveCode.select();document.execCommand('copy');toast('Код скопирован')}}
-function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[]};save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
+function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[]};let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
 function reset(){if(confirm('Сбросить весь прогресс на этом устройстве?')){state=def();save();render();closeManage();toast('Прогресс сброшен')}}
-function goBasket(){state.basketOpened=true; applyDrops(); save(); render(); toast('Лукошко открыто')}
+function goBasket(){state.basketOpened=true; save(); render(); toast('Лукошко открыто')}
 els.addBtn.onclick=openAdd; els.closeAdd.onclick=closeAdd; els.confirmAdd.onclick=add; els.addInput.onkeydown=e=>{if(e.key==='Enter')add()}; els.addModal.onclick=e=>{if(e.target===els.addModal)closeAdd()};
-els.closeResult.onclick=()=>els.resultModal.classList.remove('open'); els.resultModal.onclick=e=>{if(e.target===els.resultModal)els.resultModal.classList.remove('open')};
+els.closeResult.onclick=()=>{els.resultModal.classList.remove('open'); els.resultEventImage.classList.remove('show')}; els.resultModal.onclick=e=>{if(e.target===els.resultModal){els.resultModal.classList.remove('open'); els.resultEventImage.classList.remove('show')}};
 els.manageBtn.onclick=openManage; els.closeManage.onclick=closeManage; els.manageModal.onclick=e=>{if(e.target===els.manageModal)closeManage()}; els.copyCode.onclick=copy; els.importCodeBtn.onclick=imp; els.resetBtn.onclick=reset;
 els.goBasket.onclick=goBasket;
-els.download.onclick=()=>toast('Скачивание картинки добавим после финального визуала');
+function ensureHtml2Canvas(){
+  if(window.html2canvas)return Promise.resolve(window.html2canvas);
+  return new Promise((resolve,reject)=>{
+    const existing=document.querySelector('script[data-html2canvas-loader]');
+    if(existing){existing.addEventListener('load',()=>resolve(window.html2canvas),{once:true});existing.addEventListener('error',reject,{once:true});return}
+    const sc=document.createElement('script');
+    sc.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    sc.async=true;
+    sc.dataset.html2canvasLoader='1';
+    sc.onload=()=>window.html2canvas?resolve(window.html2canvas):reject(new Error('html2canvas not available'));
+    sc.onerror=reject;
+    document.head.appendChild(sc);
+  });
+}
+els.download.onclick=async()=>{
+  const app=document.getElementById('app');
+  try{
+    toast('Готовлю картинку...');
+    const h2c=await ensureHtml2Canvas();
+    const canvas=await h2c(app,{backgroundColor:null,scale:Math.min(2,window.devicePixelRatio||2),useCORS:true,allowTaint:true,scrollX:0,scrollY:-window.scrollY});
+    const link=document.createElement('a');
+    link.download='zimniy-sad-2.png';
+    link.href=canvas.toDataURL('image/png');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    toast('Картинка сохранена');
+  }catch(e){toast('Не получилось сохранить картинку. На GitHub Pages кнопка работает стабильнее, чем при открытии файлом.')}
+};
 els.hashtagBtn.onclick=openHashtag; els.closeHashtag.onclick=closeHashtag; els.saveHashtag.onclick=saveHashtagValue; els.hashtagInput.onkeydown=e=>{if(e.key==='Enter')saveHashtagValue()}; els.hashtagModal.onclick=e=>{if(e.target===els.hashtagModal)closeHashtag()};
 els.reportBtn.onclick=openReport; els.closeReport.onclick=closeReport; els.copyReport.onclick=copyReportText; els.reportModal.onclick=e=>{if(e.target===els.reportModal)closeReport()};
+if(els.introStart)els.introStart.onclick=closeIntro;
+if(els.introProgress)els.introProgress.onclick=closeIntroAndOpenProgress;
+if(els.rulesBtn)els.rulesBtn.onclick=openRules;
+setupVideoGuide();
 render();
+showIntro();
 })();
 </script>
 </body>
