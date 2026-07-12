@@ -1027,6 +1027,56 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 .intro-item{grid-template-columns:30px 1fr!important}
 @media(max-width:390px){.intro-ico{width:23px!important;height:23px!important;font-size:14px!important}.intro-item{grid-template-columns:28px 1fr!important}}
 
+
+
+/* === Чистая картинка для отчёта: только банки / лукошко === */
+.export-card{
+  position:fixed;
+  left:-99999px;
+  top:0;
+  width:520px;
+  padding:18px 12px 28px;
+  background:#8b5327 url('assets/background_main.png') center/cover no-repeat;
+  color:#4b2c13;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  overflow:hidden;
+  box-shadow:none;
+}
+.export-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(80,42,14,.04),rgba(80,42,14,.10) 58%,rgba(80,42,14,.20));
+  z-index:0;
+  pointer-events:none;
+}
+.export-card > *{position:relative;z-index:1}
+.export-card .export-head{text-align:center;margin-bottom:6px}
+.export-card .export-title-image{display:block;width:min(98%,480px);height:auto;margin:0 auto -4px;filter:drop-shadow(0 4px 10px rgba(62,32,9,.25))}
+.export-card .export-subtitle-image{display:block;width:min(76%,350px);height:auto;margin:-4px auto 0;filter:drop-shadow(0 4px 9px rgba(62,32,9,.20))}
+.export-card .export-note{
+  width:min(92%,400px);
+  margin:8px auto 0;
+  padding:8px 14px;
+  border-radius:18px;
+  background:rgba(255,239,198,.86);
+  border:1px solid rgba(105,61,25,.20);
+  text-align:center;
+  color:#5c3517;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 8px 18px rgba(50,27,8,.16), inset 0 1px 0 rgba(255,255,255,.45);
+}
+.export-card .export-pantry{display:grid;gap:14px;margin-top:12px;padding:0 0 2px}
+.export-card .shelf{padding-left:2px;padding-right:2px}
+.export-card .jar-box{max-width:112px}
+.export-card .label{width:112px;height:38px;font-size:13px}
+.export-card .basket-wrap{min-height:520px;padding-top:2px;padding-bottom:8px}
+.export-card .basket-stage{width:97%!important;transform:translateY(82px) scale(1.03)!important}
+.export-card .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(41.5% 44.5% at 50.5% 56%)!important;overflow:visible!important}
+.export-card .basket-img.front{clip-path:inset(75% 0 0 0)!important}
+
 </style>
 </head>
 <body>
@@ -1651,31 +1701,120 @@ function openImageFallback(blob, canvas){
   link.remove();
   toast('Картинка скачана. На iPhone ищи её в «Файлы → Загрузки».');
 }
+
+function makeExportCard(){
+  const card=document.createElement('div');
+  card.className='export-card';
+
+  const head=document.createElement('div');
+  head.className='export-head';
+  const title=document.createElement('img');
+  title.className='export-title-image';
+  title.src='assets/title_main.png';
+  title.alt='Зимний сад 2';
+  const sub=document.createElement('img');
+  sub.className='export-subtitle-image';
+  sub.src='assets/title_sub.png';
+  sub.alt='Урожай Вупсильды';
+  head.append(title,sub);
+
+  const note=document.createElement('div');
+  note.className='export-note';
+  note.textContent=view()==='basket'
+    ? `Лукошко Вупсильды: ${state.basket.length}/100 плодов`
+    : `Закрыто банок: ${fullMain()}/8`;
+
+  const content=document.createElement('div');
+  content.className='export-pantry';
+
+  if(view()==='basket'){
+    renderBasketForExport(content);
+  }else{
+    const top=document.createElement('div'), bot=document.createElement('div');
+    top.className='shelf';
+    bot.className='shelf';
+    MAIN.forEach((c,i)=>(i<4?top:bot).appendChild(jarCard(c,state.main[c.key]||0)));
+    content.append(top,bot);
+  }
+
+  card.append(head,note,content);
+  document.body.appendChild(card);
+  return card;
+}
+function renderBasketForExport(target){
+  let wrap=document.createElement('div'); wrap.className='basket-wrap';
+  let stage=document.createElement('div'); stage.className='basket-stage';
+  let shadow=document.createElement('div'); shadow.className='basket-shadow';
+
+  let basketBack=document.createElement('img');
+  basketBack.className='basket-img back';
+  basketBack.src='assets/basket_main.png';
+  basketBack.alt='Лукошко Вупсильды';
+
+  let fruits=document.createElement('div');
+  fruits.className='basket-fruits';
+
+  const basketItems = state.basket.slice(0,BASKET_LIMIT);
+  basketItems.forEach((key,i)=>{
+    const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i, basketItems.length);
+    let item=document.createElement('div'); item.className='basket-item '+p.layer;
+    item.style.left=p.x+'%'; item.style.top=p.y+'%';
+    item.style.width=p.size+'px'; item.style.height=p.size+'px';
+    item.style.transform=`translate(-50%,-50%) rotate(${p.rot}deg)`;
+    item.style.zIndex=String(100 + Math.round(p.y * 10) + i);
+    let img=document.createElement('img'); img.src='assets/'+crop.img; img.alt=crop.name;
+    item.append(img); fruits.append(item);
+  });
+
+  let basketFront=document.createElement('img');
+  basketFront.className='basket-img front';
+  basketFront.src='assets/basket_main.png';
+  basketFront.alt='';
+
+  stage.append(shadow,basketBack,fruits,basketFront);
+  wrap.append(stage);
+  target.append(wrap);
+}
+function openExportImageWindow(dataUrl, win){
+  const html=`<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Картинка Зимний сад 2</title><style>
+    html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+    body{display:grid;place-items:center;padding:14px}
+    .wrap{width:min(100%,720px);display:grid;gap:12px;text-align:center}
+    img{width:100%;height:auto;border-radius:18px;box-shadow:0 18px 45px rgba(0,0,0,.28);background:#8b5327}
+    .hint{background:#fff0c8;border:1px solid rgba(92,52,20,.25);border-radius:18px;padding:12px 14px;font-weight:800;color:#5c3517}
+    a{display:inline-block;background:linear-gradient(180deg,#87ba39,#5a8b22);color:#fff2c8;text-decoration:none;font-family:Georgia,serif;font-weight:900;font-size:20px;border-radius:18px;padding:12px 18px;text-shadow:0 2px 0 rgba(49,84,19,.45);box-shadow:0 5px 0 #3e6418,0 10px 18px rgba(45,25,8,.22)}
+  </style></head><body><div class="wrap"><img src="${dataUrl}" alt="Картинка игры Зимний сад 2"><div class="hint">На телефоне зажми картинку и выбери «Сохранить в Фото» или отправь её в чат. На компьютере можно нажать кнопку ниже.</div><a download="zimniy-sad-2.png" href="${dataUrl}">Скачать PNG</a></div></body></html>`;
+  if(win){
+    win.document.open();
+    win.document.write(html);
+    win.document.close();
+  }else{
+    const newWin=window.open('','_blank');
+    if(newWin){newWin.document.write(html);newWin.document.close();}
+  }
+}
 els.download.onclick=async()=>{
-  const app=document.getElementById('app');
+  let win=null;
+  try{win=window.open('','_blank'); if(win){win.document.write('<p style="font-family:system-ui;padding:20px">Готовлю картинку…</p>');}}
+  catch(e){}
+  let card=null;
   try{
-    toast('Готовлю картинку...');
+    toast('Готовлю чистую картинку...');
     const h2c=await ensureHtml2Canvas();
-    const canvas=await h2c(app,{backgroundColor:null,scale:Math.min(2,window.devicePixelRatio||2),useCORS:true,allowTaint:true,scrollX:0,scrollY:-window.scrollY});
-    const blob=await canvasToBlob(canvas);
-    const file=new File([blob],'zimniy-sad-2.png',{type:'image/png'});
-
-    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
-      try{
-        await navigator.share({files:[file],title:'Зимний сад 2',text:'Мой прогресс в игре «Зимний сад 2»'});
-        toast('Выбери, куда сохранить или отправить картинку.');
-        return;
-      }catch(shareError){
-        if(shareError && shareError.name==='AbortError'){
-          toast('Сохранение отменено');
-          return;
-        }
-      }
-    }
-
-    openImageFallback(blob, canvas);
-  }catch(e){toast('Не получилось подготовить картинку. На GitHub Pages кнопка работает стабильнее, чем при открытии файлом.')}
+    card=makeExportCard();
+    await new Promise(resolve=>setTimeout(resolve,80));
+    const canvas=await h2c(card,{backgroundColor:null,scale:Math.min(2.4,window.devicePixelRatio||2),useCORS:true,allowTaint:true,scrollX:0,scrollY:0});
+    const dataUrl=canvas.toDataURL('image/png');
+    openExportImageWindow(dataUrl, win);
+    toast('Картинка открыта в новом окне');
+  }catch(e){
+    if(win)try{win.close()}catch(_e){}
+    toast('Не получилось подготовить картинку. Попробуй на GitHub Pages.');
+  }finally{
+    if(card)card.remove();
+  }
 };
+
 els.hashtagBtn.onclick=openHashtag; els.closeHashtag.onclick=closeHashtag; els.saveHashtag.onclick=saveHashtagValue; els.hashtagInput.onkeydown=e=>{if(e.key==='Enter')saveHashtagValue()}; els.hashtagModal.onclick=e=>{if(e.target===els.hashtagModal)closeHashtag()};
 els.reportBtn.onclick=openReport; els.closeReport.onclick=closeReport; els.copyReport.onclick=copyReportText; els.reportModal.onclick=e=>{if(e.target===els.reportModal)closeReport()};
 if(els.introStart)els.introStart.onclick=closeIntro;
