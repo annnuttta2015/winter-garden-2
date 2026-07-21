@@ -1077,6 +1077,155 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 .export-card .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(41.5% 44.5% at 50.5% 56%)!important;overflow:visible!important}
 .export-card .basket-img.front{clip-path:inset(75% 0 0 0)!important}
 
+
+/* === rev26: экран «Мой сад» === */
+#downloadBtn{
+  background:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  color:#ffe6ad!important;
+  font-size:clamp(18px,4.6vw,23px)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:900!important;
+  text-shadow:0 2px 0 rgba(54,28,8,.55)!important;
+  border:2px solid #d69a42!important;
+  outline:1px solid rgba(79,38,9,.34)!important;
+  outline-offset:-5px!important;
+  border-radius:18px!important;
+  box-shadow:0 4px 0 rgba(81,40,9,.42),0 9px 14px rgba(48,24,6,.18),inset 0 1px 0 rgba(255,231,142,.48),inset 0 -3px 0 rgba(57,25,6,.28)!important;
+}
+.garden-modal{
+  align-items:center!important;
+  padding:8px!important;
+  background:rgba(45,24,8,.58)!important;
+  overflow:auto!important;
+}
+.garden-sheet{
+  width:min(100%,500px);
+  max-height:calc(100vh - 16px - var(--safe-bottom));
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:11px;
+  border-radius:24px;
+  background:linear-gradient(180deg,#fff1ca,#e3b66d);
+  border:2px solid rgba(114,63,20,.34);
+  box-shadow:0 22px 55px rgba(32,18,6,.42), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.garden-head{
+  display:grid;
+  grid-template-columns:1fr 44px;
+  align-items:center;
+  gap:8px;
+}
+.garden-head h2{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  color:#4d2a0f;
+  font-size:25px;
+  line-height:1;
+}
+.garden-close{
+  min-height:42px!important;
+  width:42px!important;
+  height:42px!important;
+  padding:0!important;
+  border-radius:14px!important;
+  font-size:27px!important;
+  line-height:1!important;
+}
+.garden-hint{
+  margin:0;
+  color:#6a4424;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:850;
+}
+.garden-scene{
+  position:relative;
+  width:min(100%,365px);
+  aspect-ratio:9/16;
+  margin:0 auto;
+  overflow:hidden;
+  border-radius:20px;
+  background:#8b5327;
+  border:1px solid rgba(90,48,18,.34);
+  box-shadow:0 12px 24px rgba(52,28,8,.20), inset 0 1px 0 rgba(255,255,255,.25);
+  touch-action:none;
+  isolation:isolate;
+}
+.garden-bg,.garden-room{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  user-select:none;
+  pointer-events:none;
+}
+.garden-bg{z-index:1}
+.garden-room{z-index:2}
+.garden-items{
+  position:absolute;
+  inset:0;
+  z-index:4;
+}
+.garden-item{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  touch-action:none;
+  cursor:grab;
+  user-select:none;
+  z-index:5;
+}
+.garden-item:active{cursor:grabbing}
+.garden-item img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none;
+  filter:drop-shadow(0 7px 9px rgba(43,22,7,.32));
+}
+.garden-empty{
+  display:none;
+  position:absolute;
+  left:50%;
+  top:63%;
+  transform:translate(-50%,-50%);
+  z-index:6;
+  width:76%;
+  padding:12px 14px;
+  border-radius:18px;
+  background:rgba(255,241,202,.88);
+  border:1px solid rgba(100,58,20,.20);
+  color:#5c3517;
+  font-weight:900;
+  font-family:Georgia,"Times New Roman",serif;
+  text-align:center;
+  box-shadow:0 10px 22px rgba(51,27,8,.16);
+}
+.garden-empty.show{display:block}
+.garden-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.garden-actions button{
+  min-height:46px!important;
+  font-size:16px!important;
+  border-radius:16px!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+}
+@media(max-width:390px){
+  .garden-sheet{padding:9px;border-radius:20px;gap:7px}
+  .garden-scene{width:min(100%,340px)}
+  .garden-head h2{font-size:23px}
+  .garden-hint{font-size:12px}
+  .garden-actions{gap:7px}
+  .garden-actions button{font-size:14px!important;min-height:44px!important}
+}
+
 </style>
 </head>
 <body>
@@ -1097,7 +1246,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
     <button id="addBtn">Добавить крестики</button>
     <button id="goBasketBtn" class="go-basket" style="display:none">Перейти к лукошку</button>
     <div class="button-row">
-      <button class="secondary compact" id="downloadBtn">Скачать картинку</button>
+      <button class="secondary compact" id="downloadBtn">Мой сад</button>
       <button class="secondary manage compact" id="manageBtn">Управление прогрессом</button>
     </div>
     <div class="button-row">
@@ -1135,6 +1284,26 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 <div class="modal" id="manageModal"><div class="sheet"><h2>Управление прогрессом</h2><p>Прогресс хранится только в этом браузере. Код нужен, чтобы перенести или восстановить игру.</p><label>Код сохранения<textarea id="saveCode" readonly></textarea></label><div class="sheet-actions"><button id="copyCode">Скопировать код</button><button class="secondary" id="importCodeBtn">Восстановить из кода</button><button class="secondary" id="rulesBtn">Правила игры</button><button class="danger" id="resetBtn">Сбросить прогресс</button><button class="ghost" id="closeManage">Закрыть</button></div></div></div>
 <div class="modal" id="hashtagModal"><div class="sheet"><h2>Хэштег для отчёта</h2><p>Этот хэштег будет автоматически подставляться в текст отчёта.</p><label>Хэштег<input id="hashtagInput" placeholder="#зимнийсад2"></label><div class="sheet-actions"><button id="saveHashtag">Сохранить</button><button class="ghost" id="closeHashtag">Отмена</button></div></div></div>
 <div class="modal" id="reportModal"><div class="sheet"><h2>Отчёт</h2><p>Скопируй текст отчёта и прикрепи фото вышивки в чат.</p><label>Текст отчёта<textarea id="reportOutput" readonly></textarea></label><div class="sheet-actions"><button id="copyReport">Скопировать отчёт</button><button class="ghost" id="closeReport">Закрыть</button></div></div></div>
+
+<div class="modal garden-modal" id="gardenModal" aria-modal="true" role="dialog">
+  <div class="garden-sheet">
+    <div class="garden-head">
+      <h2>Мой сад</h2>
+      <button class="garden-close ghost" id="closeGarden" aria-label="Закрыть">×</button>
+    </div>
+    <p class="garden-hint">Здесь появляются закрытые баночки. Их можно двигать пальцем и расставлять на полках.</p>
+    <div class="garden-scene" id="gardenScene">
+      <img class="garden-bg" id="gardenBg" src="assets/garden_view_august.png" alt="">
+      <img class="garden-room" src="assets/garden_room_overlay.png" alt="">
+      <div class="garden-items" id="gardenItems"></div>
+      <div class="garden-empty" id="gardenEmpty">Пока нет закрытых банок. Первая готовая баночка появится здесь.</div>
+    </div>
+    <div class="garden-actions">
+      <button id="gardenExport">Открыть картинку</button>
+      <button class="ghost" id="gardenReset">Расставить заново</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast">Готово</div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -1161,6 +1330,29 @@ const BASKET=[
  {key:'mushroom',name:'гриб',img:'bonus_mushroom.png'}
 ];
 const BASKET_TUNE={gameW:484,stageWidth:97,basketY:82,basketScale:1.03,fruitLeft:1,fruitTop:18.5,fruitWidth:98,fruitHeight:47.5,ovalW:41.5,ovalH:44.5,ovalX:50.5,ovalY:56,frontClip:75,count:100,visibleMax:100,yShift:0,xShift:0,spreadScale:1.07,rowGapScale:1.18,sizeScale:1.24,rotation:35,jitterX:5.8,jitterY:4.5};
+
+const GARDEN_VIEWS={
+  august:'garden_view_august.png',
+  september:'garden_view_september.png',
+  october:'garden_view_october.png',
+  november:'garden_view_november.png',
+  december:'garden_view_december.png'
+};
+const GARDEN_JARS={
+  apple:'garden_jar_apple.png',
+  strawberry:'garden_jar_strawberry.png',
+  cherry:'garden_jar_cherry.png',
+  raspberry:'garden_jar_raspberry.png',
+  cucumber:'garden_jar_cucumber.png',
+  tomato:'garden_jar_tomato.png',
+  chili:'garden_jar_chili.png',
+  garlic:'garden_jar_garlic.png'
+};
+const GARDEN_DEFAULTS={
+  apple:{x:20,y:36,w:16}, strawberry:{x:40,y:36,w:16}, cherry:{x:67,y:35,w:16}, raspberry:{x:84,y:35,w:16},
+  cucumber:{x:20,y:53,w:16}, tomato:{x:40,y:53,w:16}, chili:{x:67,y:52,w:16}, garlic:{x:84,y:52,w:16},
+  basket:{x:50,y:71,w:30}
+};
 const CROP_EMOJI={apple:'🍎',strawberry:'🍓',cherry:'🍒',raspberry:'🍇',cucumber:'🥒',tomato:'🍅',chili:'🌶️',garlic:'🧄',pear:'🍐',blueberry:'🫐',plum:'🟣',apricot:'🍑',chanterelle:'🍄',mushroom:'🍄'};
 function cropEmojiByName(name){
   const all=[...MAIN,...BASKET];
@@ -1337,10 +1529,10 @@ function basketPos(index, totalCount){
 }
 
 const e=id=>document.getElementById(id);
-const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultEventImage:e('resultEventImage'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp'),introModal:e('introModal'),introStart:e('introStartBtn'),introProgress:e('introProgressBtn'),introVideo:e('introVideoBtn'),rulesBtn:e('rulesBtn')};
-function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[]}}
+const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultEventImage:e('resultEventImage'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp'),introModal:e('introModal'),introStart:e('introStartBtn'),introProgress:e('introProgressBtn'),introVideo:e('introVideoBtn'),rulesBtn:e('rulesBtn'),gardenModal:e('gardenModal'),gardenScene:e('gardenScene'),gardenBg:e('gardenBg'),gardenItems:e('gardenItems'),gardenEmpty:e('gardenEmpty'),closeGarden:e('closeGarden'),gardenReset:e('gardenReset'),gardenExport:e('gardenExport')};
+function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[],gardenLayout:{}}}
 let state=load();
-function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[]};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
+function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[],gardenLayout:{...b.gardenLayout,...(p.gardenLayout||{})}};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function normalizeHashtag(v){
   let txt=String(v||"").trim();
@@ -1657,13 +1849,124 @@ function openReport(){els.reportOutput.value=makeReport(); els.reportModal.class
 function closeReport(){els.reportModal.classList.remove('open')}
 async function copyReportText(){els.reportOutput.value=makeReport(); try{await navigator.clipboard.writeText(els.reportOutput.value); toast('Отчёт скопирован')}catch{els.reportOutput.select(); document.execCommand('copy'); toast('Отчёт скопирован')}}
 async function copy(){try{await navigator.clipboard.writeText(els.saveCode.value);toast('Код скопирован')}catch{els.saveCode.select();document.execCommand('copy');toast('Код скопирован')}}
-function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[]};let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
+function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[],gardenLayout:{...b.gardenLayout,...(data.state.gardenLayout||{})}};let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
 function reset(){if(confirm('Сбросить весь прогресс на этом устройстве?')){state=def();save();render();closeManage();toast('Прогресс сброшен')}}
 function goBasket(){state.basketOpened=true; save(); render(); toast('Лукошко открыто')}
 els.addBtn.onclick=openAdd; els.closeAdd.onclick=closeAdd; els.confirmAdd.onclick=add; els.addInput.onkeydown=e=>{if(e.key==='Enter')add()}; els.addModal.onclick=e=>{if(e.target===els.addModal)closeAdd()};
 els.closeResult.onclick=()=>{els.resultModal.classList.remove('open'); els.resultEventImage.classList.remove('show')}; els.resultModal.onclick=e=>{if(e.target===els.resultModal){els.resultModal.classList.remove('open'); els.resultEventImage.classList.remove('show')}};
 els.manageBtn.onclick=openManage; els.closeManage.onclick=closeManage; els.manageModal.onclick=e=>{if(e.target===els.manageModal)closeManage()}; els.copyCode.onclick=copy; els.importCodeBtn.onclick=imp; els.resetBtn.onclick=reset;
 els.goBasket.onclick=goBasket;
+
+function gardenSeasonKey(){
+  const now=new Date();
+  const month=now.getMonth()+1;
+  const day=now.getDate();
+  if(month===8 && day>=17) return 'august';
+  if(month===9) return 'september';
+  if(month===10) return 'october';
+  if(month===11) return 'november';
+  if(month===12 || month<8) return 'december';
+  return 'august';
+}
+function unlockedGardenItems(){
+  const items=[];
+  MAIN.forEach(c=>{
+    if((state.main[c.key]||0)>=TARGET){
+      items.push({key:'jar_'+c.key,name:'банка '+c.name,img:GARDEN_JARS[c.key],def:GARDEN_DEFAULTS[c.key]});
+    }
+  });
+  if(state.basketOpened){
+    items.push({key:'basket',name:'лукошко',img:'basket_main.png',def:GARDEN_DEFAULTS.basket});
+  }
+  return items;
+}
+function openGarden(){
+  renderGarden();
+  els.gardenModal.classList.add('open');
+}
+function closeGarden(){
+  save();
+  els.gardenModal.classList.remove('open');
+}
+function renderGarden(){
+  if(!state.gardenLayout) state.gardenLayout={};
+  const season=gardenSeasonKey();
+  els.gardenBg.src='assets/'+(GARDEN_VIEWS[season]||GARDEN_VIEWS.august);
+  els.gardenItems.innerHTML='';
+  const items=unlockedGardenItems();
+  els.gardenEmpty.classList.toggle('show', items.length===0);
+  items.forEach(item=>{
+    const saved=state.gardenLayout[item.key]||item.def||{x:50,y:50,w:16};
+    const el=document.createElement('div');
+    el.className='garden-item';
+    el.dataset.key=item.key;
+    el.style.left=(saved.x||50)+'%';
+    el.style.top=(saved.y||50)+'%';
+    el.style.width=(saved.w||16)+'%';
+    el.style.height=(saved.w||16)+'%';
+    el.title=item.name;
+    const img=document.createElement('img');
+    img.src='assets/'+item.img;
+    img.alt=item.name;
+    el.append(img);
+    els.gardenItems.append(el);
+    attachGardenDrag(el);
+  });
+}
+function attachGardenDrag(el){
+  let active=false;
+  const key=el.dataset.key;
+  const move=(ev)=>{
+    if(!active)return;
+    const r=els.gardenScene.getBoundingClientRect();
+    let x=((ev.clientX-r.left)/r.width)*100;
+    let y=((ev.clientY-r.top)/r.height)*100;
+    x=Math.max(4,Math.min(96,x));
+    y=Math.max(8,Math.min(96,y));
+    el.style.left=x+'%';
+    el.style.top=y+'%';
+    const current=state.gardenLayout&&state.gardenLayout[key] ? state.gardenLayout[key] : {};
+    state.gardenLayout={...(state.gardenLayout||{}),[key]:{x:Math.round(x*10)/10,y:Math.round(y*10)/10,w:current.w||parseFloat(el.style.width)||16}};
+  };
+  el.addEventListener('pointerdown',ev=>{
+    active=true;
+    el.setPointerCapture(ev.pointerId);
+    el.style.zIndex=String(20+Date.now()%1000);
+    ev.preventDefault();
+    move(ev);
+  });
+  el.addEventListener('pointermove',move);
+  const up=(ev)=>{
+    if(!active)return;
+    active=false;
+    try{el.releasePointerCapture(ev.pointerId)}catch(e){}
+    save();
+  };
+  el.addEventListener('pointerup',up);
+  el.addEventListener('pointercancel',up);
+}
+function resetGardenLayout(){
+  state.gardenLayout={};
+  save();
+  renderGarden();
+  toast('Сад расставлен заново');
+}
+async function exportGardenImage(){
+  let win=null;
+  try{win=window.open('','_blank'); if(win){win.document.write('<p style="font-family:system-ui;padding:20px">Готовлю картинку сада…</p>');}}
+  catch(e){}
+  try{
+    toast('Готовлю картинку сада...');
+    const h2c=await ensureHtml2Canvas();
+    const canvas=await h2c(els.gardenScene,{backgroundColor:null,scale:Math.min(2.5,window.devicePixelRatio||2),useCORS:true,allowTaint:true,scrollX:0,scrollY:0});
+    openExportImageWindow(canvas.toDataURL('image/png'), win);
+    toast('Картинка сада открыта');
+  }catch(e){
+    if(win)try{win.close()}catch(_e){}
+    toast('Не получилось подготовить картинку сада');
+  }
+}
+
 function ensureHtml2Canvas(){
   if(window.html2canvas)return Promise.resolve(window.html2canvas);
   return new Promise((resolve,reject)=>{
@@ -1793,28 +2096,9 @@ function openExportImageWindow(dataUrl, win){
     if(newWin){newWin.document.write(html);newWin.document.close();}
   }
 }
-els.download.onclick=async()=>{
-  let win=null;
-  try{win=window.open('','_blank'); if(win){win.document.write('<p style="font-family:system-ui;padding:20px">Готовлю картинку…</p>');}}
-  catch(e){}
-  let card=null;
-  try{
-    toast('Готовлю чистую картинку...');
-    const h2c=await ensureHtml2Canvas();
-    card=makeExportCard();
-    await new Promise(resolve=>setTimeout(resolve,80));
-    const canvas=await h2c(card,{backgroundColor:null,scale:Math.min(2.4,window.devicePixelRatio||2),useCORS:true,allowTaint:true,scrollX:0,scrollY:0});
-    const dataUrl=canvas.toDataURL('image/png');
-    openExportImageWindow(dataUrl, win);
-    toast('Картинка открыта в новом окне');
-  }catch(e){
-    if(win)try{win.close()}catch(_e){}
-    toast('Не получилось подготовить картинку. Попробуй на GitHub Pages.');
-  }finally{
-    if(card)card.remove();
-  }
-};
+els.download.onclick=openGarden;
 
+els.closeGarden.onclick=closeGarden; els.gardenModal.onclick=e=>{if(e.target===els.gardenModal)closeGarden()}; els.gardenReset.onclick=resetGardenLayout; els.gardenExport.onclick=exportGardenImage;
 els.hashtagBtn.onclick=openHashtag; els.closeHashtag.onclick=closeHashtag; els.saveHashtag.onclick=saveHashtagValue; els.hashtagInput.onkeydown=e=>{if(e.key==='Enter')saveHashtagValue()}; els.hashtagModal.onclick=e=>{if(e.target===els.hashtagModal)closeHashtag()};
 els.reportBtn.onclick=openReport; els.closeReport.onclick=closeReport; els.copyReport.onclick=copyReportText; els.reportModal.onclick=e=>{if(e.target===els.reportModal)closeReport()};
 if(els.introStart)els.introStart.onclick=closeIntro;
