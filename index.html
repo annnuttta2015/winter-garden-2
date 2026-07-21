@@ -1182,7 +1182,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 .garden-item img{
   display:block;
   width:100%;
-  height:100%;
+  height:auto;
   object-fit:contain;
   pointer-events:none;
   filter:drop-shadow(0 7px 9px rgba(43,22,7,.32));
@@ -1206,11 +1206,66 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   box-shadow:0 10px 22px rgba(51,27,8,.16);
 }
 .garden-empty.show{display:block}
+.garden-stock{
+  display:none;
+  border-radius:18px;
+  padding:9px;
+  background:rgba(255,242,204,.68);
+  border:1px solid rgba(110,65,24,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45);
+}
+.garden-stock.open{display:block}
+.garden-stock-title{
+  margin:0 0 7px;
+  color:#5a3215;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:15px;
+  font-weight:900;
+}
+.garden-stock-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  max-height:142px;
+  overflow:auto;
+  padding-right:2px;
+}
+.garden-stock-item{
+  min-height:70px!important;
+  padding:5px!important;
+  border-radius:14px!important;
+  background:linear-gradient(180deg,#fff2c8,#e9bd75)!important;
+  border:1px solid rgba(111,64,25,.25)!important;
+  box-shadow:0 3px 0 rgba(109,65,24,.22), inset 0 1px 0 rgba(255,255,255,.5)!important;
+  color:#5a3215!important;
+  display:grid!important;
+  place-items:center!important;
+  gap:3px!important;
+  font-size:10px!important;
+  line-height:1.05!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+}
+.garden-stock-item img{
+  max-width:100%;
+  height:44px;
+  object-fit:contain;
+  pointer-events:none;
+  filter:drop-shadow(0 4px 5px rgba(60,32,10,.20));
+}
+.garden-stock-item.placed{opacity:.55}
+.garden-stock-empty{
+  grid-column:1/-1;
+  color:#6a4424;
+  font-size:13px;
+  font-weight:850;
+  padding:8px 4px;
+}
 .garden-actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
 }
+.garden-actions .garden-clear{grid-column:1/-1}
 .garden-actions button{
   min-height:46px!important;
   font-size:16px!important;
@@ -1291,16 +1346,21 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
       <h2>Мой сад</h2>
       <button class="garden-close ghost" id="closeGarden" aria-label="Закрыть">×</button>
     </div>
-    <p class="garden-hint">Здесь появляются закрытые баночки. Их можно двигать пальцем и расставлять на полках.</p>
+    <p class="garden-hint">Открой склад, выбери заработанную баночку и поставь её в сад. Потом можно двигать пальцем.</p>
     <div class="garden-scene" id="gardenScene">
       <img class="garden-bg" id="gardenBg" src="assets/garden_view_august.png" alt="">
       <img class="garden-room" src="assets/garden_room_overlay.png" alt="">
       <div class="garden-items" id="gardenItems"></div>
       <div class="garden-empty" id="gardenEmpty">Пока нет закрытых банок. Первая готовая баночка появится здесь.</div>
     </div>
+    <div class="garden-stock" id="gardenStock">
+      <p class="garden-stock-title">Склад</p>
+      <div class="garden-stock-grid" id="gardenStockGrid"></div>
+    </div>
     <div class="garden-actions">
       <button id="gardenExport">Открыть картинку</button>
-      <button class="ghost" id="gardenReset">Расставить заново</button>
+      <button class="ghost" id="gardenStockBtn">Склад</button>
+      <button class="ghost garden-clear" id="gardenReset">Убрать всё из сада</button>
     </div>
   </div>
 </div>
@@ -1349,9 +1409,9 @@ const GARDEN_JARS={
   garlic:'garden_jar_garlic.png'
 };
 const GARDEN_DEFAULTS={
-  apple:{x:20,y:36,w:16}, strawberry:{x:40,y:36,w:16}, cherry:{x:67,y:35,w:16}, raspberry:{x:84,y:35,w:16},
-  cucumber:{x:20,y:53,w:16}, tomato:{x:40,y:53,w:16}, chili:{x:67,y:52,w:16}, garlic:{x:84,y:52,w:16},
-  basket:{x:50,y:71,w:30}
+  apple:{x:50,y:58,w:14}, strawberry:{x:50,y:58,w:14}, cherry:{x:50,y:58,w:14}, raspberry:{x:50,y:58,w:14},
+  cucumber:{x:50,y:58,w:14}, tomato:{x:50,y:58,w:14}, chili:{x:50,y:58,w:14}, garlic:{x:50,y:58,w:14},
+  basket:{x:50,y:72,w:28}
 };
 const CROP_EMOJI={apple:'🍎',strawberry:'🍓',cherry:'🍒',raspberry:'🍇',cucumber:'🥒',tomato:'🍅',chili:'🌶️',garlic:'🧄',pear:'🍐',blueberry:'🫐',plum:'🟣',apricot:'🍑',chanterelle:'🍄',mushroom:'🍄'};
 function cropEmojiByName(name){
@@ -1529,10 +1589,10 @@ function basketPos(index, totalCount){
 }
 
 const e=id=>document.getElementById(id);
-const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultEventImage:e('resultEventImage'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp'),introModal:e('introModal'),introStart:e('introStartBtn'),introProgress:e('introProgressBtn'),introVideo:e('introVideoBtn'),rulesBtn:e('rulesBtn'),gardenModal:e('gardenModal'),gardenScene:e('gardenScene'),gardenBg:e('gardenBg'),gardenItems:e('gardenItems'),gardenEmpty:e('gardenEmpty'),closeGarden:e('closeGarden'),gardenReset:e('gardenReset'),gardenExport:e('gardenExport')};
-function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[],gardenLayout:{}}}
+const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultEventImage:e('resultEventImage'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp'),introModal:e('introModal'),introStart:e('introStartBtn'),introProgress:e('introProgressBtn'),introVideo:e('introVideoBtn'),rulesBtn:e('rulesBtn'),gardenModal:e('gardenModal'),gardenScene:e('gardenScene'),gardenBg:e('gardenBg'),gardenItems:e('gardenItems'),gardenEmpty:e('gardenEmpty'),gardenStock:e('gardenStock'),gardenStockGrid:e('gardenStockGrid'),gardenStockBtn:e('gardenStockBtn'),closeGarden:e('closeGarden'),gardenReset:e('gardenReset'),gardenExport:e('gardenExport')};
+function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[],gardenLayout:{},gardenPlaced:[]}}
 let state=load();
-function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[],gardenLayout:{...b.gardenLayout,...(p.gardenLayout||{})}};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
+function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[],gardenLayout:{...b.gardenLayout,...(p.gardenLayout||{})},gardenPlaced:Array.isArray(p.gardenPlaced)?p.gardenPlaced:[]};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function normalizeHashtag(v){
   let txt=String(v||"").trim();
@@ -1849,7 +1909,7 @@ function openReport(){els.reportOutput.value=makeReport(); els.reportModal.class
 function closeReport(){els.reportModal.classList.remove('open')}
 async function copyReportText(){els.reportOutput.value=makeReport(); try{await navigator.clipboard.writeText(els.reportOutput.value); toast('Отчёт скопирован')}catch{els.reportOutput.select(); document.execCommand('copy'); toast('Отчёт скопирован')}}
 async function copy(){try{await navigator.clipboard.writeText(els.saveCode.value);toast('Код скопирован')}catch{els.saveCode.select();document.execCommand('copy');toast('Код скопирован')}}
-function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[],gardenLayout:{...b.gardenLayout,...(data.state.gardenLayout||{})}};let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
+function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[],gardenLayout:{...b.gardenLayout,...(data.state.gardenLayout||{})},gardenPlaced:Array.isArray(data.state.gardenPlaced)?data.state.gardenPlaced:[]};let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
 function reset(){if(confirm('Сбросить весь прогресс на этом устройстве?')){state=def();save();render();closeManage();toast('Прогресс сброшен')}}
 function goBasket(){state.basketOpened=true; save(); render(); toast('Лукошко открыто')}
 els.addBtn.onclick=openAdd; els.closeAdd.onclick=closeAdd; els.confirmAdd.onclick=add; els.addInput.onkeydown=e=>{if(e.key==='Enter')add()}; els.addModal.onclick=e=>{if(e.target===els.addModal)closeAdd()};
@@ -1880,6 +1940,10 @@ function unlockedGardenItems(){
   }
   return items;
 }
+function placedGardenItems(){
+  const placed=new Set(Array.isArray(state.gardenPlaced)?state.gardenPlaced:[]);
+  return unlockedGardenItems().filter(item=>placed.has(item.key));
+}
 function openGarden(){
   renderGarden();
   els.gardenModal.classList.add('open');
@@ -1890,20 +1954,25 @@ function closeGarden(){
 }
 function renderGarden(){
   if(!state.gardenLayout) state.gardenLayout={};
+  if(!Array.isArray(state.gardenPlaced)) state.gardenPlaced=[];
   const season=gardenSeasonKey();
   els.gardenBg.src='assets/'+(GARDEN_VIEWS[season]||GARDEN_VIEWS.august);
   els.gardenItems.innerHTML='';
-  const items=unlockedGardenItems();
+  const unlocked=unlockedGardenItems();
+  const items=placedGardenItems();
   els.gardenEmpty.classList.toggle('show', items.length===0);
+  els.gardenEmpty.textContent=unlocked.length
+    ? 'Открой склад и выбери, что поставить в сад.'
+    : 'Пока нет закрытых банок. Первая готовая баночка появится в складе.';
   items.forEach(item=>{
-    const saved=state.gardenLayout[item.key]||item.def||{x:50,y:50,w:16};
+    const saved=state.gardenLayout[item.key]||item.def||{x:50,y:58,w:14};
     const el=document.createElement('div');
     el.className='garden-item';
     el.dataset.key=item.key;
     el.style.left=(saved.x||50)+'%';
-    el.style.top=(saved.y||50)+'%';
-    el.style.width=(saved.w||16)+'%';
-    el.style.height=(saved.w||16)+'%';
+    el.style.top=(saved.y||58)+'%';
+    el.style.width=(saved.w||14)+'%';
+    el.style.height='auto';
     el.title=item.name;
     const img=document.createElement('img');
     img.src='assets/'+item.img;
@@ -1912,6 +1981,40 @@ function renderGarden(){
     els.gardenItems.append(el);
     attachGardenDrag(el);
   });
+  renderGardenStock(unlocked);
+}
+function renderGardenStock(unlocked){
+  if(!els.gardenStockGrid)return;
+  els.gardenStockGrid.innerHTML='';
+  const placed=new Set(Array.isArray(state.gardenPlaced)?state.gardenPlaced:[]);
+  if(!unlocked.length){
+    const empty=document.createElement('div');
+    empty.className='garden-stock-empty';
+    empty.textContent='Пока склад пуст. Закрой первую банку — и она появится здесь.';
+    els.gardenStockGrid.append(empty);
+    return;
+  }
+  unlocked.forEach(item=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='garden-stock-item'+(placed.has(item.key)?' placed':'');
+    btn.innerHTML=`<img src="assets/${item.img}" alt=""><span>${placed.has(item.key)?'в саду':item.name.replace('банка ','')}</span>`;
+    btn.onclick=()=>addGardenItemFromStock(item.key);
+    els.gardenStockGrid.append(btn);
+  });
+}
+function addGardenItemFromStock(key){
+  const item=unlockedGardenItems().find(i=>i.key===key);
+  if(!item){toast('Этот предмет пока закрыт');return}
+  if(!Array.isArray(state.gardenPlaced)) state.gardenPlaced=[];
+  if(!state.gardenPlaced.includes(key)) state.gardenPlaced.push(key);
+  state.gardenLayout={...(state.gardenLayout||{}),[key]:state.gardenLayout?.[key]||item.def||{x:50,y:58,w:14}};
+  save();
+  renderGarden();
+  toast('Добавлено в сад');
+}
+function toggleGardenStock(){
+  els.gardenStock.classList.toggle('open');
 }
 function attachGardenDrag(el){
   let active=false;
@@ -1947,9 +2050,10 @@ function attachGardenDrag(el){
 }
 function resetGardenLayout(){
   state.gardenLayout={};
+  state.gardenPlaced=[];
   save();
   renderGarden();
-  toast('Сад расставлен заново');
+  toast('Сад очищен');
 }
 async function exportGardenImage(){
   let win=null;
@@ -2098,7 +2202,7 @@ function openExportImageWindow(dataUrl, win){
 }
 els.download.onclick=openGarden;
 
-els.closeGarden.onclick=closeGarden; els.gardenModal.onclick=e=>{if(e.target===els.gardenModal)closeGarden()}; els.gardenReset.onclick=resetGardenLayout; els.gardenExport.onclick=exportGardenImage;
+els.closeGarden.onclick=closeGarden; els.gardenModal.onclick=e=>{if(e.target===els.gardenModal)closeGarden()}; els.gardenReset.onclick=resetGardenLayout; els.gardenExport.onclick=exportGardenImage; els.gardenStockBtn.onclick=toggleGardenStock;
 els.hashtagBtn.onclick=openHashtag; els.closeHashtag.onclick=closeHashtag; els.saveHashtag.onclick=saveHashtagValue; els.hashtagInput.onkeydown=e=>{if(e.key==='Enter')saveHashtagValue()}; els.hashtagModal.onclick=e=>{if(e.target===els.hashtagModal)closeHashtag()};
 els.reportBtn.onclick=openReport; els.closeReport.onclick=closeReport; els.copyReport.onclick=copyReportText; els.reportModal.onclick=e=>{if(e.target===els.reportModal)closeReport()};
 if(els.introStart)els.introStart.onclick=closeIntro;
