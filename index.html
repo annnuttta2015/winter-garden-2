@@ -689,7 +689,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 }
 .basket-img{inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;pointer-events:none!important;}
 .basket-img.back{display:block!important;z-index:2!important;clip-path:none!important;}
-.basket-img.front{display:block!important;z-index:7!important;clip-path:inset(75% 0 0 0)!important;}
+.basket-img.front{display:block!important;z-index:7!important;clip-path:inset(80% 0 0 0)!important;}
 .basket-fruits{
   display:block!important;
   position:absolute!important;
@@ -707,7 +707,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 @media(max-width:390px){
   .app{width:min(100vw,484px)!important;}
   .basket-stage{width:97%!important;transform:translateY(82px) scale(1.03)!important;}
-  .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(41.5% 44.5% at 50.5% 56%)!important;}
+  .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(40.5% 44.5% at 50.5% 56.5%)!important;}
 }
 
 
@@ -1074,8 +1074,8 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 .export-card .label{width:112px;height:38px;font-size:13px}
 .export-card .basket-wrap{min-height:520px;padding-top:2px;padding-bottom:8px}
 .export-card .basket-stage{width:97%!important;transform:translateY(82px) scale(1.03)!important}
-.export-card .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(41.5% 44.5% at 50.5% 56%)!important;overflow:visible!important}
-.export-card .basket-img.front{clip-path:inset(75% 0 0 0)!important}
+.export-card .basket-fruits{left:1%!important;top:18.5%!important;width:98%!important;height:47.5%!important;clip-path:ellipse(40.5% 44.5% at 50.5% 56.5%)!important;overflow:visible!important}
+.export-card .basket-img.front{clip-path:inset(80% 0 0 0)!important}
 
 
 /* === rev26: экран «Мой сад» === */
@@ -1291,6 +1291,72 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   .garden-actions button{font-size:14px!important;min-height:44px!important}
 }
 
+
+
+/* === rev31: единые коричневые кнопки и чистый шрифт === */
+#downloadBtn,#manageBtn,#hashtagBtn,#reportBtn,
+.sheet-actions button:not(.danger),
+.intro-actions button:not(.danger),
+.garden-actions button,
+#gardenStockBtn{
+  color:#ffe8b3!important;
+  font-size:clamp(17px,4.6vw,23px)!important;
+  line-height:1.05!important;
+  min-height:56px!important;
+  padding:10px 14px 12px!important;
+  border-radius:16px!important;
+  border:2px solid #d69a42!important;
+  outline:1px solid rgba(79,38,9,.34)!important;
+  outline-offset:-5px!important;
+  background:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  background-image:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  box-shadow:
+    0 4px 0 rgba(81,40,9,.42),
+    0 9px 14px rgba(48,24,6,.18),
+    inset 0 1px 0 rgba(255,231,142,.48),
+    inset 0 -3px 0 rgba(57,25,6,.28)!important;
+  text-shadow:0 1px 0 rgba(54,27,8,.40)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:900!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+#downloadBtn::before,#manageBtn::before,#hashtagBtn::before,#reportBtn::before,
+.sheet-actions button:not(.danger)::before,
+.intro-actions button:not(.danger)::before,
+.garden-actions button::before,
+#gardenStockBtn::before{
+  content:""!important;
+  position:absolute!important;
+  left:10px!important;
+  right:10px!important;
+  top:5px!important;
+  height:28%!important;
+  border-radius:12px 12px 7px 7px!important;
+  background:linear-gradient(180deg,rgba(255,239,156,.36),rgba(255,255,255,.06))!important;
+  pointer-events:none!important;
+}
+#downloadBtn::after,#manageBtn::after,#hashtagBtn::after,#reportBtn::after,
+.sheet-actions button:not(.danger)::after,
+.intro-actions button:not(.danger)::after,
+.garden-actions button::after,
+#gardenStockBtn::after{
+  content:""!important;
+  position:absolute!important;
+  inset:5px!important;
+  border-radius:11px!important;
+  border:1px solid rgba(255,224,126,.24)!important;
+  box-shadow:inset 0 0 0 1px rgba(74,33,8,.13)!important;
+  pointer-events:none!important;
+}
+#addBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px!important}
+#goBasketBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important}
+.garden-stock-item{font-family:Georgia,"Times New Roman",serif!important;text-shadow:none!important}
+
 </style>
 </head>
 <body>
@@ -1418,10 +1484,55 @@ const GARDEN_JARS={
   chili:'garden_jar_chili.png',
   garlic:'garden_jar_garlic.png'
 };
+const GARDEN_DISHES={
+  apple:[
+    {key:'apple_pie',name:'яблочный пирог',img:'dish_apple_pie.png',def:{x:50,y:61,w:23}},
+    {key:'apple_zephyr',name:'яблочный зефир',img:'dish_apple_zephyr.png',def:{x:50,y:61,w:22}}
+  ],
+  strawberry:[
+    {key:'strawberry_dessert',name:'клубничный десерт',img:'dish_strawberry_dessert.png',def:{x:50,y:61,w:19}},
+    {key:'strawberry_crepes',name:'клубничные блинчики',img:'dish_strawberry_crepes.png',def:{x:50,y:61,w:23}}
+  ],
+  cherry:[
+    {key:'cherry_vareniki',name:'вареники с вишней',img:'dish_cherry_vareniki.png',def:{x:50,y:61,w:23}},
+    {key:'cherry_kompot',name:'вишнёвый компот',img:'dish_cherry_kompot.png',def:{x:50,y:61,w:18}}
+  ],
+  raspberry:[
+    {key:'raspberry_tea',name:'малиновый чай',img:'dish_raspberry_tea.png',def:{x:50,y:61,w:22}},
+    {key:'raspberry_toasts',name:'тосты с малиной',img:'dish_raspberry_toasts.png',def:{x:50,y:61,w:24}}
+  ],
+  cucumber:[
+    {key:'cucumber_bowl',name:'огурчики',img:'dish_cucumber_bowl.png',def:{x:50,y:61,w:23}},
+    {key:'cucumber_toasts',name:'бутерброды с огурцом',img:'dish_cucumber_toasts.png',def:{x:50,y:61,w:24}}
+  ],
+  tomato:[
+    {key:'tomato_bruschetta',name:'брускетты с помидором',img:'dish_tomato_bruschetta.png',def:{x:50,y:61,w:24}},
+    {key:'tomato_caprese',name:'салат с помидором',img:'dish_tomato_caprese.png',def:{x:50,y:61,w:24}}
+  ],
+  chili:[
+    {key:'chili_sauce',name:'соус чили',img:'dish_chili_sauce.png',def:{x:50,y:61,w:16}},
+    {key:'chili_garland',name:'связка чили',img:'dish_chili_garland.png',def:{x:50,y:48,w:28}}
+  ],
+  garlic:[
+    {key:'garlic_croutons',name:'чесночные гренки',img:'dish_garlic_croutons.png',def:{x:50,y:61,w:24}},
+    {key:'garlic_bunch',name:'связка чеснока',img:'dish_garlic_bunch.png',def:{x:50,y:50,w:16}}
+  ]
+};
+const CROP_SEEN_FOR_DISH={
+  apple:'яблоки',
+  strawberry:'клубнику',
+  cherry:'вишню',
+  raspberry:'малину',
+  cucumber:'огурцы',
+  tomato:'помидоры',
+  chili:'чили',
+  garlic:'чеснок'
+};
 const GARDEN_DEFAULTS={
-  apple:{x:50,y:58,w:14}, strawberry:{x:50,y:58,w:14}, cherry:{x:50,y:58,w:14}, raspberry:{x:50,y:58,w:14},
-  cucumber:{x:50,y:58,w:14}, tomato:{x:50,y:58,w:14}, chili:{x:50,y:58,w:14}, garlic:{x:50,y:58,w:14},
-  basket:{x:50,y:72,w:28}
+  apple:{x:50,y:58,w:16.1}, strawberry:{x:50,y:58,w:16.1}, cherry:{x:50,y:58,w:16.1}, raspberry:{x:50,y:58,w:16.1},
+  cucumber:{x:50,y:58,w:16.1}, tomato:{x:50,y:58,w:16.1}, chili:{x:50,y:58,w:16.1}, garlic:{x:50,y:58,w:16.1},
+  basket:{x:50,y:72,w:28},
+  dish:{x:50,y:61,w:22}
 };
 const CROP_EMOJI={apple:'🍎',strawberry:'🍓',cherry:'🍒',raspberry:'🍇',cucumber:'🥒',tomato:'🍅',chili:'🌶️',garlic:'🧄',pear:'🍐',blueberry:'🫐',plum:'🟣',apricot:'🍑',chanterelle:'🍄',mushroom:'🍄'};
 function cropEmojiByName(name){
@@ -1497,112 +1608,105 @@ function jarRow(title, names){
   els.resultList.append(row);
 }
 
-function getBasketLayers(count) {
-  if (count <= 0) return [];
 
-  if (count <= 12) {
-    return [
-      { n: count, y: 84, spread: 70, size: 42 }
-    ];
-  }
 
-  if (count <= 24) {
-    const row1 = Math.min(14, Math.round(count * 0.58));
-    const row2 = count - row1;
-    return [
-      { n: row1, y: 84, spread: 72, size: 41 },
-      { n: row2, y: 68, spread: 58, size: 39 }
-    ];
-  }
+const BASKET_SLOT_TUNE = {
+  count: 100,
+  stageWidth: 97,
+  basketY: 82,
+  basketScale: 1.03,
+  fruitLeft: 1,
+  fruitTop: 18.5,
+  fruitWidth: 98,
+  fruitHeight: 47.5,
+  ovalW: 40.5,
+  ovalH: 44.5,
+  ovalX: 50.5,
+  ovalY: 56.5,
+  frontClip: 80,
+  xShift: 1,
+  yShift: 0,
+  spreadScale: 1,
+  sizeScale: 1.4,
+  jitterX: 1.1,
+  jitterY: 1.8,
+  rotation: 35
+};
 
-  if (count <= 40) {
-    const row1 = Math.round(count * 0.42);
-    const row2 = Math.round(count * 0.33);
-    const row3 = count - row1 - row2;
-    return [
-      { n: row1, y: 85, spread: 74, size: 40 },
-      { n: row2, y: 69, spread: 62, size: 38 },
-      { n: row3, y: 54, spread: 48, size: 36 }
-    ];
-  }
+const BASKET_ROWS = [
+  { n: 8,  y: 28, spread: 42, size: 23, layer: 'back'  },
+  { n: 10, y: 36, spread: 52, size: 24, layer: 'back'  },
+  { n: 12, y: 44, spread: 62, size: 25, layer: 'back'  },
+  { n: 14, y: 52, spread: 72, size: 26, layer: 'mid'   },
+  { n: 14, y: 60, spread: 78, size: 27, layer: 'mid'   },
+  { n: 14, y: 68, spread: 82, size: 28, layer: 'mid'   },
+  { n: 12, y: 76, spread: 80, size: 29, layer: 'front' },
+  { n: 10, y: 84, spread: 72, size: 30, layer: 'front' },
+  { n: 6,  y: 91, spread: 46, size: 31, layer: 'front' }
+];
 
-  if (count <= 70) {
-    const row1 = Math.round(count * 0.34);
-    const row2 = Math.round(count * 0.27);
-    const row3 = Math.round(count * 0.22);
-    const row4 = count - row1 - row2 - row3;
-    return [
-      { n: row1, y: 86, spread: 74, size: 39 },
-      { n: row2, y: 72, spread: 64, size: 37 },
-      { n: row3, y: 58, spread: 54, size: 35 },
-      { n: row4, y: 45, spread: 42, size: 34 }
-    ];
-  }
-
-  const row1 = Math.round(count * 0.30);
-  const row2 = Math.round(count * 0.24);
-  const row3 = Math.round(count * 0.20);
-  const row4 = Math.round(count * 0.15);
-  const row5 = count - row1 - row2 - row3 - row4;
-
-  return [
-    { n: row1, y: 87, spread: 75, size: 38 },
-    { n: row2, y: 74, spread: 66, size: 36 },
-    { n: row3, y: 62, spread: 56, size: 35 },
-    { n: row4, y: 50, spread: 46, size: 34 },
-    { n: row5, y: 39, spread: 34, size: 33 }
-  ];
-}
+const BASKET_ROW_FILL_ORDER = [4,3,5,2,6,1,7,0,8];
 
 function seededOffset(index, salt, range) {
   const raw = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;
   return (raw - Math.floor(raw) - 0.5) * range * 2;
 }
 
-function basketPos(index, totalCount){
-  const tune=BASKET_TUNE;
-  const layers = getBasketLayers(totalCount);
-  let passed = 0;
-  const centerY=86;
+function centerOutSlot(local, n){
+  const center=(n-1)/2;
+  return Array.from({length:n}, (_,i)=>i)
+    .sort((a,b)=>{
+      const da=Math.abs(a-center), db=Math.abs(b-center);
+      if(da!==db) return da-db;
+      return a-b;
+    })[local] ?? local;
+}
 
-  for (let rowIndex = 0; rowIndex < layers.length; rowIndex++) {
-    const layer = layers[rowIndex];
-
-    if (index < passed + layer.n) {
-      const local = index - passed;
-      const spread = layer.spread * tune.spreadScale;
-      const xBase = layer.n === 1
-        ? 50
-        : 50 - spread / 2 + (spread / (layer.n - 1)) * local;
-      const yBase = centerY + (layer.y - centerY) * tune.rowGapScale;
-
-      const x = xBase + tune.xShift + seededOffset(index, 1, tune.jitterX);
-      const y = yBase + tune.yShift + seededOffset(index, 2, tune.jitterY);
-      const scale = 1 + seededOffset(index, 3, 0.08);
-      const rot = seededOffset(index, 4, tune.rotation);
-      const layerName = rowIndex <= 1 ? 'front' : rowIndex <= 3 ? 'mid' : 'back';
-
-      return {
-        x,
-        y,
-        scale,
+function buildBasketSlots(){
+  const t=BASKET_SLOT_TUNE;
+  const slots=[];
+  BASKET_ROW_FILL_ORDER.forEach(rowIndex=>{
+    const row=BASKET_ROWS[rowIndex];
+    if(!row) return;
+    for(let local=0; local<row.n; local++){
+      const slotIndex=centerOutSlot(local,row.n);
+      const spread=row.spread*t.spreadScale;
+      const x = row.n===1 ? 50 : 50 - spread/2 + (spread/(row.n-1))*slotIndex;
+      const jitterX = seededOffset(slots.length, 1, t.jitterX);
+      const jitterY = seededOffset(slots.length, 2, t.jitterY);
+      const rot = seededOffset(slots.length, 3, t.rotation);
+      const scale = 1 + seededOffset(slots.length, 4, 0.035);
+      slots.push({
+        x: x + jitterX + t.xShift,
+        y: row.y + jitterY + t.yShift,
         rot,
-        layer: layerName,
-        size: layer.size * scale * tune.sizeScale
-      };
+        scale,
+        layer: row.layer,
+        size: row.size * t.sizeScale * scale
+      });
     }
+  });
+  return slots;
+}
 
-    passed += layer.n;
-  }
+const BASKET_SLOTS = buildBasketSlots();
 
-  return { x: 50, y: 50, scale: 1, rot: 0, layer: 'mid', size: 36 * BASKET_TUNE.sizeScale };
+function basketPos(index){
+  return BASKET_SLOTS[index] || {
+    x:50 + seededOffset(index, 5, 1.2),
+    y:60 + seededOffset(index, 6, 1),
+    rot:seededOffset(index, 7, 8),
+    scale:1,
+    layer:'mid',
+    size:28 * BASKET_SLOT_TUNE.sizeScale
+  };
 }
 
 const e=id=>document.getElementById(id);
 const els={pantry:e('pantry'),stitches:e('stitchesStat'),rightStat:e('rightStat'),rightIcon:e('rightIcon'),rightLabel:e('rightLabel'),subtitle:e('subtitle'),stage:e('stageChip'),note:e('switchNote'),worm:e('wormNote'),fill:e('wormFill'),addBtn:e('addBtn'),goBasket:e('goBasketBtn'),addModal:e('addModal'),addInput:e('addInput'),confirmAdd:e('confirmAdd'),closeAdd:e('closeAdd'),resultModal:e('resultModal'),resultEventImage:e('resultEventImage'),resultTitle:e('resultTitle'),resultText:e('resultText'),resultList:e('resultList'),closeResult:e('closeResult'),manageBtn:e('manageBtn'),manageModal:e('manageModal'),saveCode:e('saveCode'),copyCode:e('copyCode'),importCodeBtn:e('importCodeBtn'),resetBtn:e('resetBtn'),closeManage:e('closeManage'),download:e('downloadBtn'),hashtagBtn:e('hashtagBtn'),reportBtn:e('reportBtn'),hashtagModal:e('hashtagModal'),hashtagInput:e('hashtagInput'),saveHashtag:e('saveHashtag'),closeHashtag:e('closeHashtag'),reportModal:e('reportModal'),reportOutput:e('reportOutput'),copyReport:e('copyReport'),closeReport:e('closeReport'),toast:e('toast'),addHelp:e('addHelp'),introModal:e('introModal'),introStart:e('introStartBtn'),introProgress:e('introProgressBtn'),introVideo:e('introVideoBtn'),rulesBtn:e('rulesBtn'),gardenModal:e('gardenModal'),gardenScene:e('gardenScene'),gardenBg:e('gardenBg'),gardenItems:e('gardenItems'),gardenEmpty:e('gardenEmpty'),gardenStock:e('gardenStock'),gardenStockGrid:e('gardenStockGrid'),gardenStockBtn:e('gardenStockBtn'),closeGarden:e('closeGarden'),gardenReset:e('gardenReset'),gardenExport:e('gardenExport')};
-function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[],gardenLayout:{},gardenPlaced:[]}}
+function def(){return {stitches:0,drops:0,addCount:0,basketOpened:false,hashtag:'',brokenByVupsent:0,reportNo:0,lastAdd:null,main:Object.fromEntries(MAIN.map(c=>[c.key,0])),basket:[],gardenLayout:{},gardenPlaced:[],gardenDishRewards:{}}}
 let state=load();
-function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[],gardenLayout:{...b.gardenLayout,...(p.gardenLayout||{})},gardenPlaced:Array.isArray(p.gardenPlaced)?p.gardenPlaced:[]};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
+function load(){try{let r=localStorage.getItem(STORAGE_KEY);if(r){let p=JSON.parse(r),b=def();let merged={...b,...p,main:{...b.main,...(p.main||{})},basket:Array.isArray(p.basket)?p.basket:[],gardenLayout:{...b.gardenLayout,...(p.gardenLayout||{})},gardenPlaced:Array.isArray(p.gardenPlaced)?p.gardenPlaced:[],gardenDishRewards:{...b.gardenDishRewards,...(p.gardenDishRewards||{})}};let visibleDrops=Object.values(merged.main).reduce((a,n)=>a+(Number(n)||0),0)+merged.basket.length;if(!Number.isFinite(merged.drops)||merged.drops<visibleDrops)merged.drops=visibleDrops;if(!Number.isFinite(merged.brokenByVupsent))merged.brokenByVupsent=0;if(!Number.isFinite(merged.addCount))merged.addCount=0;return merged}}catch{}return def()}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function normalizeHashtag(v){
   let txt=String(v||"").trim();
@@ -1632,6 +1736,36 @@ function maybeVupsentBreak(projectedDrops=Number(state.drops)||0){
   state.main[victim.key]=0;
   state.brokenByVupsent=brokenCount+1;
   return {crop:victim,lost};
+}
+
+function assignGardenDishReward(crop){
+  const variants=GARDEN_DISHES[crop.key]||[];
+  if(!variants.length) return null;
+  if(!state.gardenDishRewards) state.gardenDishRewards={};
+  let dish=variants.find(d=>d.key===state.gardenDishRewards[crop.key]);
+  if(!dish){
+    dish=randomFrom(variants);
+    state.gardenDishRewards[crop.key]=dish.key;
+  }
+  return {crop,dish};
+}
+function ensureGardenDishRewards(){
+  let changed=false;
+  if(!state.gardenDishRewards) state.gardenDishRewards={};
+  MAIN.forEach(c=>{
+    if((state.main[c.key]||0)>=TARGET && !state.gardenDishRewards[c.key]){
+      const reward=assignGardenDishReward(c);
+      if(reward) changed=true;
+    }
+  });
+  return changed;
+}
+function dishRewardItem(crop){
+  const variants=GARDEN_DISHES[crop.key]||[];
+  if(!variants.length) return null;
+  const key=state.gardenDishRewards?.[crop.key];
+  const dish=variants.find(d=>d.key===key);
+  return dish ? {key:'dish_'+dish.key,name:dish.name,img:dish.img,def:dish.def||GARDEN_DEFAULTS.dish,cropKey:crop.key} : null;
 }
 
 function applyDrops(extraDrops=0, blockedMainKey=null){
@@ -1744,7 +1878,7 @@ function renderBasket(){
   const basketItems = state.basket.slice(0,visible);
 
   basketItems.forEach((key,i)=>{
-    const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i, basketItems.length);
+    const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i);
     let item=document.createElement('div'); item.className='basket-item '+p.layer;
     item.style.left=p.x+'%'; item.style.top=p.y+'%';
     item.style.width=p.size+'px'; item.style.height=p.size+'px';
@@ -1807,6 +1941,7 @@ function add(){
   // Так он не может разбить тот же плод, который только что выпал в этом добавлении.
   const broken=maybeVupsentBreak(alreadyDropped+dropsToAdd);
   let r=applyDrops(dropsToAdd, broken?.crop?.key || null);
+  const dishRewards=(r.closed||[]).map(c=>assignGardenDishReward(c)).filter(Boolean);
   state.reportNo=(state.reportNo||0)+1;
   state.lastAdd={
     reportNo:state.reportNo,
@@ -1815,10 +1950,11 @@ function add(){
     stolen,
     results:r.results.map(x=>({type:x.type,name:x.crop.name,count:x.count})),
     closed:r.closed.map(x=>x.name),
+    dishes:dishRewards.map(x=>({crop:x.crop.name,dish:x.dish.name})),
     broken:broken?{name:broken.crop.name,lost:broken.lost}:null,
     unlocked:!!r.unlocked
   };
-  save(); render(); closeAdd(); result({typed,credited,stolen,broken,...r});
+  save(); render(); closeAdd(); result({typed,credited,stolen,broken,dishRewards,...r});
 }
 
 function result(o){
@@ -1856,13 +1992,50 @@ function result(o){
   if(o.closed.length){
     jarRow(o.closed.length===1?'Закрыта банка:':'Закрыты банки:', o.closed.map(c=>c.name));
   }
+  if(o.dishRewards&&o.dishRewards.length){
+    o.dishRewards.forEach(r=>{
+      item(`Вупси увидела ещё ${CROP_SEEN_FOR_DISH[r.crop.key]||r.crop.name} и приготовила «${r.dish.name}». Новый предмет уже лежит на Складе в меню «Мой сад».`);
+    });
+  }
   if(o.unlocked)item('Все 8 баночек закрыты! Теперь нажми «Добавить крестики», чтобы открыть лукошко.');
   els.resultModal.classList.add('open');
 }
 
 function item(t){let d=document.createElement('div');d.className='result-item';d.textContent=t;els.resultList.append(d)}
 function toast(t){els.toast.textContent=t;els.toast.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>els.toast.classList.remove('show'),2200)}
-function code(){return 'WG2-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:2,state})))).replace(/=+$/,'')}
+function enc64(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function dec64(s){let clean=String(s||'').replace(/-/g,'+').replace(/_/g,'/');while(clean.length%4)clean+='=';return decodeURIComponent(escape(atob(clean)))}
+function dishIndexForCrop(cropKey,dishKey){return (GARDEN_DISHES[cropKey]||[]).findIndex(d=>d.key===dishKey)}
+function gardenItemCode(key){
+  if(String(key).startsWith('jar_')){const i=MAIN.findIndex(c=>'jar_'+c.key===key);return i>=0?'j'+i.toString(36):''}
+  if(String(key).startsWith('dish_')){for(let ci=0;ci<MAIN.length;ci++){const arr=GARDEN_DISHES[MAIN[ci].key]||[];const di=arr.findIndex(d=>'dish_'+d.key===key);if(di>=0)return 'd'+ci.toString(36)+di.toString(36)}}
+  return ''
+}
+function gardenItemKeyFromCode(code){
+  code=String(code||'');
+  if(code[0]==='j'){const c=MAIN[parseInt(code.slice(1),36)];return c?'jar_'+c.key:''}
+  if(code[0]==='d'){const c=MAIN[parseInt(code[1],36)];const d=c?(GARDEN_DISHES[c.key]||[])[parseInt(code[2],36)]:null;return d?'dish_'+d.key:''}
+  return ''
+}
+function compactState(){
+  const gd=MAIN.map(c=>{const i=dishIndexForCrop(c.key,state.gardenDishRewards?.[c.key]);return i>=0?String(i):'x'}).join('');
+  const gp=(state.gardenPlaced||[]).map(gardenItemCode).filter(Boolean).join('.');
+  const gl=Object.entries(state.gardenLayout||{}).map(([k,v])=>{const c=gardenItemCode(k);if(!c||!v)return null;return c+':'+[v.x,v.y,v.w].map(n=>Math.round((Number(n)||0)*10).toString(36)).join(',')}).filter(Boolean).join(';');
+  return {v:3,s:state.stitches||0,d:state.drops||0,a:state.addCount||0,o:state.basketOpened?1:0,h:state.hashtag||'',vb:state.brokenByVupsent||0,r:state.reportNo||0,m:MAIN.map(c=>Math.min(9,Number(state.main[c.key])||0)).join(''),b:(state.basket||[]).map(k=>Math.max(0,BASKET.findIndex(c=>c.key===k)).toString(36)).join(''),gd,gp,gl};
+}
+function expandState(data){
+  const b=def();
+  if(data&&data.state) return {...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[],gardenLayout:{...b.gardenLayout,...(data.state.gardenLayout||{})},gardenPlaced:Array.isArray(data.state.gardenPlaced)?data.state.gardenPlaced:[],gardenDishRewards:{...b.gardenDishRewards,...(data.state.gardenDishRewards||{})}};
+  if(!data||data.v!==3) return null;
+  b.stitches=Number(data.s)||0; b.drops=Number(data.d)||0; b.addCount=Number(data.a)||0; b.basketOpened=!!data.o; b.hashtag=data.h||''; b.brokenByVupsent=Number(data.vb)||0; b.reportNo=Number(data.r)||0;
+  MAIN.forEach((c,i)=>{b.main[c.key]=Number(String(data.m||'')[i])||0});
+  b.basket=String(data.b||'').split('').map(ch=>BASKET[parseInt(ch,36)]?.key).filter(Boolean);
+  String(data.gd||'').split('').forEach((ch,i)=>{const c=MAIN[i];const d=c?(GARDEN_DISHES[c.key]||[])[Number(ch)]:null;if(c&&d)b.gardenDishRewards[c.key]=d.key});
+  b.gardenPlaced=String(data.gp||'').split('.').map(gardenItemKeyFromCode).filter(Boolean);
+  String(data.gl||'').split(';').forEach(row=>{if(!row)return;const [c,vals]=row.split(':');const key=gardenItemKeyFromCode(c);if(!key||!vals)return;const [x,y,w]=vals.split(',').map(v=>parseInt(v,36)/10);b.gardenLayout[key]={x:x||50,y:y||58,w:w||14}});
+  return b
+}
+function code(){return 'WG2-'+enc64(JSON.stringify(compactState()))}
 function openManage(){els.saveCode.value=code();els.manageModal.classList.add('open')}
 function closeManage(){els.manageModal.classList.remove('open')}
 function openHashtag(){els.hashtagInput.value=state.hashtag||''; els.hashtagModal.classList.add('open'); setTimeout(()=>els.hashtagInput.focus(),80)}
@@ -1919,7 +2092,7 @@ function openReport(){els.reportOutput.value=makeReport(); els.reportModal.class
 function closeReport(){els.reportModal.classList.remove('open')}
 async function copyReportText(){els.reportOutput.value=makeReport(); try{await navigator.clipboard.writeText(els.reportOutput.value); toast('Отчёт скопирован')}catch{els.reportOutput.select(); document.execCommand('copy'); toast('Отчёт скопирован')}}
 async function copy(){try{await navigator.clipboard.writeText(els.saveCode.value);toast('Код скопирован')}catch{els.saveCode.select();document.execCommand('copy');toast('Код скопирован')}}
-function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(decodeURIComponent(escape(atob(clean)))); if(data&&data.state){let b=def();state={...b,...data.state,main:{...b.main,...(data.state.main||{})},basket:Array.isArray(data.state.basket)?data.state.basket:[],gardenLayout:{...b.gardenLayout,...(data.state.gardenLayout||{})},gardenPlaced:Array.isArray(data.state.gardenPlaced)?data.state.gardenPlaced:[]};let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
+function imp(){let code=prompt('Вставь код сохранения'); if(!code)return; try{let clean=code.trim().replace(/^WG2-/,'');let data=JSON.parse(dec64(clean));let restored=expandState(data); if(restored){state=restored;let visibleDrops=Object.values(state.main).reduce((a,n)=>a+(Number(n)||0),0)+state.basket.length;if(!Number.isFinite(state.drops)||state.drops<visibleDrops)state.drops=visibleDrops;if(!Number.isFinite(state.brokenByVupsent))state.brokenByVupsent=0;if(!Number.isFinite(state.addCount))state.addCount=0;save();render();closeManage();toast('Прогресс восстановлен')}else toast('Код не подошёл')}catch{toast('Код не читается')}}
 function reset(){if(confirm('Сбросить весь прогресс на этом устройстве?')){state=def();save();render();closeManage();toast('Прогресс сброшен')}}
 function goBasket(){state.basketOpened=true; save(); render(); toast('Лукошко открыто')}
 els.addBtn.onclick=openAdd; els.closeAdd.onclick=closeAdd; els.confirmAdd.onclick=add; els.addInput.onkeydown=e=>{if(e.key==='Enter')add()}; els.addModal.onclick=e=>{if(e.target===els.addModal)closeAdd()};
@@ -1938,15 +2111,19 @@ function gardenSeasonKey(){
   return 'december';
 }
 function unlockedGardenItems(){
+  const changed=ensureGardenDishRewards();
   const items=[];
   MAIN.forEach(c=>{
     if((state.main[c.key]||0)>=TARGET){
       items.push({key:'jar_'+c.key,name:'банка '+c.name,img:GARDEN_JARS[c.key],def:GARDEN_DEFAULTS[c.key]});
+      const dish=dishRewardItem(c);
+      if(dish) items.push(dish);
     }
   });
   if(state.basketOpened){
     items.push({key:'basket',name:'лукошко',img:'basket_main.png',def:GARDEN_DEFAULTS.basket});
   }
+  if(changed) save();
   return items;
 }
 function placedGardenItems(){
@@ -1978,9 +2155,11 @@ function renderGarden(){
     const el=document.createElement('div');
     el.className='garden-item';
     el.dataset.key=item.key;
+    const isJar=String(item.key||'').startsWith('jar_');
+    const itemW=isJar && (!state.gardenLayout[item.key] || Number(saved.w)<=14.2) ? (item.def?.w||16.1) : (saved.w||item.def?.w||14);
     el.style.left=(saved.x||50)+'%';
     el.style.top=(saved.y||58)+'%';
-    el.style.width=(saved.w||14)+'%';
+    el.style.width=itemW+'%';
     el.style.height='auto';
     el.title=item.name;
     const img=document.createElement('img');
@@ -2198,7 +2377,7 @@ function renderBasketForExport(target){
 
   const basketItems = state.basket.slice(0,BASKET_LIMIT);
   basketItems.forEach((key,i)=>{
-    const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i, basketItems.length);
+    const crop=BASKET.find(c=>c.key===key)||BASKET[0], p=basketPos(i);
     let item=document.createElement('div'); item.className='basket-item '+p.layer;
     item.style.left=p.x+'%'; item.style.top=p.y+'%';
     item.style.width=p.size+'px'; item.style.height=p.size+'px';
@@ -2225,7 +2404,73 @@ function openExportImageWindow(dataUrl, win){
     img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 18px 45px rgba(0,0,0,.28);background:#8b5327}
     .hint{background:#fff0c8;border:1px solid rgba(92,52,20,.25);border-radius:18px;padding:12px 14px;font-weight:800;color:#5c3517}
     a{display:inline-block;background:linear-gradient(180deg,#87ba39,#5a8b22);color:#fff2c8;text-decoration:none;font-family:Georgia,serif;font-weight:900;font-size:20px;border-radius:18px;padding:12px 18px;text-shadow:0 2px 0 rgba(49,84,19,.45);box-shadow:0 5px 0 #3e6418,0 10px 18px rgba(45,25,8,.22)}
-  </style></head><body><div class="wrap"><img src="${dataUrl}" alt="Картинка игры Зимний сад 2"><div class="hint">На телефоне зажми картинку и выбери «Сохранить в Фото» или отправь её в чат. На компьютере можно нажать кнопку ниже.</div><a download="zimniy-sad-2.png" href="${dataUrl}">Скачать PNG</a></div></body></html>`;
+  
+
+/* === rev31: единые коричневые кнопки и чистый шрифт === */
+#downloadBtn,#manageBtn,#hashtagBtn,#reportBtn,
+.sheet-actions button:not(.danger),
+.intro-actions button:not(.danger),
+.garden-actions button,
+#gardenStockBtn{
+  color:#ffe8b3!important;
+  font-size:clamp(17px,4.6vw,23px)!important;
+  line-height:1.05!important;
+  min-height:56px!important;
+  padding:10px 14px 12px!important;
+  border-radius:16px!important;
+  border:2px solid #d69a42!important;
+  outline:1px solid rgba(79,38,9,.34)!important;
+  outline-offset:-5px!important;
+  background:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  background-image:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  box-shadow:
+    0 4px 0 rgba(81,40,9,.42),
+    0 9px 14px rgba(48,24,6,.18),
+    inset 0 1px 0 rgba(255,231,142,.48),
+    inset 0 -3px 0 rgba(57,25,6,.28)!important;
+  text-shadow:0 1px 0 rgba(54,27,8,.40)!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:900!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+#downloadBtn::before,#manageBtn::before,#hashtagBtn::before,#reportBtn::before,
+.sheet-actions button:not(.danger)::before,
+.intro-actions button:not(.danger)::before,
+.garden-actions button::before,
+#gardenStockBtn::before{
+  content:""!important;
+  position:absolute!important;
+  left:10px!important;
+  right:10px!important;
+  top:5px!important;
+  height:28%!important;
+  border-radius:12px 12px 7px 7px!important;
+  background:linear-gradient(180deg,rgba(255,239,156,.36),rgba(255,255,255,.06))!important;
+  pointer-events:none!important;
+}
+#downloadBtn::after,#manageBtn::after,#hashtagBtn::after,#reportBtn::after,
+.sheet-actions button:not(.danger)::after,
+.intro-actions button:not(.danger)::after,
+.garden-actions button::after,
+#gardenStockBtn::after{
+  content:""!important;
+  position:absolute!important;
+  inset:5px!important;
+  border-radius:11px!important;
+  border:1px solid rgba(255,224,126,.24)!important;
+  box-shadow:inset 0 0 0 1px rgba(74,33,8,.13)!important;
+  pointer-events:none!important;
+}
+#addBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px!important}
+#goBasketBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important}
+.garden-stock-item{font-family:Georgia,"Times New Roman",serif!important;text-shadow:none!important}
+
+</style></head><body><div class="wrap"><img src="${dataUrl}" alt="Картинка игры Зимний сад 2"><div class="hint">На телефоне зажми картинку и выбери «Сохранить в Фото» или отправь её в чат. На компьютере можно нажать кнопку ниже.</div><a download="zimniy-sad-2.png" href="${dataUrl}">Скачать PNG</a></div></body></html>`;
   if(win){
     win.document.open();
     win.document.write(html);
