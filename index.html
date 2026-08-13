@@ -203,11 +203,11 @@ button:active{transform:translateY(1px) scale(.996)}
   background-position:center!important;
   background-repeat:no-repeat!important;
 }
-#addBtn,#goBasketBtn{background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px}
-#downloadBtn{background-image:url('assets/btn_download_light.png')!important;min-height:58px}
-#manageBtn{background-image:url('assets/btn_progress_brown.png')!important;min-height:58px}
-#hashtagBtn{background-image:url('assets/btn_hashtag_brown.png')!important;min-height:56px}
-#reportBtn{background-image:url('assets/btn_report_light.png')!important;min-height:56px}
+#addBtn,#goBasketBtn{min-height:70px}
+#downloadBtn{min-height:58px}
+#manageBtn{min-height:58px}
+#hashtagBtn{min-height:56px}
+#reportBtn{min-height:56px}
 
 
 
@@ -1078,6 +1078,71 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 .export-card .basket-img.front{clip-path:inset(80% 0 0 0)!important}
 
 
+
+.result-gift-link{
+  display:block;
+  margin:9px 0 0;
+  padding:12px 14px;
+  border-radius:16px;
+  border:2px solid #d69a42;
+  outline:1px solid rgba(79,38,9,.34);
+  outline-offset:-5px;
+  background:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#8cc53f 0%,#5c971f 55%,#3f7415 100%);
+  color:#fff6cc;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
+  line-height:1.1;
+  font-weight:900;
+  text-align:center;
+  text-decoration:none;
+  text-shadow:0 1px 0 rgba(54,27,8,.42);
+  box-shadow:
+    0 4px 0 rgba(58,91,18,.42),
+    0 9px 14px rgba(48,24,6,.18),
+    inset 0 1px 0 rgba(255,231,142,.48),
+    inset 0 -3px 0 rgba(57,25,6,.20);
+}
+.result-gift-link:active{transform:translateY(1px)}
+
+.result-save-reminder{
+  margin:9px 0 0;
+  padding:10px 12px;
+  border-radius:16px;
+  background:rgba(255,242,204,.72);
+  border:1px solid rgba(116,65,22,.22);
+  color:#6a4424;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:850;
+}
+.result-save-code-btn{
+  display:block;
+  width:100%;
+  margin:8px 0 0;
+  min-height:44px!important;
+  padding:9px 12px!important;
+  border-radius:15px!important;
+  color:#ffe8b3!important;
+  font-size:15px!important;
+  line-height:1.05!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-weight:900!important;
+  border:2px solid #d69a42!important;
+  outline:1px solid rgba(79,38,9,.34)!important;
+  outline-offset:-5px!important;
+  background:
+    linear-gradient(180deg,rgba(255,217,119,.18) 0%,rgba(255,217,119,0) 38%),
+    linear-gradient(180deg,#a96b2e 0%,#884715 50%,#61300f 100%)!important;
+  box-shadow:
+    0 3px 0 rgba(81,40,9,.42),
+    inset 0 1px 0 rgba(255,231,142,.48),
+    inset 0 -3px 0 rgba(57,25,6,.28)!important;
+  text-shadow:0 1px 0 rgba(54,27,8,.40)!important;
+}
+
+
 /* === rev26: экран «Мой сад» === */
 #downloadBtn{
   background:
@@ -1189,6 +1254,51 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   z-index:5;
 }
 .garden-item:active{cursor:grabbing}
+
+.garden-basket-visual{
+  position:relative;
+  width:100%;
+  aspect-ratio:1/1;
+  pointer-events:none;
+  filter:drop-shadow(0 7px 9px rgba(43,22,7,.32));
+}
+.garden-basket-visual .gb-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none;
+}
+.garden-basket-visual .gb-back{z-index:1}
+.garden-basket-visual .gb-front{
+  z-index:5;
+  clip-path:inset(80% 0 0 0);
+}
+.garden-basket-visual .gb-fruits{
+  position:absolute;
+  left:1%;
+  top:18.5%;
+  width:98%;
+  height:47.5%;
+  z-index:4;
+  pointer-events:none;
+  overflow:visible;
+  clip-path:ellipse(40.5% 44.5% at 50.5% 56.5%);
+}
+.garden-basket-visual .gb-fruit{
+  position:absolute;
+  display:grid;
+  place-items:center;
+  transform-origin:center center;
+}
+.garden-basket-visual .gb-fruit img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 1px 1px rgba(44,22,7,.22));
+}
+
 .garden-item img{
   display:block;
   width:100%;
@@ -1282,13 +1392,40 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   border-radius:16px!important;
   font-family:Georgia,"Times New Roman",serif!important;
 }
-@media(max-width:390px){
+.garden-scroll-hint{
+  margin:-1px 0 0;
+  color:#7a512e;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:800;
+  text-align:center;
+  opacity:.92;
+}
+.garden-scroll-hint b{color:#5c3517}
+@media(max-width:430px){
+  .pantry{gap:8px;min-height:392px}
+  .shelf{gap:3.8%;padding:0 6px 14px}
+  .jar-box{max-width:90px}
+  .jar-lid{left:-5%;top:-11%;width:110%}
+  .slots{left:17%;right:17%;top:19%;bottom:13%;gap:2px 4px}
+  .fruit-img{width:108%;height:108%}
+  .label{width:94px;height:34px;margin-top:-4px;padding:0 12px 2px;font-size:11px}
   .garden-sheet{padding:9px;border-radius:20px;gap:7px}
-  .garden-scene{width:min(100%,340px)}
+  .garden-scene{width:min(100%,318px)}
   .garden-head h2{font-size:23px}
   .garden-hint{font-size:12px}
+  .garden-stock-grid{max-height:112px;gap:6px}
+  .garden-stock-item{min-height:66px!important;font-size:9.5px!important}
+  .garden-stock-item img{height:40px}
   .garden-actions{gap:7px}
   .garden-actions button{font-size:14px!important;min-height:44px!important}
+}
+@media(max-width:390px){
+  .shelf{gap:4.2%;padding:0 7px 14px}
+  .jar-box{max-width:86px}
+  .jar-lid{left:-4%;top:-10%;width:108%}
+  .label{width:89px;font-size:10px}
+  .garden-scene{width:min(100%,298px)}
 }
 
 
@@ -1353,9 +1490,8 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   box-shadow:inset 0 0 0 1px rgba(74,33,8,.13)!important;
   pointer-events:none!important;
 }
-#addBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px!important}
-#goBasketBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important}
-.garden-stock-item{font-family:Georgia,"Times New Roman",serif!important;text-shadow:none!important}
+#addBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;min-height:70px!important}
+#goBasketBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;text-shadow:none!important}
 
 </style>
 </head>
@@ -1429,6 +1565,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
       <div class="garden-items" id="gardenItems"></div>
       <div class="garden-empty" id="gardenEmpty">Пока нет закрытых банок. Первая готовая баночка появится здесь.</div>
     </div>
+    <div class="garden-scroll-hint">↓ <b>Склад ниже</b> • если сцена не листается, прокручивай по светлым полям • предметы в саду можно двигать пальцем</div>
     <div class="garden-stock" id="gardenStock">
       <p class="garden-stock-title">Склад</p>
       <div class="garden-stock-grid" id="gardenStockGrid"></div>
@@ -1447,6 +1584,8 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 (function(){
 const STORAGE_KEY='winterGarden2BasketDraftV1', INTRO_KEY='winterGarden2IntroSeenV1', TARGET=6, STEP=500, MAIN_LIMIT=48, BASKET_LIMIT=100, STEAL_CHANCE=.20, STEAL=100, STEAL_PROTECTED_ADDS=2, VUPSENT_BREAK_LIMIT=2, VUPSENT_MAX_FRUITS=4, VUPSENT_BREAK_MILESTONES=[8,24];
 const VIDEO_GUIDE_URL=''; // сюда потом можно вставить ссылку на видеоинструкцию в облаке
+const GIFT_URL='https://drive.google.com/drive/folders/1jEUsPdIa744TNcE6LdZdUeW3HYVuR_aX'; // ссылка на подарок/схему вышивки
+const GIFT_TEXT='Скачать подарок: схема вышивки';
 const MAIN=[
  {key:'apple',name:'яблоко',img:'fruit_apple.png'},
  {key:'strawberry',name:'клубника',img:'fruit_strawberry.png'},
@@ -1531,7 +1670,7 @@ const CROP_SEEN_FOR_DISH={
 const GARDEN_DEFAULTS={
   apple:{x:50,y:58,w:16.1}, strawberry:{x:50,y:58,w:16.1}, cherry:{x:50,y:58,w:16.1}, raspberry:{x:50,y:58,w:16.1},
   cucumber:{x:50,y:58,w:16.1}, tomato:{x:50,y:58,w:16.1}, chili:{x:50,y:58,w:16.1}, garlic:{x:50,y:58,w:16.1},
-  basket:{x:50,y:72,w:28},
+  basket:{x:50,y:74,w:34},
   dish:{x:50,y:61,w:22}
 };
 const CROP_EMOJI={apple:'🍎',strawberry:'🍓',cherry:'🍒',raspberry:'🍇',cucumber:'🥒',tomato:'🍅',chili:'🌶️',garlic:'🧄',pear:'🍐',blueberry:'🫐',plum:'🟣',apricot:'🍑',chanterelle:'🍄',mushroom:'🍄'};
@@ -1997,22 +2136,64 @@ function result(o){
       item(`Вупси увидела ещё ${CROP_SEEN_FOR_DISH[r.crop.key]||r.crop.name} и приготовила «${r.dish.name}». Новый предмет уже лежит на Складе в меню «Мой сад».`);
     });
   }
-  if(o.unlocked)item('Все 8 баночек закрыты! Теперь нажми «Добавить крестики», чтобы открыть лукошко.');
+  restoreCodeReminderItem();
+  if(o.unlocked){
+    item('Все 8 баночек закрыты! Теперь нажми «Добавить крестики», чтобы открыть лукошко.');
+    giftLinkItem();
+  }
   els.resultModal.classList.add('open');
 }
 
 function item(t){let d=document.createElement('div');d.className='result-item';d.textContent=t;els.resultList.append(d)}
+function giftLinkItem(){
+  if(!GIFT_URL)return;
+  const a=document.createElement('a');
+  a.className='result-gift-link';
+  a.href=GIFT_URL;
+  a.target='_blank';
+  a.rel='noopener';
+  a.textContent=GIFT_TEXT||'Скачать подарок';
+  els.resultList.append(a);
+}
+
+function restoreCodeReminderItem(){
+  const box=document.createElement('div');
+  box.className='result-save-reminder';
+  box.textContent='Чтобы не потерять прогресс, скопируй код восстановления после отчёта.';
+  const btn=document.createElement('button');
+  btn.type='button';
+  btn.className='result-save-code-btn';
+  btn.textContent='Скопировать код восстановления';
+  btn.onclick=async()=>{
+    const code=makeCode();
+    try{
+      await navigator.clipboard.writeText(code);
+      toast('Код восстановления скопирован');
+    }catch(e){
+      if(els.saveCode){
+        els.saveCode.value=code;
+        els.saveCode.select();
+        try{document.execCommand('copy')}catch(_e){}
+      }
+      toast('Код восстановления скопирован');
+    }
+  };
+  box.append(btn);
+  els.resultList.append(box);
+}
 function toast(t){els.toast.textContent=t;els.toast.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>els.toast.classList.remove('show'),2200)}
 function enc64(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 function dec64(s){let clean=String(s||'').replace(/-/g,'+').replace(/_/g,'/');while(clean.length%4)clean+='=';return decodeURIComponent(escape(atob(clean)))}
 function dishIndexForCrop(cropKey,dishKey){return (GARDEN_DISHES[cropKey]||[]).findIndex(d=>d.key===dishKey)}
 function gardenItemCode(key){
+  if(key==='basket')return 'B';
   if(String(key).startsWith('jar_')){const i=MAIN.findIndex(c=>'jar_'+c.key===key);return i>=0?'j'+i.toString(36):''}
   if(String(key).startsWith('dish_')){for(let ci=0;ci<MAIN.length;ci++){const arr=GARDEN_DISHES[MAIN[ci].key]||[];const di=arr.findIndex(d=>'dish_'+d.key===key);if(di>=0)return 'd'+ci.toString(36)+di.toString(36)}}
   return ''
 }
 function gardenItemKeyFromCode(code){
   code=String(code||'');
+  if(code==='B')return 'basket';
   if(code[0]==='j'){const c=MAIN[parseInt(code.slice(1),36)];return c?'jar_'+c.key:''}
   if(code[0]==='d'){const c=MAIN[parseInt(code[1],36)];const d=c?(GARDEN_DISHES[c.key]||[])[parseInt(code[2],36)]:null;return d?'dish_'+d.key:''}
   return ''
@@ -2138,6 +2319,47 @@ function closeGarden(){
   save();
   els.gardenModal.classList.remove('open');
 }
+
+function makeGardenBasketVisual(){
+  const visual=document.createElement('div');
+  visual.className='garden-basket-visual';
+
+  const back=document.createElement('img');
+  back.className='gb-img gb-back';
+  back.src='assets/basket_main.png';
+  back.alt='';
+
+  const fruits=document.createElement('div');
+  fruits.className='gb-fruits';
+
+  (state.basket||[]).slice(0,BASKET_LIMIT).forEach((key,i)=>{
+    const crop=BASKET.find(c=>c.key===key)||BASKET[0];
+    const p=basketPos(i);
+    const item=document.createElement('div');
+    item.className='gb-fruit '+p.layer;
+    item.style.left=p.x+'%';
+    item.style.top=p.y+'%';
+    item.style.width=(p.size/430*100)+'%';
+    item.style.height=(p.size/430*100)+'%';
+    item.style.transform=`translate(-50%,-50%) rotate(${p.rot}deg)`;
+    item.style.zIndex=String(100 + Math.round(p.y * 10) + i);
+
+    const img=document.createElement('img');
+    img.src='assets/'+crop.img;
+    img.alt=crop.name;
+    item.append(img);
+    fruits.append(item);
+  });
+
+  const front=document.createElement('img');
+  front.className='gb-img gb-front';
+  front.src='assets/basket_main.png';
+  front.alt='';
+
+  visual.append(back,fruits,front);
+  return visual;
+}
+
 function renderGarden(){
   if(!state.gardenLayout) state.gardenLayout={};
   if(!Array.isArray(state.gardenPlaced)) state.gardenPlaced=[];
@@ -2156,16 +2378,28 @@ function renderGarden(){
     el.className='garden-item';
     el.dataset.key=item.key;
     const isJar=String(item.key||'').startsWith('jar_');
-    const itemW=isJar && (!state.gardenLayout[item.key] || Number(saved.w)<=14.2) ? (item.def?.w||16.1) : (saved.w||item.def?.w||14);
+    const isBundle=/garland|bunch/.test(String(item.key||''));
+    const baseW=(saved.w||item.def?.w||14);
+    let itemW=baseW;
+    if(isJar){
+      itemW=baseW*1.12;
+      if(!state.gardenLayout[item.key] || Number(saved.w)<=14.2) itemW=(item.def?.w||16.1)*1.12;
+    }else if(!isBundle){
+      itemW=baseW*0.9;
+    }
     el.style.left=(saved.x||50)+'%';
     el.style.top=(saved.y||58)+'%';
     el.style.width=itemW+'%';
     el.style.height='auto';
     el.title=item.name;
-    const img=document.createElement('img');
-    img.src='assets/'+item.img;
-    img.alt=item.name;
-    el.append(img);
+    if(item.key==='basket'){
+      el.append(makeGardenBasketVisual());
+    }else{
+      const img=document.createElement('img');
+      img.src='assets/'+item.img;
+      img.alt=item.name;
+      el.append(img);
+    }
     els.gardenItems.append(el);
     attachGardenDrag(el);
   });
@@ -2186,7 +2420,7 @@ function renderGardenStock(unlocked){
     const btn=document.createElement('button');
     btn.type='button';
     btn.className='garden-stock-item'+(placed.has(item.key)?' placed':'');
-    btn.innerHTML=`<img src="assets/${item.img}" alt=""><span>${placed.has(item.key)?'в саду':item.name.replace('банка ','')}</span>`;
+    btn.innerHTML=`<img src="assets/${item.img}" alt=""><span>${placed.has(item.key)?'в саду':(item.key==='basket'?'лукошко':item.name.replace('банка ',''))}</span>`;
     btn.onclick=()=>addGardenItemFromStock(item.key);
     els.gardenStockGrid.append(btn);
   });
@@ -2466,9 +2700,8 @@ function openExportImageWindow(dataUrl, win){
   box-shadow:inset 0 0 0 1px rgba(74,33,8,.13)!important;
   pointer-events:none!important;
 }
-#addBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px!important}
-#goBasketBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;background-image:url('assets/btn_add_crosses_green.png')!important}
-.garden-stock-item{font-family:Georgia,"Times New Roman",serif!important;text-shadow:none!important}
+#addBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;min-height:70px!important}
+#goBasketBtn{color:transparent!important;font-size:0!important;text-shadow:none!important;text-shadow:none!important}
 
 </style></head><body><div class="wrap"><img src="${dataUrl}" alt="Картинка игры Зимний сад 2"><div class="hint">На телефоне зажми картинку и выбери «Сохранить в Фото» или отправь её в чат. На компьютере можно нажать кнопку ниже.</div><a download="zimniy-sad-2.png" href="${dataUrl}">Скачать PNG</a></div></body></html>`;
   if(win){
