@@ -203,11 +203,11 @@ button:active{transform:translateY(1px) scale(.996)}
   background-position:center!important;
   background-repeat:no-repeat!important;
 }
-#addBtn,#goBasketBtn{min-height:70px}
-#downloadBtn{min-height:58px}
-#manageBtn{min-height:58px}
-#hashtagBtn{min-height:56px}
-#reportBtn{min-height:56px}
+#addBtn,#goBasketBtn{background-image:url('assets/btn_add_crosses_green.png')!important;min-height:70px}
+#downloadBtn{background-image:url('assets/btn_download_light.png')!important;min-height:58px}
+#manageBtn{background-image:url('assets/btn_progress_brown.png')!important;min-height:58px}
+#hashtagBtn{background-image:url('assets/btn_hashtag_brown.png')!important;min-height:56px}
+#reportBtn{background-image:url('assets/btn_report_light.png')!important;min-height:56px}
 
 
 
@@ -1585,7 +1585,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
 const STORAGE_KEY='winterGarden2BasketDraftV1', INTRO_KEY='winterGarden2IntroSeenV1', TARGET=6, STEP=500, MAIN_LIMIT=48, BASKET_LIMIT=100, STEAL_CHANCE=.20, STEAL=100, STEAL_PROTECTED_ADDS=2, VUPSENT_BREAK_LIMIT=2, VUPSENT_MAX_FRUITS=4, VUPSENT_BREAK_MILESTONES=[8,24];
 const VIDEO_GUIDE_URL=''; // сюда потом можно вставить ссылку на видеоинструкцию в облаке
 const GIFT_URL='https://drive.google.com/drive/folders/1jEUsPdIa744TNcE6LdZdUeW3HYVuR_aX'; // ссылка на подарок/схему вышивки
-const GIFT_TEXT='Скачать подарок: схема вышивки';
+const GIFT_TEXT='🎁 Скачать подарок: схема вышивки';
 const MAIN=[
  {key:'apple',name:'яблоко',img:'fruit_apple.png'},
  {key:'strawberry',name:'клубника',img:'fruit_strawberry.png'},
@@ -1784,7 +1784,7 @@ const BASKET_ROWS = [
   { n: 6,  y: 91, spread: 46, size: 31, layer: 'front' }
 ];
 
-const BASKET_ROW_FILL_ORDER = [4,3,5,2,6,1,7,0,8];
+const BASKET_ROW_FILL_ORDER = [8,7,6,5,4,3,2,1,0];
 
 function seededOffset(index, salt, range) {
   const raw = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;
