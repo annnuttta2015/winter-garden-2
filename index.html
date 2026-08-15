@@ -1307,6 +1307,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   pointer-events:none;
   overflow:visible;
   clip-path:ellipse(40.5% 44.5% at 50.5% 56.5%);
+  transform:translateZ(0);
 }
 .garden-basket-visual .gb-fruit{
   position:absolute;
@@ -2355,6 +2356,8 @@ function makeGardenBasketVisual(){
   const fruits=document.createElement('div');
   fruits.className='gb-fruits';
 
+  const total=Math.min((state.basket||[]).length,BASKET_LIMIT);
+  const sizeBoost = total>=80 ? 2.05 : total>=50 ? 1.95 : total>=25 ? 1.8 : 1.65;
   (state.basket||[]).slice(0,BASKET_LIMIT).forEach((key,i)=>{
     const crop=BASKET.find(c=>c.key===key)||BASKET[0];
     const p=basketPos(i);
@@ -2362,8 +2365,10 @@ function makeGardenBasketVisual(){
     item.className='gb-fruit '+p.layer;
     item.style.left=p.x+'%';
     item.style.top=p.y+'%';
-    item.style.width=(p.size/430*100)+'%';
-    item.style.height=(p.size/430*100)+'%';
+    const basePct=(p.size/430*100);
+    const pct=Math.max(6.2, basePct*sizeBoost);
+    item.style.width=pct+'%';
+    item.style.height=pct+'%';
     item.style.transform=`translate(-50%,-50%) rotate(${p.rot}deg)`;
     item.style.zIndex=String(100 + Math.round(p.y * 10) + i);
 
@@ -2407,6 +2412,8 @@ function renderGarden(){
     if(isJar){
       itemW=baseW*1.12;
       if(!state.gardenLayout[item.key] || Number(saved.w)<=14.2) itemW=(item.def?.w||16.1)*1.12;
+    }else if(item.key==='basket'){
+      itemW=baseW*1.05;
     }else if(!isBundle){
       itemW=baseW*0.9;
     }
@@ -2535,6 +2542,10 @@ function makeGardenExportScene(){
   clone.style.overflow='hidden';
   clone.style.transform='none';
   document.body.appendChild(clone);
+  clone.querySelectorAll('.garden-item[data-key="basket"]').forEach(el=>{
+    el.innerHTML='';
+    el.append(makeGardenBasketVisual());
+  });
   return clone;
 }
 function waitForImages(root){
