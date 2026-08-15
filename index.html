@@ -2347,14 +2347,34 @@ function closeGarden(){
 function makeGardenBasketVisual(){
   const visual=document.createElement('div');
   visual.className='garden-basket-visual';
+  visual.style.position='relative';
+  visual.style.width='100%';
+  visual.style.aspectRatio='1/1';
+  visual.style.pointerEvents='none';
 
   const back=document.createElement('img');
   back.className='gb-img gb-back';
   back.src='assets/basket_main.png';
   back.alt='';
+  back.style.position='absolute';
+  back.style.inset='0';
+  back.style.width='100%';
+  back.style.height='100%';
+  back.style.objectFit='contain';
+  back.style.zIndex='1';
 
   const fruits=document.createElement('div');
   fruits.className='gb-fruits';
+  fruits.style.position='absolute';
+  fruits.style.left='1%';
+  fruits.style.top='18.5%';
+  fruits.style.width='98%';
+  fruits.style.height='47.5%';
+  fruits.style.zIndex='4';
+  fruits.style.pointerEvents='none';
+  fruits.style.overflow='visible';
+  // Для экспорта не используем жёсткую маску: html2canvas иногда съедает вложенные плоды.
+  fruits.style.clipPath='none';
 
   const total=Math.min((state.basket||[]).length,BASKET_LIMIT);
   const sizeBoost = total>=80 ? 2.05 : total>=50 ? 1.95 : total>=25 ? 1.8 : 1.65;
@@ -2363,6 +2383,9 @@ function makeGardenBasketVisual(){
     const p=basketPos(i);
     const item=document.createElement('div');
     item.className='gb-fruit '+p.layer;
+    item.style.position='absolute';
+    item.style.display='grid';
+    item.style.placeItems='center';
     item.style.left=p.x+'%';
     item.style.top=p.y+'%';
     const basePct=(p.size/430*100);
@@ -2370,11 +2393,17 @@ function makeGardenBasketVisual(){
     item.style.width=pct+'%';
     item.style.height=pct+'%';
     item.style.transform=`translate(-50%,-50%) rotate(${p.rot}deg)`;
+    item.style.transformOrigin='center center';
     item.style.zIndex=String(100 + Math.round(p.y * 10) + i);
 
     const img=document.createElement('img');
     img.src='assets/'+crop.img;
     img.alt=crop.name;
+    img.style.width='100%';
+    img.style.height='100%';
+    img.style.objectFit='contain';
+    img.style.display='block';
+    img.style.filter='drop-shadow(0 1px 1px rgba(44,22,7,.22))';
     item.append(img);
     fruits.append(item);
   });
@@ -2383,6 +2412,13 @@ function makeGardenBasketVisual(){
   front.className='gb-img gb-front';
   front.src='assets/basket_main.png';
   front.alt='';
+  front.style.position='absolute';
+  front.style.inset='0';
+  front.style.width='100%';
+  front.style.height='100%';
+  front.style.objectFit='contain';
+  front.style.zIndex='5';
+  front.style.clipPath='inset(80% 0 0 0)';
 
   visual.append(back,fruits,front);
   return visual;
@@ -2529,24 +2565,100 @@ async function exportGardenImage(){
   }
 }
 function makeGardenExportScene(){
-  const clone=els.gardenScene.cloneNode(true);
-  clone.id='gardenExportCapture';
-  clone.classList.add('garden-export-capture');
-  clone.style.position='fixed';
-  clone.style.left='-10000px';
-  clone.style.top='0';
-  clone.style.width='900px';
-  clone.style.height='1600px';
-  clone.style.aspectRatio='auto';
-  clone.style.margin='0';
-  clone.style.overflow='hidden';
-  clone.style.transform='none';
-  document.body.appendChild(clone);
-  clone.querySelectorAll('.garden-item[data-key="basket"]').forEach(el=>{
-    el.innerHTML='';
-    el.append(makeGardenBasketVisual());
+  const capture=document.createElement('div');
+  capture.id='gardenExportCapture';
+  capture.className='garden-scene garden-export-capture';
+  capture.style.position='fixed';
+  capture.style.left='-10000px';
+  capture.style.top='0';
+  capture.style.width='900px';
+  capture.style.height='1600px';
+  capture.style.aspectRatio='auto';
+  capture.style.margin='0';
+  capture.style.overflow='hidden';
+  capture.style.transform='none';
+  capture.style.border='0';
+  capture.style.borderRadius='0';
+  capture.style.boxShadow='none';
+  capture.style.background='#8b5327';
+
+  const season=gardenSeasonKey();
+
+  const bg=document.createElement('img');
+  bg.className='garden-bg';
+  bg.src='assets/'+(GARDEN_VIEWS[season]||GARDEN_VIEWS.august);
+  bg.alt='';
+  bg.style.position='absolute';
+  bg.style.inset='0';
+  bg.style.width='100%';
+  bg.style.height='100%';
+  bg.style.objectFit='cover';
+  bg.style.zIndex='1';
+
+  const room=document.createElement('img');
+  room.className='garden-room';
+  room.src='assets/garden_room_overlay.png';
+  room.alt='';
+  room.style.position='absolute';
+  room.style.inset='0';
+  room.style.width='100%';
+  room.style.height='100%';
+  room.style.objectFit='cover';
+  room.style.zIndex='2';
+
+  const layer=document.createElement('div');
+  layer.className='garden-items';
+  layer.style.position='absolute';
+  layer.style.inset='0';
+  layer.style.zIndex='4';
+
+  const items=placedGardenItems();
+  items.forEach(item=>{
+    const saved=state.gardenLayout?.[item.key]||item.def||{x:50,y:58,w:14};
+    const el=document.createElement('div');
+    el.className='garden-item';
+    el.dataset.key=item.key;
+    el.style.position='absolute';
+    el.style.left=(saved.x||50)+'%';
+    el.style.top=(saved.y||58)+'%';
+    el.style.transform='translate(-50%,-50%)';
+    el.style.zIndex='5';
+
+    const isJar=String(item.key||'').startsWith('jar_');
+    const isBundle=/garland|bunch/.test(String(item.key||''));
+    const baseW=(saved.w||item.def?.w||14);
+    let itemW=baseW;
+    if(isJar){
+      itemW=baseW*1.12;
+      if(!state.gardenLayout?.[item.key] || Number(saved.w)<=14.2) itemW=(item.def?.w||16.1)*1.12;
+    }else if(item.key==='basket'){
+      itemW=baseW*1.05;
+    }else if(!isBundle){
+      itemW=baseW*0.9;
+    }
+    el.style.width=itemW+'%';
+    el.style.height='auto';
+
+    if(item.key==='basket'){
+      el.append(makeGardenBasketVisual());
+    }else{
+      const img=document.createElement('img');
+      img.src='assets/'+item.img;
+      img.alt=item.name;
+      img.style.display='block';
+      img.style.width='100%';
+      img.style.height='auto';
+      img.style.objectFit='contain';
+      img.style.filter='drop-shadow(0 7px 9px rgba(43,22,7,.32))';
+      el.append(img);
+    }
+
+    layer.append(el);
   });
-  return clone;
+
+  capture.append(bg,room,layer);
+  document.body.appendChild(capture);
+  return capture;
 }
 function waitForImages(root){
   const imgs=[...root.querySelectorAll('img')];
