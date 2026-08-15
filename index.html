@@ -1185,6 +1185,11 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   grid-template-columns:1fr 44px;
   align-items:center;
   gap:8px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:2px 0 5px;
+  background:linear-gradient(180deg,#fff1ca 0%,rgba(255,241,202,.94) 72%,rgba(255,241,202,0) 100%);
 }
 .garden-head h2{
   margin:0;
@@ -1219,7 +1224,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   background:#8b5327;
   border:1px solid rgba(90,48,18,.34);
   box-shadow:0 12px 24px rgba(52,28,8,.20), inset 0 1px 0 rgba(255,255,255,.25);
-  touch-action:none;
+  touch-action:pan-y;
   isolation:isolate;
   flex:0 0 auto;
 }
@@ -2076,9 +2081,10 @@ function add(){
   const alreadyDropped=Number(state.drops)||0;
   const dropsToAdd=Math.max(0, afterDrops-alreadyDropped);
 
-  // Сначала проверяем Вупсента, потом раскладываем новые плоды.
+  // Если пришла Вупсильда, Вупсент в этот же ход не приходит — события не накладываются.
+  // Если Вупсильды нет, сначала проверяем Вупсента, потом раскладываем новые плоды.
   // Так он не может разбить тот же плод, который только что выпал в этом добавлении.
-  const broken=maybeVupsentBreak(alreadyDropped+dropsToAdd);
+  const broken=stolen?null:maybeVupsentBreak(alreadyDropped+dropsToAdd);
   let r=applyDrops(dropsToAdd, broken?.crop?.key || null);
   const dishRewards=(r.closed||[]).map(c=>assignGardenDishReward(c)).filter(Boolean);
   state.reportNo=(state.reportNo||0)+1;
