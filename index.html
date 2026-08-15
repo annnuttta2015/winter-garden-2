@@ -1160,14 +1160,20 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   box-shadow:0 4px 0 rgba(81,40,9,.42),0 9px 14px rgba(48,24,6,.18),inset 0 1px 0 rgba(255,231,142,.48),inset 0 -3px 0 rgba(57,25,6,.28)!important;
 }
 .garden-modal{
-  align-items:center!important;
-  padding:8px!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  padding:8px 8px calc(18px + var(--safe-bottom))!important;
   background:rgba(45,24,8,.58)!important;
-  overflow:auto!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
 }
 .garden-sheet{
   width:min(100%,500px);
-  max-height:calc(100vh - 16px - var(--safe-bottom));
+  max-height:none;
+  min-height:auto;
+  height:auto;
+  max-height:calc(100dvh - 16px - var(--safe-bottom));
   display:flex;
   flex-direction:column;
   gap:8px;
@@ -1176,21 +1182,27 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   background:linear-gradient(180deg,#fff1ca,#e3b66d);
   border:2px solid rgba(114,63,20,.34);
   box-shadow:0 22px 55px rgba(32,18,6,.42), inset 0 1px 0 rgba(255,255,255,.5);
-  overflow:auto;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
 }
 .garden-head,.garden-hint,.garden-stock,.garden-actions{flex:0 0 auto}
 
 .garden-head{
   display:grid;
-  grid-template-columns:1fr 44px;
+  grid-template-columns:1fr;
   align-items:center;
   gap:8px;
-  position:sticky;
-  top:0;
-  z-index:20;
-  padding:2px 0 5px;
-  background:linear-gradient(180deg,#fff1ca 0%,rgba(255,241,202,.94) 72%,rgba(255,241,202,0) 100%);
+  padding-right:54px;
 }
+
+.garden-sheet::after{
+  content:"";
+  display:block;
+  flex:0 0 max(18px, var(--safe-bottom));
+}
+
 .garden-head h2{
   margin:0;
   font-family:Georgia,"Times New Roman",serif;
@@ -1199,13 +1211,18 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   line-height:1;
 }
 .garden-close{
-  min-height:42px!important;
-  width:42px!important;
-  height:42px!important;
+  position:fixed!important;
+  top:calc(8px + env(safe-area-inset-top, 0px))!important;
+  right:12px!important;
+  z-index:9999!important;
+  min-height:44px!important;
+  width:44px!important;
+  height:44px!important;
   padding:0!important;
   border-radius:14px!important;
-  font-size:27px!important;
+  font-size:29px!important;
   line-height:1!important;
+  box-shadow:0 5px 15px rgba(54,28,8,.22), inset 0 1px 0 rgba(255,255,255,.45)!important;
 }
 .garden-hint{
   margin:0;
@@ -1416,7 +1433,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   .fruit-img{width:108%;height:108%}
   .label{width:94px;height:34px;margin-top:-4px;padding:0 12px 2px;font-size:11px}
   .garden-sheet{padding:9px;border-radius:20px;gap:7px}
-  .garden-scene{width:min(100%,318px)}
+  .garden-scene{width:min(100%,300px)}
   .garden-head h2{font-size:23px}
   .garden-hint{font-size:12px}
   .garden-stock-grid{max-height:112px;gap:6px}
@@ -1430,7 +1447,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   .jar-box{max-width:86px}
   .jar-lid{left:-4%;top:-10%;width:108%}
   .label{width:89px;font-size:10px}
-  .garden-scene{width:min(100%,298px)}
+  .garden-scene{width:min(100%,286px)}
 }
 
 
