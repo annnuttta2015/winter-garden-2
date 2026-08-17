@@ -23,7 +23,7 @@ html,body{margin:0;min-height:100%;background:#75431d;color:#4b2c13;font-family:
   display:flex;
   flex-direction:column;
   gap:8px;
-  background:#8b5327 url("assets/background_main.png") center/cover no-repeat;
+  background:#8b5327 url("assets/background_main.webp") center/cover no-repeat;
   box-shadow:0 0 60px rgba(0,0,0,.25);
 }
 .app::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(80,42,14,.05),rgba(80,42,14,.10) 55%,rgba(80,42,14,.24));z-index:0;pointer-events:none}
@@ -1036,7 +1036,7 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
   top:0;
   width:520px;
   padding:18px 12px 28px;
-  background:#8b5327 url('assets/background_main.png') center/cover no-repeat;
+  background:#8b5327 url('assets/background_main.webp') center/cover no-repeat;
   color:#4b2c13;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   overflow:hidden;
@@ -1582,8 +1582,8 @@ textarea{min-height:82px;resize:vertical;font-family:ui-monospace,SFMono-Regular
     </div>
     <p class="garden-hint">Открой склад, выбери заработанную баночку и поставь её в сад. Потом можно двигать пальцем.</p>
     <div class="garden-scene" id="gardenScene">
-      <img class="garden-bg" id="gardenBg" src="assets/garden_view_august.png" alt="">
-      <img class="garden-room" src="assets/garden_room_overlay.png" alt="">
+      <img class="garden-bg" id="gardenBg" src="assets/garden_view_august.webp" alt="">
+      <img class="garden-room" src="assets/garden_room_overlay.webp" alt="">
       <div class="garden-items" id="gardenItems"></div>
       <div class="garden-empty" id="gardenEmpty">Пока нет закрытых банок. Первая готовая баночка появится здесь.</div>
     </div>
@@ -1629,54 +1629,54 @@ const BASKET=[
 const BASKET_TUNE={gameW:484,stageWidth:97,basketY:82,basketScale:1.03,fruitLeft:1,fruitTop:18.5,fruitWidth:98,fruitHeight:47.5,ovalW:41.5,ovalH:44.5,ovalX:50.5,ovalY:56,frontClip:75,count:100,visibleMax:100,yShift:0,xShift:0,spreadScale:1.07,rowGapScale:1.18,sizeScale:1.24,rotation:35,jitterX:5.8,jitterY:4.5};
 
 const GARDEN_VIEWS={
-  august:'garden_view_august.png',
-  september:'garden_view_september.png',
-  october:'garden_view_october.png',
-  november:'garden_view_november.png',
-  december:'garden_view_december.png'
+  august:'garden_view_august.webp',
+  september:'garden_view_september.webp',
+  october:'garden_view_october.webp',
+  november:'garden_view_november.webp',
+  december:'garden_view_december.webp'
 };
 const GARDEN_JARS={
-  apple:'garden_jar_apple.png',
-  strawberry:'garden_jar_strawberry.png',
-  cherry:'garden_jar_cherry.png',
-  raspberry:'garden_jar_raspberry.png',
-  cucumber:'garden_jar_cucumber.png',
-  tomato:'garden_jar_tomato.png',
-  chili:'garden_jar_chili.png',
-  garlic:'garden_jar_garlic.png'
+  apple:'garden_jar_apple.webp',
+  strawberry:'garden_jar_strawberry.webp',
+  cherry:'garden_jar_cherry.webp',
+  raspberry:'garden_jar_raspberry.webp',
+  cucumber:'garden_jar_cucumber.webp',
+  tomato:'garden_jar_tomato.webp',
+  chili:'garden_jar_chili.webp',
+  garlic:'garden_jar_garlic.webp'
 };
 const GARDEN_DISHES={
   apple:[
-    {key:'apple_pie',name:'яблочный пирог',img:'dish_apple_pie.png',def:{x:50,y:61,w:23}},
-    {key:'apple_zephyr',name:'яблочный зефир',img:'dish_apple_zephyr.png',def:{x:50,y:61,w:22}}
+    {key:'apple_pie',name:'яблочный пирог',img:'dish_apple_pie.webp',def:{x:50,y:61,w:23}},
+    {key:'apple_zephyr',name:'яблочный зефир',img:'dish_apple_zephyr.webp',def:{x:50,y:61,w:22}}
   ],
   strawberry:[
-    {key:'strawberry_dessert',name:'клубничный десерт',img:'dish_strawberry_dessert.png',def:{x:50,y:61,w:19}},
-    {key:'strawberry_crepes',name:'клубничные блинчики',img:'dish_strawberry_crepes.png',def:{x:50,y:61,w:23}}
+    {key:'strawberry_dessert',name:'клубничный десерт',img:'dish_strawberry_dessert.webp',def:{x:50,y:61,w:19}},
+    {key:'strawberry_crepes',name:'клубничные блинчики',img:'dish_strawberry_crepes.webp',def:{x:50,y:61,w:23}}
   ],
   cherry:[
-    {key:'cherry_vareniki',name:'вареники с вишней',img:'dish_cherry_vareniki.png',def:{x:50,y:61,w:23}},
-    {key:'cherry_kompot',name:'вишнёвый компот',img:'dish_cherry_kompot.png',def:{x:50,y:61,w:18}}
+    {key:'cherry_vareniki',name:'вареники с вишней',img:'dish_cherry_vareniki.webp',def:{x:50,y:61,w:23}},
+    {key:'cherry_kompot',name:'вишнёвый компот',img:'dish_cherry_kompot.webp',def:{x:50,y:61,w:18}}
   ],
   raspberry:[
-    {key:'raspberry_tea',name:'малиновый чай',img:'dish_raspberry_tea.png',def:{x:50,y:61,w:22}},
-    {key:'raspberry_toasts',name:'тосты с малиной',img:'dish_raspberry_toasts.png',def:{x:50,y:61,w:24}}
+    {key:'raspberry_tea',name:'малиновый чай',img:'dish_raspberry_tea.webp',def:{x:50,y:61,w:22}},
+    {key:'raspberry_toasts',name:'тосты с малиной',img:'dish_raspberry_toasts.webp',def:{x:50,y:61,w:24}}
   ],
   cucumber:[
-    {key:'cucumber_bowl',name:'огурчики',img:'dish_cucumber_bowl.png',def:{x:50,y:61,w:23}},
-    {key:'cucumber_toasts',name:'бутерброды с огурцом',img:'dish_cucumber_toasts.png',def:{x:50,y:61,w:24}}
+    {key:'cucumber_bowl',name:'огурчики',img:'dish_cucumber_bowl.webp',def:{x:50,y:61,w:23}},
+    {key:'cucumber_toasts',name:'бутерброды с огурцом',img:'dish_cucumber_toasts.webp',def:{x:50,y:61,w:24}}
   ],
   tomato:[
-    {key:'tomato_bruschetta',name:'брускетты с помидором',img:'dish_tomato_bruschetta.png',def:{x:50,y:61,w:24}},
-    {key:'tomato_caprese',name:'салат с помидором',img:'dish_tomato_caprese.png',def:{x:50,y:61,w:24}}
+    {key:'tomato_bruschetta',name:'брускетты с помидором',img:'dish_tomato_bruschetta.webp',def:{x:50,y:61,w:24}},
+    {key:'tomato_caprese',name:'салат с помидором',img:'dish_tomato_caprese.webp',def:{x:50,y:61,w:24}}
   ],
   chili:[
-    {key:'chili_sauce',name:'соус чили',img:'dish_chili_sauce.png',def:{x:50,y:61,w:16}},
-    {key:'chili_garland',name:'связка чили',img:'dish_chili_garland.png',def:{x:50,y:48,w:28}}
+    {key:'chili_sauce',name:'соус чили',img:'dish_chili_sauce.webp',def:{x:50,y:61,w:16}},
+    {key:'chili_garland',name:'связка чили',img:'dish_chili_garland.webp',def:{x:50,y:48,w:28}}
   ],
   garlic:[
-    {key:'garlic_croutons',name:'чесночные гренки',img:'dish_garlic_croutons.png',def:{x:50,y:61,w:24}},
-    {key:'garlic_bunch',name:'связка чеснока',img:'dish_garlic_bunch.png',def:{x:50,y:50,w:16}}
+    {key:'garlic_croutons',name:'чесночные гренки',img:'dish_garlic_croutons.webp',def:{x:50,y:61,w:24}},
+    {key:'garlic_bunch',name:'связка чеснока',img:'dish_garlic_bunch.webp',def:{x:50,y:50,w:16}}
   ]
 };
 const CROP_SEEN_FOR_DISH={
@@ -2028,7 +2028,7 @@ function renderBasket(){
 
   let basketBack=document.createElement('img');
   basketBack.className='basket-img back';
-  basketBack.src='assets/basket_main.png';
+  basketBack.src='assets/basket_main.webp';
   basketBack.alt='Лукошко Вупсильды';
 
   let fruits=document.createElement('div');
@@ -2051,7 +2051,7 @@ function renderBasket(){
 
   let basketFront=document.createElement('img');
   basketFront.className='basket-img front';
-  basketFront.src='assets/basket_main.png';
+  basketFront.src='assets/basket_main.webp';
   basketFront.alt='';
   basketFront.setAttribute('aria-hidden','true');
 
@@ -2125,13 +2125,13 @@ function result(o){
   els.resultEventImage.removeAttribute('src');
   els.resultEventImage.alt='';
   if(o.stolen){
-    els.resultEventImage.src='assets/event_vupsilda_eat.png';
+    els.resultEventImage.src='assets/event_vupsilda_eat.webp';
     els.resultEventImage.alt='Вупсильда полакомилась крестиками';
     els.resultEventImage.classList.add('show');
     els.resultTitle.textContent='Вупсильда пошалила!';
     els.resultText.textContent=`Вупсильда съела ${o.stolen} крестиков. В зачёт пошло ${o.credited}.`;
   }else if(o.broken){
-    els.resultEventImage.src='assets/event_vupsent_break.png';
+    els.resultEventImage.src='assets/event_vupsent_break.webp';
     els.resultEventImage.alt='Вупсент разбил банку';
     els.resultEventImage.classList.add('show');
     els.resultTitle.textContent='Вупсент разбил банку!';
@@ -2325,7 +2325,7 @@ function unlockedGardenItems(){
     }
   });
   if(state.basketOpened){
-    items.push({key:'basket',name:'лукошко',img:'basket_main.png',def:GARDEN_DEFAULTS.basket});
+    items.push({key:'basket',name:'лукошко',img:'basket_main.webp',def:GARDEN_DEFAULTS.basket});
   }
   if(changed) save();
   return items;
@@ -2349,7 +2349,7 @@ function makeGardenBasketVisual(){
 
   const back=document.createElement('img');
   back.className='gb-img gb-back';
-  back.src='assets/basket_main.png';
+  back.src='assets/basket_main.webp';
   back.alt='';
 
   const fruits=document.createElement('div');
@@ -2376,7 +2376,7 @@ function makeGardenBasketVisual(){
 
   const front=document.createElement('img');
   front.className='gb-img gb-front';
-  front.src='assets/basket_main.png';
+  front.src='assets/basket_main.webp';
   front.alt='';
 
   visual.append(back,fruits,front);
@@ -2631,7 +2631,7 @@ function renderBasketForExport(target){
 
   let basketBack=document.createElement('img');
   basketBack.className='basket-img back';
-  basketBack.src='assets/basket_main.png';
+  basketBack.src='assets/basket_main.webp';
   basketBack.alt='Лукошко Вупсильды';
 
   let fruits=document.createElement('div');
@@ -2651,7 +2651,7 @@ function renderBasketForExport(target){
 
   let basketFront=document.createElement('img');
   basketFront.className='basket-img front';
-  basketFront.src='assets/basket_main.png';
+  basketFront.src='assets/basket_main.webp';
   basketFront.alt='';
 
   stage.append(shadow,basketBack,fruits,basketFront);
